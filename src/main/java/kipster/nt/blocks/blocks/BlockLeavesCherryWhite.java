@@ -38,7 +38,7 @@ public class BlockLeavesCherryWhite extends BlockLeaves implements IHasModel
 {
 	public BlockLeavesCherryWhite(String name, Material material) 
 	{
-		setUnlocalizedName(name);
+        setTranslationKey(name);
 		setRegistryName(name);
 		setSoundType(SoundType.PLANT);
         setDefaultState(blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(true)));  
@@ -144,8 +144,8 @@ public class BlockLeavesCherryWhite extends BlockLeaves implements IHasModel
     }
 @Override
 	@SideOnly(Side.CLIENT)
-public BlockRenderLayer getBlockLayer() {
-	return Blocks.LEAVES.getBlockLayer();
+public BlockRenderLayer getRenderLayer() {
+	return Blocks.LEAVES.getRenderLayer();
 }
 
 @Override

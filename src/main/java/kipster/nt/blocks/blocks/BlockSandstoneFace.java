@@ -43,7 +43,7 @@ public class BlockSandstoneFace extends Block implements IHasModel
 	public BlockSandstoneFace(String name, Material material) 
 	{
 		super(Material.ROCK);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName(name);
 		setSoundType(SoundType.STONE);
 		setHardness(0.8F);

@@ -42,7 +42,7 @@ public class BlockSands extends BlockFalling implements IHasModel
 	public BlockSands(String name, Material material) 
 	{
 		super(Material.SAND);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setSoundType(SoundType.SAND);
 		setRegistryName(name);
 		setHardness(0.8F);

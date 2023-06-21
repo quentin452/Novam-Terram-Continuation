@@ -33,7 +33,7 @@ public class BlockSaplingBlueSpruce extends BlockBush implements IHasModel, IGro
 	
 	public BlockSaplingBlueSpruce(String name, Material material) 
 	{
-		setUnlocalizedName(name);
+        setTranslationKey(name);
 		setRegistryName(name);
       setHardness(0.0F);
       setSoundType(SoundType.PLANT);

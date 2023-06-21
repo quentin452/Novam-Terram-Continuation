@@ -49,7 +49,7 @@ public class BlockPodzols extends Block implements IHasModel
 	public BlockPodzols(String name, Material material) 
 	{
 		super(Material.GROUND);
-		setUnlocalizedName(name);
+        setTranslationKey(name);
 		setRegistryName(name);
 		setSoundType(SoundType.GROUND);
 		setHardness(0.8F);

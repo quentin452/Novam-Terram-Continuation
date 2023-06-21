@@ -33,7 +33,7 @@ public class BlockSaplingPaulownia extends BlockBush implements IHasModel, IGrow
 	
 	public BlockSaplingPaulownia(String name, Material material) 
 	{
-		setUnlocalizedName(name);
+        setTranslationKey(name);
 		setRegistryName(name);
       setHardness(0.0F);
       setSoundType(SoundType.PLANT);

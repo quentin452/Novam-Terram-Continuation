@@ -33,7 +33,7 @@ public class BlockSaplingCherryPink extends BlockBush implements IHasModel, IGro
 	
 	public BlockSaplingCherryPink(String name, Material material) 
 	{
-		setUnlocalizedName(name);
+        setTranslationKey(name);
 		setRegistryName(name);
       setHardness(0.0F);
       setSoundType(SoundType.PLANT);

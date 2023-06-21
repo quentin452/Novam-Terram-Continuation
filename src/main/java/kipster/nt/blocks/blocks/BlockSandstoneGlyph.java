@@ -43,7 +43,7 @@ public class BlockSandstoneGlyph extends Block implements IHasModel
 	public BlockSandstoneGlyph(String name, Material material) 
 	{
 		super(Material.ROCK);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName(name);
 		setSoundType(SoundType.STONE);
 		setHardness(0.8F);

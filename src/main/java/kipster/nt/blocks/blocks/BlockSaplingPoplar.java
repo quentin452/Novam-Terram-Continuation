@@ -33,7 +33,7 @@ public class BlockSaplingPoplar extends BlockBush implements IHasModel, IGrowabl
 	
 	public BlockSaplingPoplar(String name, Material material) 
 	{
-		setUnlocalizedName(name);
+        setTranslationKey(name);
 		setRegistryName(name);
       setHardness(0.0F);
       setSoundType(SoundType.PLANT);

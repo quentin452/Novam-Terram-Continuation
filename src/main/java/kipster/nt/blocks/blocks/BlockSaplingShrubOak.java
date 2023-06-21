@@ -33,7 +33,7 @@ public class BlockSaplingShrubOak extends BlockBush implements IHasModel, IGrowa
 	
 	public BlockSaplingShrubOak(String name, Material material) 
 	{
-		setUnlocalizedName(name);
+        setTranslationKey(name);
 		setRegistryName(name);
       setHardness(0.0F);
       setSoundType(SoundType.PLANT);

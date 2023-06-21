@@ -33,7 +33,7 @@ public class BlockSaplingConiferYellow extends BlockBush implements IHasModel, I
 	
 	public BlockSaplingConiferYellow(String name, Material material) 
 	{
-		setUnlocalizedName(name);
+        setTranslationKey(name);
 		setRegistryName(name);
       setHardness(0.0F);
       setSoundType(SoundType.PLANT);

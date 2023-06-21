@@ -33,7 +33,7 @@ public class BlockSaplingOrchard extends BlockBush implements IHasModel, IGrowab
 	
 	public BlockSaplingOrchard(String name, Material material) 
 	{
-		setUnlocalizedName(name);
+        setTranslationKey(name);
 		setRegistryName(name);
       setHardness(0.0F);
       setSoundType(SoundType.PLANT);

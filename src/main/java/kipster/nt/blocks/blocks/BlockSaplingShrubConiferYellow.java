@@ -33,7 +33,7 @@ public class BlockSaplingShrubConiferYellow extends BlockBush implements IHasMod
 	
 	public BlockSaplingShrubConiferYellow(String name, Material material) 
 	{
-		setUnlocalizedName(name);
+        setTranslationKey(name);
 		setRegistryName(name);
       setHardness(0.0F);
       setSoundType(SoundType.PLANT);
