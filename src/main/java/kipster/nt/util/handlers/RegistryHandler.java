@@ -1,22 +1,20 @@
 package kipster.nt.util.handlers;
 
-import java.io.File;
-
 import kipster.nt.biomes.BiomeInit;
 import kipster.nt.blocks.BlockInit;
 import kipster.nt.items.ItemInit;
 import kipster.nt.util.interfaces.IHasModel;
-import kipster.nt.world.type.WorldTypeIslands;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+
+import java.io.File;
 
 @EventBusSubscriber
 public class RegistryHandler {

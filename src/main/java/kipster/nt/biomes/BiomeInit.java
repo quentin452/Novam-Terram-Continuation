@@ -1,8 +1,5 @@
 package kipster.nt.biomes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import kipster.nt.NovamTerram;
 import kipster.nt.biomes.cool.*;
 import kipster.nt.biomes.desert.*;
@@ -10,8 +7,6 @@ import kipster.nt.biomes.icy.*;
 import kipster.nt.biomes.warm.*;
 import kipster.nt.config.BiomeWeightConfig;
 import kipster.nt.config.MiscConfig;
-import net.minecraft.world.biome.BiomeTaiga;
-import net.minecraft.world.biome.BiomeForest;
 import net.minecraft.init.Biomes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
@@ -24,7 +19,9 @@ import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.BiomeManager.BiomeEntry;
 import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 	public class BiomeInit {

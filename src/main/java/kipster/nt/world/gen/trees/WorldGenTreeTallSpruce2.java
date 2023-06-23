@@ -1,8 +1,5 @@
 package kipster.nt.world.gen.trees;
 
-import java.util.Random;
-
-import kipster.nt.blocks.BlockInit;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockOldLeaf;
 import net.minecraft.block.BlockOldLog;
@@ -12,6 +9,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+
+import java.util.Random;
 
 public class WorldGenTreeTallSpruce2 extends WorldGenAbstractTree
 {

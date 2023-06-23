@@ -1,8 +1,8 @@
 package kipster.nt;
 
+import kipster.nt.proxy.CommonProxy;
 import kipster.nt.util.handlers.RegistryHandler;
 import kipster.nt.world.type.WorldTypeIslands;
-import kipster.nt.proxy.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.world.WorldType;
 import net.minecraftforge.fml.common.Mod;

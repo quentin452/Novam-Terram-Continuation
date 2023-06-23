@@ -1,36 +1,26 @@
 package kipster.nt.biomes.icy;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
-import kipster.nt.biomes.BiomeInit;
-import kipster.nt.biomes.icy.BiomeAlps.LapisGenerator;
 import kipster.nt.world.gen.WorldGenPatches;
-
-import kipster.nt.world.gen.trees.WorldGenTreeShrubSpruce;
 import kipster.nt.world.gen.trees.WorldGenTreeTallSpruce;
-import net.minecraft.init.Biomes;
+import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.block.BlockSilverfish;
+import net.minecraft.block.BlockTallGrass;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntityStray;
+import net.minecraft.entity.passive.EntityRabbit;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.BiomeProperties;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraft.block.BlockTallGrass;
-import net.minecraft.entity.passive.EntityRabbit;
-import net.minecraft.entity.passive.EntityWolf;
-import net.minecraftforge.common.BiomeManager;
-import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntityStray;
-import net.minecraft.block.BlockSilverfish;
-import net.minecraft.block.BlockDoublePlant;
+
+import java.util.Iterator;
+import java.util.Random;
 
 	public class BiomeAlps extends Biome 
 	{	

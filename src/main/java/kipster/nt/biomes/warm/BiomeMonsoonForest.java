@@ -1,48 +1,22 @@
 package kipster.nt.biomes.warm;
 
-import java.util.Random;
-
-import kipster.nt.biomes.BiomeInit;
-import kipster.nt.biomes.warm.BiomeMonsoonForest.EmeraldGenerator;
-import kipster.nt.config.*;
-import kipster.nt.world.gen.WorldGenPatches;
+import kipster.nt.config.MiscConfig;
 import kipster.nt.world.gen.trees.WorldGenTreeBigJacaranda;
-import kipster.nt.world.gen.trees.WorldGenTreeOak;
-import net.minecraft.init.Biomes;
+import net.minecraft.block.*;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.entity.passive.EntityParrot;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.BiomeProperties;
-import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenBlockBlob;
-import net.minecraft.world.gen.feature.WorldGenLakes;
-import net.minecraft.world.gen.feature.WorldGenMegaJungle;
-import net.minecraft.world.gen.feature.WorldGenMelon;
-import net.minecraft.world.gen.feature.WorldGenSavannaTree;
-import net.minecraft.world.gen.feature.WorldGenShrub;
-import net.minecraft.world.gen.feature.WorldGenTallGrass;
-import net.minecraft.world.gen.feature.WorldGenTrees;
-import net.minecraft.world.gen.feature.WorldGenVines;
-import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraft.block.BlockDoublePlant;
-import net.minecraft.block.BlockFlower;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockOldLeaf;
-import net.minecraft.block.BlockOldLog;
-import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.BlockTallGrass;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.entity.passive.EntityMooshroom;
-import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.entity.passive.EntityParrot;
-import net.minecraft.entity.passive.EntityWolf;
-import net.minecraftforge.common.BiomeManager;
+import net.minecraft.world.gen.feature.*;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+
+import java.util.Random;
 
 public class BiomeMonsoonForest extends Biome 
 	{

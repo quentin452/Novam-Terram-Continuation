@@ -1,21 +1,16 @@
 package kipster.nt.blocks.blocks;
 
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
 import kipster.nt.NovamTerram;
 import kipster.nt.blocks.BlockInit;
 import kipster.nt.items.ItemInit;
 import kipster.nt.util.interfaces.IHasModel;
 import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.BlockPlanks.EnumType;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -33,6 +28,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
+import java.util.Random;
 
 public class BlockLeavesCherryPurple extends BlockLeaves implements IHasModel
 {

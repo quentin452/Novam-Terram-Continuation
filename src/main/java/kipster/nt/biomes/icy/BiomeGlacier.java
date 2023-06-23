@@ -1,36 +1,23 @@
 package kipster.nt.biomes.icy;
 
-import java.util.Iterator;
-import java.util.Random;
-
-import kipster.nt.biomes.BiomeInit;
-import kipster.nt.biomes.icy.BiomeGlacier.LapisGenerator;
 import kipster.nt.config.MiscConfig;
 import kipster.nt.world.gen.WorldGenPatches;
-import kipster.nt.world.gen.trees.WorldGenTreeShrubSpruce;
-import net.minecraft.init.Biomes;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.BiomeProperties;
-import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenBlockBlob;
-import net.minecraft.world.gen.feature.WorldGenIcePath;
-import net.minecraft.world.gen.feature.WorldGenIceSpike;
-import net.minecraft.world.gen.feature.WorldGenLakes;
-import net.minecraft.world.gen.feature.WorldGenTallGrass;
-import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockTallGrass;
 import net.minecraft.entity.monster.EntityPolarBear;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityStray;
 import net.minecraft.entity.passive.EntityRabbit;
-import net.minecraft.entity.passive.EntityWolf;
-import net.minecraftforge.common.BiomeManager;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.ChunkPrimer;
+import net.minecraft.world.gen.feature.WorldGenBlockBlob;
+import net.minecraft.world.gen.feature.WorldGenIceSpike;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+
+import java.util.Iterator;
+import java.util.Random;
 
 public class BiomeGlacier extends Biome 
 {

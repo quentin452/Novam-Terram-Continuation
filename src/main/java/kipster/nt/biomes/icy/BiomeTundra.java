@@ -1,26 +1,20 @@
 package kipster.nt.biomes.icy;
 
-import java.util.Random;
-
-import kipster.nt.biomes.BiomeInit;
-import kipster.nt.biomes.icy.BiomeTundra.LapisGenerator;
 import kipster.nt.world.gen.WorldGenPatches;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubSpruce;
-import net.minecraft.init.Biomes;
+import net.minecraft.block.BlockTallGrass;
+import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.BiomeProperties;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraft.block.BlockTallGrass;
-import net.minecraft.entity.passive.EntityRabbit;
-import net.minecraft.entity.passive.EntityWolf;
-import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+
+import java.util.Random;
 
 public class BiomeTundra extends Biome 
 {

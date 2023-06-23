@@ -1,26 +1,19 @@
 package kipster.nt.biomes.desert;
 
-import java.util.Iterator;
-import java.util.Random;
-
-import kipster.nt.biomes.BiomeInit;
-import kipster.nt.biomes.desert.BiomeSandDune.GoldGenerator;
-import kipster.nt.world.gen.WorldGenSandSpike;
-import kipster.nt.world.gen.WorldGenStoneSpike;
 import net.minecraft.entity.monster.EntityHusk;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.monster.EntityZombieVillager;
 import net.minecraft.entity.passive.EntityRabbit;
-import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.BiomeProperties;
 import net.minecraft.world.gen.feature.WorldGenDesertWells;
 import net.minecraft.world.gen.feature.WorldGenFossils;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+
+import java.util.Iterator;
+import java.util.Random;
 
 public class BiomeSandDune extends Biome 
 {

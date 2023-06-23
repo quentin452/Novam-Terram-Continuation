@@ -1,40 +1,18 @@
 package kipster.nt.biomes.warm;
 
-import java.util.Random;
-
-import kipster.nt.biomes.BiomeInit;
-import kipster.nt.biomes.warm.BiomePoppyMeadow.EmeraldGenerator;
-import kipster.nt.world.gen.WorldGenPatches;
-import kipster.nt.world.gen.trees.WorldGenTreeBigJacaranda;
-import kipster.nt.world.gen.trees.WorldGenTreeBigMaple;
 import kipster.nt.world.gen.trees.WorldGenTreeBigRedOak;
-import kipster.nt.world.gen.trees.WorldGenTreeJacaranda;
-import kipster.nt.world.gen.trees.WorldGenTreePoplar;
-import kipster.nt.world.gen.trees.WorldGenTreeShrubOak;
-import net.minecraft.init.Biomes;
+import net.minecraft.block.BlockFlower;
+import net.minecraft.entity.passive.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.BiomeProperties;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenLakes;
-import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraft.block.BlockDoublePlant;
-import net.minecraft.block.BlockFlower;
-import net.minecraft.block.BlockTallGrass;
-import net.minecraft.entity.passive.EntityRabbit;
-import net.minecraft.entity.passive.EntityWolf;
-import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.entity.passive.EntityCow;
-import net.minecraft.entity.passive.EntityDonkey;
-import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.entity.passive.EntitySheep;
-import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+
+import java.util.Random;
 
 public class BiomePoppyMeadow extends Biome 
 {

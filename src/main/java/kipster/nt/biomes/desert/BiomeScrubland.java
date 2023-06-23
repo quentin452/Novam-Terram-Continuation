@@ -1,10 +1,5 @@
 package kipster.nt.biomes.desert;
 
-import java.util.Iterator;
-import java.util.Random;
-
-import kipster.nt.biomes.desert.BiomeScrubland.GoldGenerator;
-import kipster.nt.world.gen.WorldGenPatches;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubAcacia;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.entity.monster.EntityHusk;
@@ -12,18 +7,19 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.monster.EntityZombieVillager;
 import net.minecraft.entity.passive.EntityDonkey;
 import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.BiomeProperties;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenSavannaTree;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+
+import java.util.Iterator;
+import java.util.Random;
 
 public class BiomeScrubland extends Biome 
 {

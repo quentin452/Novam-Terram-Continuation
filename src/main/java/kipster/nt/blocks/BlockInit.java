@@ -1,13 +1,11 @@
 package kipster.nt.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import kipster.nt.blocks.blocks.*;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.BlockFlower;
 import net.minecraft.block.material.Material;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockInit {
 	

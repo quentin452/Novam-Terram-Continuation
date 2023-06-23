@@ -3,7 +3,6 @@ package kipster.nt.biomes.cool;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSilverfish;
 import net.minecraft.block.BlockStone;
-import net.minecraft.block.state.BlockStateBase;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.passive.EntityLlama;
 import net.minecraft.init.Blocks;

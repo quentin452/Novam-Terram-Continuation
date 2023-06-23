@@ -1,36 +1,25 @@
 package kipster.nt.biomes.cool;
 
-import java.util.*;
-import java.util.concurrent.*;
-
 import com.google.common.collect.ImmutableSet;
-import kipster.nt.biomes.BiomeInit;
-import kipster.nt.biomes.cool.BiomeAutumnTaiga.DiamondGenerator;
-import kipster.nt.world.gen.WorldGenPatches;
-import kipster.nt.world.gen.trees.WorldGenTreeAutumnTaigaOrange;
-import kipster.nt.world.gen.trees.WorldGenTreeAutumnTaigaYellow;
-import kipster.nt.world.gen.trees.WorldGenTreeDead;
-import kipster.nt.world.gen.trees.WorldGenTreeShrubSpruce;
-import kipster.nt.world.gen.trees.WorldGenTreeTallSpruce;
+import kipster.nt.world.gen.trees.*;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDirt;
+import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Biomes;
+import net.minecraft.entity.passive.EntityRabbit;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.BiomeProperties;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.*;
-import net.minecraft.block.BlockTallGrass;
-import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockDoublePlant;
-import net.minecraft.entity.passive.EntityRabbit;
-import net.minecraft.entity.passive.EntityWolf;
-import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+
+import java.util.*;
+import java.util.concurrent.*;
 
 public class BiomeAutumnTaiga extends Biome 
 {

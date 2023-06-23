@@ -1,13 +1,13 @@
 package kipster.nt.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import kipster.nt.NovamTerram;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemInit {
 

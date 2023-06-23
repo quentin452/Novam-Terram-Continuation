@@ -1,31 +1,21 @@
 package kipster.nt.biomes.desert;
 
-import java.util.Iterator;
-import java.util.Random;
-
-import kipster.nt.biomes.BiomeInit;
-import kipster.nt.biomes.desert.BiomeSahel.GoldGenerator;
 import kipster.nt.world.gen.WorldGenPatches;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubAcacia;
-import kipster.nt.world.gen.trees.WorldGenTreeShrubSpruce;
 import net.minecraft.entity.monster.EntityHusk;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.monster.EntityZombieVillager;
-import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.init.Biomes;
+import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.BiomeProperties;
 import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenDesertWells;
-import net.minecraft.world.gen.feature.WorldGenFossils;
-import net.minecraft.world.gen.feature.WorldGenSavannaTree;
-import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+import net.minecraft.world.gen.feature.*;
+
+import java.util.Iterator;
+import java.util.Random;
 
 public class BiomeSahel extends Biome 
 {
