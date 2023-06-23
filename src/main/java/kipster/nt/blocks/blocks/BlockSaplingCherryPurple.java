@@ -49,19 +49,19 @@ public class BlockSaplingCherryPurple extends BlockBush implements IHasModel, IG
       return SAPLING_AABB;
   }
 
-  @Override
-  public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
-  {
-      if (!worldIn.isRemote)
-      {
-          super.updateTick(worldIn, pos, state, rand);
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    {
+        if (worldIn.isRemote) {
+            return;
+        }
 
-          if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && rand.nextInt(7) == 0)
-          {
-              grow(worldIn, rand, pos, state);
-          }
-      }
-  }
+        if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && rand.nextInt(7) == 0)
+        {
+            super.updateTick(worldIn, pos, state, rand);
+            grow(worldIn, rand, pos, state);
+        }
+    }
 
   public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand)
   {

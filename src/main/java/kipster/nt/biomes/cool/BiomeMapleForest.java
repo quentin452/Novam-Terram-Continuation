@@ -10,38 +10,34 @@ import kipster.nt.world.gen.trees.WorldGenTreeMaple;
 import kipster.nt.world.gen.trees.WorldGenTreeRedSpruce2;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubOak;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubSpruce2;
+import net.minecraft.block.*;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.BiomeProperties;
 import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenBlockBlob;
-import net.minecraft.world.gen.feature.WorldGenLakes;
-import net.minecraft.world.gen.feature.WorldGenTallGrass;
-import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraft.block.BlockTallGrass;
-import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.world.gen.feature.*;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
-public class BiomeMapleForest extends Biome 
-{	
+public class BiomeMapleForest extends Biome
+{
 	protected static final WorldGenAbstractTree SHRUB_OAK = new WorldGenTreeShrubOak();
 	 protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
 	protected static final WorldGenAbstractTree MAPLE_TREE = new WorldGenTreeMaple(false, false);
    private final WorldGenTreeRedSpruce2 spruceGenerator = new WorldGenTreeRedSpruce2(true);
-	 
+
    public BiomeMapleForest(BiomeProperties properties)
- 	{	
+ 	{
  		super(properties);
- 	
-       
+
+
        this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityWolf.class, 8, 4, 4));
        this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityRabbit.class, 4, 2, 3));
        this.decorator.treesPerChunk = 7;
@@ -61,7 +57,47 @@ public class BiomeMapleForest extends Biome
 	}
 	}
 
-	
+    private void generateFallenTree(World worldIn, Random rand, BlockPos pos) {
+        Block woodBlock = Blocks.LOG; // Adjust this to the desired wood block
+        IBlockState woodState = woodBlock.getDefaultState().withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.NONE); // Adjust the property values as needed
+
+        // Adjust the probability value as desired (lower value = less frequent spawning)
+        double spawnProbability = 0.2;
+
+        // Check if the random number is within the desired probability range
+        if (rand.nextDouble() > spawnProbability) {
+            return; // Do not generate the fallen tree
+        }
+
+        int trunkHeight = rand.nextInt(3) + 3; // Random number of wood blocks between 3 and 5
+
+        // Determine the facing direction of the fallen tree
+        EnumFacing direction = EnumFacing.HORIZONTALS[rand.nextInt(EnumFacing.HORIZONTALS.length)];
+
+        // Calculate the starting position for the fallen tree
+        BlockPos startPos = pos.offset(direction, trunkHeight / 2);
+
+        // Check if the fallen tree would intersect with leaves
+        if (checkLeavesIntersect(worldIn, startPos, direction, trunkHeight)) {
+            return; // Do not generate the fallen tree if it intersects with leaves
+        }
+
+        // Generate the fallen tree by placing wood blocks side by side
+        for (int i = 0; i < trunkHeight; i++) {
+            BlockPos blockPos = startPos.offset(direction.getOpposite(), i);
+            worldIn.setBlockState(blockPos, woodState, 2);
+        }
+    }
+
+    private boolean checkLeavesIntersect(World worldIn, BlockPos startPos, EnumFacing direction, int trunkHeight) {
+        for (int i = 0; i < trunkHeight; i++) {
+            BlockPos blockPos = startPos.offset(direction.getOpposite(), i);
+            if (worldIn.getBlockState(blockPos).getBlock() instanceof BlockLeaves) {
+                return true; // Leaves intersect with the fallen tree
+            }
+        }
+        return false; // No intersection with leaves
+    }
 
 	public WorldGenerator getRandomWorldGenForGrass(Random rand)
    {
@@ -81,12 +117,12 @@ public class BiomeMapleForest extends Biome
            int l1 = rand.nextInt(worldIn.getHeight(pos.add(j1, 0, k1)).getY() + 32);
            DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, pos.add(j1, l1, k1));
        }
-       
+
        net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
        WorldGenerator diamonds = new DiamondGenerator();
        if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, diamonds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.DIAMOND))
     	   diamonds.generate(worldIn, rand, pos);
-       
+
        if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.LAKE_WATER)) {
            int boulderChance = rand.nextInt(12);
            if (boulderChance == 0) {
@@ -98,13 +134,53 @@ public class BiomeMapleForest extends Biome
            net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Post(worldIn, rand, pos));
 
        }
+       // Generate fallen trees
+       for (int i = 0; i < 5; i++) {
+           int x = rand.nextInt(16) + 8;
+           int z = rand.nextInt(16) + 8;
+           int y = worldIn.getHeight(pos.add(x, 0, z)).getY();
+
+           if (y > 63 && rand.nextInt(6) == 0) {
+               generateFallenTree(worldIn, rand, pos.add(x, y, z));
+           }
+       }
+        // Generate flowers
+       WorldGenerator flowers = new WorldGenFlowers(Blocks.RED_FLOWER, BlockFlower.EnumFlowerType.POPPY);
+       WorldGenerator otherFlowers = new WorldGenFlowers(Blocks.YELLOW_FLOWER, BlockFlower.EnumFlowerType.DANDELION);
+       WorldGenerator thirdFlower = new WorldGenFlowers(Blocks.RED_FLOWER, BlockFlower.EnumFlowerType.BLUE_ORCHID);
+
+       if (net.minecraftforge.event.terraingen.TerrainGen.decorate(
+               worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.FLOWERS)) {
+           for (int i = 0; i < 5; i++) {
+               int x = rand.nextInt(16) + 8;
+               int y = rand.nextInt(128);
+               int z = rand.nextInt(16) + 8;
+
+               // Generate a random flower type
+               int flowerType = rand.nextInt(3);
+               switch (flowerType) {
+                   case 0:
+                       flowers.generate(worldIn, rand, pos.add(x, y, z));
+                       break;
+                   case 1:
+                       otherFlowers.generate(worldIn, rand, pos.add(x, y, z));
+                       break;
+                   case 2:
+                       thirdFlower.generate(worldIn, rand, pos.add(x, y, z));
+                       break;
+                   default:
+                       break;
+               }
+           }
+       }
+
        super.decorate(worldIn, rand, pos);
    }
    @Override
    public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
        if (noiseVal > 2.50D) {
            this.topBlock = BlockInit.REDPODZOL.getDefaultState();
-           this.fillerBlock = Blocks.DIRT.getDefaultState();  } 
+           this.fillerBlock = Blocks.DIRT.getDefaultState();  }
        else {
         this.topBlock = Blocks.GRASS.getDefaultState();
            this.fillerBlock = Blocks.DIRT.getDefaultState();
@@ -121,9 +197,9 @@ public class BiomeMapleForest extends Biome
   	public int getModdedBiomeFoliageColor(int original) {
   	    return super.getModdedBiomeFoliageColor(0xD9A44F);
   	}
-  	
- 
-	
+
+
+
 	 public static class DiamondGenerator extends WorldGenerator
 	    {
 	        @Override

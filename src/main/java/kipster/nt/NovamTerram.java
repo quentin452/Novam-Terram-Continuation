@@ -16,7 +16,7 @@ public class NovamTerram {
 	
 	public static final String modId = "nt";
 	public static final String name = "Novam Terram";
-	public static final String version = "7.2";
+	public static final String version = "7.3.2";
 
 	public static final CreativeTabs NOVAMTERRAMTAB = new NovamTerramTab("novamterramtab");
 	
