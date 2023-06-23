@@ -1,0 +1,8 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "package": "kipster.nt.mixin",
+  "refmap": "refmap.threadai.json",
+  "mixins": ["MinecraftServerMixin","BlockLeavesMixin"],
+  "client": [],
+  "server": []
+}

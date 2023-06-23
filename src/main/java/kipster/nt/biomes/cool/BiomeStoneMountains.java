@@ -72,45 +72,50 @@ public class BiomeStoneMountains extends Biome {
 
 		double radiusSq = radius * radius;
 
-		IntStream.rangeClosed(-radius, radius)
-				.forEach(x -> {
-					IntStream.range(0, height)
-							.forEach(y -> {
-								IntStream.rangeClosed(-radius, radius)
-										.forEach(z -> {
-											double distanceSq = x * x + y * y + z * z;
-											if (distanceSq <= radiusSq + rand.nextDouble() * 0.5) {
-												BlockPos blockPos = pos.add(x, y, z);
-												Block block = world.getBlockState(blockPos).getBlock();
+		List<BlockPos> modifiedBlocks = new ArrayList<>();
 
-												// Check if the stone block exists
-												if (block == Blocks.STONE) {
-													// Only replace blocks that can be replaced by stone
-													if (block.isReplaceableOreGen(world.getBlockState(blockPos), world, blockPos, state -> state.getBlock() == Blocks.STONE)) {
-														// Calculate the blend factor based on distance from the center
-														double blendFactor = 1.0 - (distanceSq / radiusSq);
+		for (int x = -radius; x <= radius; x++) {
+			for (int y = 0; y < height; y++) {
+				for (int z = -radius; z <= radius; z++) {
+					double distanceSq = x * x + y * y + z * z;
+					if (distanceSq <= radiusSq + rand.nextDouble() * 0.5) {
+						BlockPos blockPos = pos.add(x, y, z);
+						Block block = world.getBlockState(blockPos).getBlock();
 
-														// Interpolate between the stone and variant states based on the blend factor
-														IBlockState interpolatedState;
-														if (blendFactor < 0.2) {
-															interpolatedState = stoneState;
-														} else if (blendFactor < 0.4) {
-															interpolatedState = graniteState;
-														} else if (blendFactor < 0.6) {
-															interpolatedState = dioriteState;
-														} else if (blendFactor < 0.8) {
-															interpolatedState = andesiteState;
-														} else {
-															interpolatedState = andesiteState;
-														}
+						// Check if the stone block exists
+						if (block == Blocks.STONE) {
+							// Only replace blocks that can be replaced by stone
+							if (block.isReplaceableOreGen(world.getBlockState(blockPos), world, blockPos, state -> state.getBlock() == Blocks.STONE)) {
+								// Calculate the blend factor based on distance from the center
+								double blendFactor = 1.0 - (distanceSq / radiusSq);
 
-														world.setBlockState(blockPos, interpolatedState, 2);
-													}
-												}
-											}
-										});
-							});
-				});
+								// Interpolate between the stone and variant states based on the blend factor
+								IBlockState interpolatedState;
+								if (blendFactor < 0.2) {
+									interpolatedState = stoneState;
+								} else if (blendFactor < 0.4) {
+									interpolatedState = graniteState;
+								} else if (blendFactor < 0.6) {
+									interpolatedState = dioriteState;
+								} else if (blendFactor < 0.8) {
+									interpolatedState = andesiteState;
+								} else {
+									interpolatedState = andesiteState;
+								}
+
+								modifiedBlocks.add(blockPos);
+								world.setBlockState(blockPos, interpolatedState, 2);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// Batch the block state changes and apply them in bulk
+		for (BlockPos modifiedPos : modifiedBlocks) {
+			world.notifyBlockUpdate(modifiedPos, world.getBlockState(modifiedPos), world.getBlockState(modifiedPos), 3);
+		}
 	}
 
 	@Override

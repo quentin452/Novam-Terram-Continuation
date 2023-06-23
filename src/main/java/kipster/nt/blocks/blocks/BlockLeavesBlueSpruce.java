@@ -5,10 +5,10 @@ import kipster.nt.blocks.BlockInit;
 import kipster.nt.items.ItemInit;
 import kipster.nt.util.interfaces.IHasModel;
 import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockPlanks.EnumType;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -32,70 +32,58 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockLeavesBlueSpruce extends BlockLeaves implements IHasModel
-{
-	public BlockLeavesBlueSpruce(String name, Material material) 
-	{
+public class BlockLeavesBlueSpruce extends BlockLeaves implements IHasModel {
+    public static final PropertyBool CHECK_DECAY = PropertyBool.create("check_decay");
+    public static final PropertyBool DECAYABLE = PropertyBool.create("decayable");
+
+    public BlockLeavesBlueSpruce(String name, Material material) {
+        super();
         setTranslationKey(name);
-		setRegistryName(name);
-		setSoundType(SoundType.PLANT);
-        setDefaultState(blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(true)));  
+        setRegistryName(name);
+        setSoundType(SoundType.PLANT);
+        setDefaultState(blockState.getBaseState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
         setCreativeTab(NovamTerram.NOVAMTERRAMTAB);
-		
-		
-		BlockInit.BLOCKS.add(this);
-		ItemInit.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
+
+        BlockInit.BLOCKS.add(this);
+        ItemInit.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
     }
 
     @Override
-    protected void dropApple(World worldIn, BlockPos pos, IBlockState state, int chance)
-    {
-        if (worldIn.rand.nextInt(chance) == 0)
-        {
+    protected void dropApple(World worldIn, BlockPos pos, IBlockState state, int chance) {
+        if (worldIn.rand.nextInt(chance) == 0) {
             spawnAsEntity(worldIn, pos, new ItemStack(Items.STICK));
         }
     }
-    
 
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
-    {
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return Item.getItemFromBlock(BlockInit.SPRUCESAPLINGBLUE);
     }
 
-
     @Override
-    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items)
-    {
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
         items.add(new ItemStack(this));
     }
 
     @Override
-    protected ItemStack getSilkTouchDrop(IBlockState state)
-    {
+    protected ItemStack getSilkTouchDrop(IBlockState state) {
         return new ItemStack(Item.getItemFromBlock(this));
     }
 
-
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
-        return getDefaultState().withProperty(DECAYABLE, Boolean.valueOf((meta & 4) == 0)).withProperty(CHECK_DECAY, Boolean.valueOf((meta & 8) > 0));
+    public IBlockState getStateFromMeta(int meta) {
+        return getDefaultState().withProperty(DECAYABLE, (meta & 4) == 0).withProperty(CHECK_DECAY, (meta & 8) > 0);
     }
 
-
     @Override
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         int i = 0;
 
-        if (!state.getValue(DECAYABLE).booleanValue())
-        {
+        if (!state.getValue(DECAYABLE)) {
             i |= 4;
         }
 
-        if (state.getValue(CHECK_DECAY).booleanValue())
-        {
+        if (state.getValue(CHECK_DECAY)) {
             i |= 8;
         }
 
@@ -103,58 +91,47 @@ public class BlockLeavesBlueSpruce extends BlockLeaves implements IHasModel
     }
 
     @Override
-    protected BlockStateContainer createBlockState()
-    {
-        return new BlockStateContainer(this, new IProperty[] {CHECK_DECAY, DECAYABLE});
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, CHECK_DECAY, DECAYABLE);
     }
 
-   
     @Override
-    public int damageDropped(IBlockState state)
-    {
+    public int damageDropped(IBlockState state) {
         return 0;
     }
 
-    
     @Override
-    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack)
-    {
-        if (!worldIn.isRemote && stack.getItem() == Items.SHEARS)
-        {
+    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+        if (!worldIn.isRemote && stack.getItem() == Items.SHEARS) {
             player.addStat(StatList.getBlockStats(this));
-        }
-        else
-        {
+        } else {
             super.harvestBlock(worldIn, player, pos, state, te, stack);
         }
     }
 
     @Override
-    public NonNullList<ItemStack> onSheared(ItemStack item, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune)
-    {
+    public NonNullList<ItemStack> onSheared(ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
         return NonNullList.withSize(1, new ItemStack(this));
     }
+
     @Override
-    public EnumType getWoodType(int meta)
-    {
-        // TODO Auto-generated method stub
+    public BlockRenderLayer getRenderLayer() {
+        return Blocks.LEAVES.getRenderLayer();
+    }
+
+    @Override
+    public BlockPlanks.EnumType getWoodType(int meta) {
         return null;
     }
-@Override
-	@SideOnly(Side.CLIENT)
-public BlockRenderLayer getRenderLayer() {
-	return Blocks.LEAVES.getRenderLayer();
-}
 
-@Override
-	@SideOnly(Side.CLIENT)
-public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-	setGraphicsLevel(!Blocks.LEAVES.isOpaqueCube(blockState));
-		return super.shouldSideBeRendered(blockState, blockAccess, pos, side); 
-	}
-@Override
-public void registerModels() 
-{
-	NovamTerram.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
-}
+    @Override
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+        setGraphicsLevel(!Blocks.LEAVES.isOpaqueCube(blockState));
+        return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+    }
+
+    @Override
+    public void registerModels() {
+        NovamTerram.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
+    }
 }
