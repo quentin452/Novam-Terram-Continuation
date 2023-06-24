@@ -77,7 +77,7 @@ public class BiomeMapleForest extends Biome {
         // Generate the fallen tree by placing wood blocks side by side
         for (int i = 0; i < trunkHeight; i++) {
             BlockPos blockPos = startPos.offset(direction.getOpposite(), i);
-            worldIn.setBlockState(blockPos, woodState, 2);
+            worldIn.setBlockState(blockPos, woodState, 2 | 16); // Use flag 16 to prevent cascading during generation
         }
     }
 
