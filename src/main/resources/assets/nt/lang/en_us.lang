@@ -22,6 +22,9 @@ tile.paulownia_leaves.name=Paulownia Leaves
 tile.orchard_leaves.name=White Leaves
 tile.whitemyrtle_leaves.name=White Myrtle Leaves
 
+//Flowers
+tile.flower_primevere.name=Primevere Flower
+
 //Saplings
 tile.conifer_sapling_yellow.name=Yellow Conifer Sapling
 tile.conifer_sapling_orange.name=Orange Conifer Sapling
