@@ -32,3 +32,8 @@ jobs:
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: build
+    - name: Publish Java Package with Gradle
+      uses: gradle/gradle-publish-action@7cc29b7523348aa0e7e48f0e94e4bc75015d1e1a
+      with:
+        gradle-version: '7.0.2'
+        task: 'publish'
