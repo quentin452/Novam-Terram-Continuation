@@ -78,16 +78,7 @@ public class BiomeSprings extends Biome
 	        WorldGenerator emeralds = new EmeraldGenerator();
 	        if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, emeralds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.EMERALD))
 	            emeralds.generate(worldIn, rand, pos);
-	        
-		 if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.LAKE_WATER)) {
-	         int boulderChance = rand.nextInt(4);
-	         if (boulderChance == 0) {
-	          int k6 = rand.nextInt(16) + 8;
-	          int l = rand.nextInt(16) + 8;
-	           BlockPos blockpos = worldIn.getHeight(pos.add(k6, 0, 1));
-	           LAKE.generate(worldIn, rand, blockpos);
-	         }
-	     }
+
 	         int grasspatchChance = rand.nextInt(4);
 				if (grasspatchChance == 0) {
 					int k6 = rand.nextInt(16) + 8;

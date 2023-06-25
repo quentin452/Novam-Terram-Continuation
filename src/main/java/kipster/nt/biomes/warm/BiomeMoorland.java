@@ -50,16 +50,6 @@ public class BiomeMoorland extends Biome
 	public void decorate(World worldIn, Random rand, BlockPos pos) {
 		super.decorate(worldIn, rand, pos);
 
-		if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.LAKE_WATER)) {
-			int boulderChance = rand.nextInt(4);
-			if (boulderChance == 0) {
-				int k6 = rand.nextInt(16) + 8;
-				int l = rand.nextInt(16) + 8;
-				BlockPos blockpos = worldIn.getHeight(pos.add(k6, 0, 1));
-				LAKE.generate(worldIn, rand, blockpos);
-			}
-		}
-
 		if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, new net.minecraft.util.math.ChunkPos(pos), net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.FOSSIL)) {
 			if (rand.nextInt(64) == 0) {
 				(new WorldGenFossils()).generate(worldIn, rand, pos);

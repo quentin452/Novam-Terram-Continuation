@@ -81,18 +81,7 @@ public class BiomeRockyTaiga extends Biome
 			BlockPos blockpos = worldIn.getHeight(pos.add(k6, 0, l));
 			STONE_PATCHES.generate(worldIn, rand, blockpos);
 		}
-       
-       if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.LAKE_WATER)) {
-           int boulderChance = rand.nextInt(4);
-           if (boulderChance == 0) {
-            int k6 = rand.nextInt(4) + 8;
-            int l = rand.nextInt(4) + 8;
-             BlockPos blockpos = worldIn.getHeight(pos.add(k6, 0, l));
-             LAKE.generate(worldIn, rand, blockpos);
-           }
-         
-           net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Post(worldIn, rand, pos));
-       }
+
        if (!MiscConfig.disableBouldersInRockyTaiga && net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.ROCK)) {
 	            int genChance = rand.nextInt(3);
 	            if (genChance == 0) {

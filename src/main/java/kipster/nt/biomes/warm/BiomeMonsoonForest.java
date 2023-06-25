@@ -147,16 +147,7 @@ public WorldGenerator getRandomWorldGenForGrass(Random rand)
 	                STONE_BOULDER_FEATURE.generate(worldIn, rand, blockpos);
 	            }
             }
-	        
-		 if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.LAKE_WATER)) {
-	         int boulderChance = rand.nextInt(12);
-	         if (boulderChance == 0) {
-	          int k6 = rand.nextInt(16) + 8;
-	          int l = rand.nextInt(16) + 8;
-	           BlockPos blockpos = worldIn.getHeight(pos.add(k6, 0, l));
-	           LAKE.generate(worldIn, rand, blockpos);
-	         }
-         }
+
 	         int i = rand.nextInt(16) + 8;
 	         int j = rand.nextInt(16) + 8;
 	         int height = worldIn.getHeight(pos.add(i, 0, j)).getY() * 2; // could == 0, which crashes nextInt

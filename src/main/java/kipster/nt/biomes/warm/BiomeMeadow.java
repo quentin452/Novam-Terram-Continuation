@@ -103,15 +103,7 @@ public class BiomeMeadow extends Biome
 
 			 this.addDoublePlants(worldIn, rand, pos, i);
 			 }
-			 if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.LAKE_WATER)) {
-		         int boulderChance = rand.nextInt(12);
-		         if (boulderChance == 0) {
-		          int k6 = rand.nextInt(16) + 8;
-		          int l = rand.nextInt(16) + 8;
-		           BlockPos blockpos = worldIn.getHeight(pos.add(k6, 0, l));
-		           LAKE.generate(worldIn, rand, blockpos);
-		         }
-		}
+
 	    super.decorate(worldIn, rand, pos);
 			 }
 	

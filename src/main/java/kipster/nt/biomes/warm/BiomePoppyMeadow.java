@@ -67,15 +67,6 @@ public class BiomePoppyMeadow extends Biome
 	        if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, diamonds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.DIAMOND))
 	            emeralds.generate(worldIn, rand, pos);
 
-			 if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.LAKE_WATER)) {
-		         int boulderChance = rand.nextInt(12);
-		         if (boulderChance == 0) {
-		          int k6 = rand.nextInt(16) + 8;
-		          int l = rand.nextInt(16) + 8;
-		           BlockPos blockpos = worldIn.getHeight(pos.add(k6, 0, l));
-		           LAKE.generate(worldIn, rand, blockpos);
-		         }
-		}
 	    super.decorate(worldIn, rand, pos);
 			 }
 	

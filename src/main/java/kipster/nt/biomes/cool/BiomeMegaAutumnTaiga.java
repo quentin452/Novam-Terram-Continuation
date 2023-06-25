@@ -89,18 +89,7 @@ public class BiomeMegaAutumnTaiga extends Biome
        WorldGenerator diamonds = new DiamondGenerator();
        if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, diamonds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.DIAMOND))
     	   diamonds.generate(worldIn, rand, pos);
-       
-       if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.LAKE_WATER)) {
-           int boulderChance = rand.nextInt(12);
-           if (boulderChance == 0) {
-            int k6 = rand.nextInt(16) + 8;
-            int l = rand.nextInt(16) + 8;
-             BlockPos blockpos = worldIn.getHeight(pos.add(k6, 0, l));
-             LAKE.generate(worldIn, rand, blockpos);
-           }
-           net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Post(worldIn, rand, pos));
 
-       }
        super.decorate(worldIn, rand, pos);
    }
    

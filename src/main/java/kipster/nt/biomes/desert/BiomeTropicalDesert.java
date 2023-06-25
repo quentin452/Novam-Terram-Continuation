@@ -127,15 +127,6 @@ public class BiomeTropicalDesert extends Biome
 	      BlockPos blockpos = worldIn.getHeight(pos.add(i1, 0, j1)).up();
 	      (new WorldGenDesertWells()).generate(worldIn, rand, blockpos);
 	  }
-	  if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.LAKE_WATER)) {
-          int boulderChance = rand.nextInt(4);
-          if (boulderChance == 0) {
-           int k6 = rand.nextInt(2) + 8;
-           int l = rand.nextInt(2) + 8;
-            BlockPos blockpos = worldIn.getHeight(pos.add(k6, 0, l));
-            LAKE.generate(worldIn, rand, blockpos);
-          }
-	  }
           net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
           WorldGenerator gold = new GoldGenerator();
           

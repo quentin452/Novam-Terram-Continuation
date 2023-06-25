@@ -113,17 +113,6 @@ public class BiomeMapleForest extends Biome {
         if (TerrainGen.generateOre(worldIn, rand, diamonds, pos, OreGenEvent.GenerateMinable.EventType.DIAMOND))
             diamonds.generate(worldIn, rand, pos);
 
-        if (TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.LAKE_WATER)) {
-            int boulderChance = rand.nextInt(12);
-            if (boulderChance == 0) {
-                int k6 = rand.nextInt(16) + 8;
-                int l = rand.nextInt(16) + 8;
-                BlockPos blockpos = worldIn.getHeight(pos.add(k6, 0, l));
-                LAKE.generate(worldIn, rand, blockpos);
-            }
-            MinecraftForge.ORE_GEN_BUS.post(new OreGenEvent.Post(worldIn, rand, pos));
-        }
-
         // Generate fallen trees
         for (int i = 0; i < 5; i++) {
             int x = rand.nextInt(16) + 8;
