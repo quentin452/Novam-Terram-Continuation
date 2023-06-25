@@ -2,8 +2,10 @@ package kipster.nt.blocks.blocks;
 
 import kipster.nt.NovamTerram;
 import kipster.nt.blocks.BlockInit;
+import kipster.nt.items.ItemInit;
 import kipster.nt.util.interfaces.IHasModel;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -20,16 +22,19 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.Random;
 
-public class BlockFlowerPrimevere extends BlockFlower implements IHasModel {
+public class BlockFlowerPrimevere extends BlockBush implements IHasModel {
 
     protected static final AxisAlignedBB PRIMEVEREFLOWER_AABB = new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.8D, 0.9D);
 
     public BlockFlowerPrimevere(String name, Material material) {
-        super();
         setTranslationKey(name);
         setRegistryName(name);
+        setHardness(0.0F);
         setSoundType(SoundType.PLANT);
-        setCreativeTab(CreativeTabs.DECORATIONS);
+        setCreativeTab(NovamTerram.NOVAMTERRAMTAB);
+
+        BlockInit.BLOCKS.add(this);
+        ItemInit.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
     }
 
     @Override
@@ -47,19 +52,9 @@ public class BlockFlowerPrimevere extends BlockFlower implements IHasModel {
         NovamTerram.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
     }
 
-    public static void register(IForgeRegistry<Block> registry) {
-        BlockFlowerPrimevere primevere = new BlockFlowerPrimevere("primevere_flower", Material.PLANTS);
-        registry.register(primevere);
-        ForgeRegistries.ITEMS.register(new ItemBlock(primevere).setRegistryName(primevere.getRegistryName()));
-    }
-
     @Override
     public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
         return EnumPlantType.Plains;
     }
 
-    @Override
-    public EnumFlowerColor getBlockType() {
-        return EnumFlowerColor.YELLOW;
-    }
 }

@@ -1,5 +1,6 @@
 package kipster.nt.biomes.warm;
 
+import kipster.nt.blocks.BlockInit;
 import kipster.nt.blocks.blocks.BlockFlowerPrimevere;
 import kipster.nt.world.gen.flowers.WorldGenPrimevereFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeBigJacaranda;
@@ -44,55 +45,14 @@ public class BiomeAliumMeadow extends Biome {
 		return rand.nextInt(1) == 0 ? JACARANDA_TREE : JACARANDA_TREE;
 	}
 
+	@Override
 	public void decorate(World worldIn, Random rand, BlockPos pos) {
 		super.decorate(worldIn, rand, pos);
-
-		float spawnChance = 0.5f; // Adjust the spawn chance as needed
-
-		if (rand.nextFloat() <= spawnChance) {
-			int chunkX = pos.getX() >> 4;
-			int chunkZ = pos.getZ() >> 4;
-			long seedX = (rand.nextLong() >> 2) + 1L;
-			long seedZ = (rand.nextLong() >> 2) + 1L;
-			rand.setSeed(chunkX * seedX + chunkZ * seedZ ^ worldIn.getSeed());
-
-			int x = rand.nextInt(16) + (chunkX << 4);
-			int z = rand.nextInt(16) + (chunkZ << 4);
-
-			BlockPos topPos = worldIn.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z));
-			int y = topPos.getY();
-
-			BlockPos flowerPos = new BlockPos(x, y, z);
-
-			if (worldIn.getBlockState(flowerPos).getBlock() == Blocks.AIR &&
-					worldIn.getBlockState(flowerPos.down()).getBlock() == Blocks.GRASS) {
-				PRIMEVERE_FLOWER.generate(worldIn, rand, flowerPos);
-				System.out.println("Generated Primevere flower at " + flowerPos);
-				IBlockState blockState = worldIn.getBlockState(flowerPos.down());
-				System.out.println("Block at flowerPos: " + blockState.getBlock());
-				System.out.println("Is block full: " + blockState.isFullBlock());
-			} else {
-				System.out.println("Failed to generate Primevere flower at " + flowerPos);
-				IBlockState blockState = worldIn.getBlockState(flowerPos.down());
-				System.out.println("Block at flowerPos: " + blockState.getBlock());
-				System.out.println("Is block full: " + blockState.isFullBlock());
-			}
-		}
 
 		net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
 		WorldGenerator emeralds = new EmeraldGenerator();
 		if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, emeralds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.EMERALD))
 			emeralds.generate(worldIn, rand, pos);
-
-		if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.LAKE_WATER)) {
-			int boulderChance = rand.nextInt(12);
-			if (boulderChance == 0) {
-				int k6 = rand.nextInt(16) + 8;
-				int l = rand.nextInt(16) + 8;
-				BlockPos blockpos = worldIn.getTopSolidOrLiquidBlock(pos.add(k6, 0, l));
-				LAKE.generate(worldIn, rand, blockpos);
-			}
-		}
 	}
 
 	@Override
@@ -109,17 +69,45 @@ public class BiomeAliumMeadow extends Biome {
 		@Override
 		public boolean generate(World worldIn, Random rand, BlockPos pos) {
 
+
+				int x = rand.nextInt(16) + (chunkX << 4);
+				int z = rand.nextInt(16) + (chunkZ << 4);
+
+				BlockPos topPos = worldIn.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z));
+				int y = topPos.getY();
+
+				BlockPos flowerPos = new BlockPos(x, y, z);
+
+				Biome biome = worldIn.getBiome(flowerPos);
+				if (biome instanceof BiomeAliumMeadow) {
+					IBlockState blockState = worldIn.getBlockState(flowerPos.down());
+					if (blockState.getBlock() == Blocks.GRASS && blockState.isFullBlock()) {
+						PRIMEVERE_FLOWER.generate(worldIn, rand, flowerPos);
+						System.out.println("Generated Primevere flower at " + flowerPos);
+						System.out.println("Block at flowerPos: " + blockState.getBlock());
+						System.out.println("Is block full: " + blockState.isFullBlock());
+					} else {
+						System.out.println("Failed to generate Primevere flower at " + flowerPos);
+						System.out.println("Block at flowerPos: " + blockState.getBlock());
+						System.out.println("Is block full: " + blockState.isFullBlock());
+					}
+				}
+			}
+
 			int count = 10 + rand.nextInt(6);
+
 			for (int i = 0; i < count; i++) {
 				int offset = net.minecraftforge.common.ForgeModContainer.fixVanillaCascading ? 8 : 0; // MC-114332
 				BlockPos blockpos = pos.add(rand.nextInt(16) + offset, rand.nextInt(28) + 2, rand.nextInt(16) + offset);
 
-				net.minecraft.block.state.IBlockState state = worldIn.getBlockState(blockpos);
+				IBlockState state = worldIn.getBlockState(blockpos);
 				if (state.getBlock().isReplaceableOreGen(state, worldIn, blockpos, net.minecraft.block.state.pattern.BlockMatcher.forBlock(Blocks.STONE))) {
 					worldIn.setBlockState(blockpos, Blocks.EMERALD_ORE.getDefaultState(), 16 | 2);
 				}
-				net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Post(worldIn, rand, pos));
 			}
+
+			net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Post(worldIn, rand, pos));
+
 			return true;
 		}
 	}

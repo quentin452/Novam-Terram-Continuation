@@ -31,7 +31,7 @@ public class BlockInit {
 	public static final Block WHITEMYRTLELEAVES = new BlockLeavesWhiteMyrtle("whitemyrtle_leaves", Material.LEAVES);
 
 	//FLOWER
-	public static final Block PRIMEVEREFLOWER = new BlockSaplingConiferYellow("flower_primevere", Material.PLANTS);
+	public static final Block PRIMEVEREFLOWER = new BlockFlowerPrimevere("flower_primevere", Material.PLANTS);
 
 	//SAPLING
 	public static final Block CONIFERSAPLINGYELLOW = new BlockSaplingConiferYellow("conifer_sapling_yellow", Material.LEAVES);
