@@ -69,6 +69,14 @@ public class BiomeAliumMeadow extends Biome {
 		@Override
 		public boolean generate(World worldIn, Random rand, BlockPos pos) {
 
+			float spawnChance = 0.5f; // Adjust the spawn chance as needed
+
+			if (rand.nextFloat() <= spawnChance) {
+				int chunkX = pos.getX() >> 4;
+				int chunkZ = pos.getZ() >> 4;
+				long seedX = (rand.nextLong() >> 2) + 1L;
+				long seedZ = (rand.nextLong() >> 2) + 1L;
+				rand.setSeed(chunkX * seedX + chunkZ * seedZ ^ worldIn.getSeed());
 
 				int x = rand.nextInt(16) + (chunkX << 4);
 				int z = rand.nextInt(16) + (chunkZ << 4);
