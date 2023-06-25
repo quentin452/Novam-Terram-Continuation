@@ -47,33 +47,33 @@ public class BiomeMoorland extends Biome
 	        return BlockFlower.EnumFlowerType.ALLIUM;
 	    }
 
-	    public void decorate(World worldIn, Random rand, BlockPos pos)
-	    {
-	        super.decorate(worldIn, rand, pos);
-	        
-	        if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.LAKE_WATER)) {
-		         int boulderChance = rand.nextInt(4);
-		         if (boulderChance == 0) {
-		          int k6 = rand.nextInt(16) + 8;
-		          int l = rand.nextInt(16) + 8;
-		           BlockPos blockpos = worldIn.getHeight(pos.add(k6, 0, 1));
-		           LAKE.generate(worldIn, rand, blockpos);
-		         }
-            }
-	        if(net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, new net.minecraft.util.math.ChunkPos(pos), net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.FOSSIL))
-	        if (rand.nextInt(64) == 0)
-	        {
-	            (new WorldGenFossils()).generate(worldIn, rand, pos);
-	        }
-	        net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
-	        WorldGenerator emeralds = new EmeraldGenerator();
-	        if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, emeralds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.EMERALD))
-	            emeralds.generate(worldIn, rand, pos);
-	      
-	        net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Post(worldIn, rand, pos));
-	    }
+	public void decorate(World worldIn, Random rand, BlockPos pos) {
+		super.decorate(worldIn, rand, pos);
 
-	    @Override
+		if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.LAKE_WATER)) {
+			int boulderChance = rand.nextInt(4);
+			if (boulderChance == 0) {
+				int k6 = rand.nextInt(16) + 8;
+				int l = rand.nextInt(16) + 8;
+				BlockPos blockpos = worldIn.getHeight(pos.add(k6, 0, 1));
+				LAKE.generate(worldIn, rand, blockpos);
+			}
+		}
+
+		if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, new net.minecraft.util.math.ChunkPos(pos), net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.FOSSIL)) {
+			if (rand.nextInt(64) == 0) {
+				(new WorldGenFossils()).generate(worldIn, rand, pos);
+			}
+		}
+
+		net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
+		WorldGenerator emeralds = new EmeraldGenerator();
+		if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, emeralds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.EMERALD)) {
+			emeralds.generate(worldIn, rand, pos);
+		}
+	}
+
+	@Override
 	    public int getGrassColorAtPos(BlockPos pos)
 	    {
 	        double d0 = GRASS_COLOR_NOISE.getValue((double)pos.getX() * 0.0225D, (double)pos.getZ() * 0.0225D);
