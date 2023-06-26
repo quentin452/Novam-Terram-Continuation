@@ -2,6 +2,9 @@ package kipster.nt.biomes.desert;
 
 import kipster.nt.blocks.BlockInit;
 import kipster.nt.world.gen.WorldGenPatches;
+import kipster.nt.world.gen.flowers.WorldGenGalanthusFlower;
+import kipster.nt.world.gen.flowers.WorldGenNartheciumFlower;
+import kipster.nt.world.gen.flowers.WorldGenSumastraFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubJungle;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
@@ -88,11 +91,39 @@ public class BiomeTropicalDesert extends Biome
         this.generateBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
         
 		}
-	
+	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
+		for (int i = 0; i < flowersPerChunk; ++i) {
+
+			// Generate a random offset in x and z directions
+			int offsetX = rand.nextInt(16) + 8;
+			int offsetZ = rand.nextInt(16) + 8;
+
+			boolean success = false;
+
+			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+				BlockPos blockpos = pos.add(
+						offsetX,                  // Use random x offset
+						rand.nextInt(10) + 60,
+						offsetZ);                 // Use random z offset
+
+				if (flowerGenerator.generate(worldIn, rand, blockpos)) {
+					success = true;
+				}
+			}
+
+			if (success) {
+				break; // Move on to the next group of flowers
+			}
+		}
+	}
+	protected static final WorldGenerator SUMASTRAFLOWER= new WorldGenSumastraFlower(BlockInit.SUMASTRAFLOWER.getDefaultState());
 	public void decorate(World worldIn, Random rand, BlockPos pos)
 	{
-	  
-	     int i = rand.nextInt(16) + 8;
+		int flowersPerChunk = 1;
+
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, SUMASTRAFLOWER);
+
+		int i = rand.nextInt(16) + 8;
 	      int j = rand.nextInt(16) + 8;
 	      int height = worldIn.getHeight(pos.add(i, 0, j)).getY() * 2; // could == 0, which crashes nextInt
 	      if (height < 1) height = 1;

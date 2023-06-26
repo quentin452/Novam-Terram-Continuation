@@ -1,5 +1,10 @@
 package kipster.nt.biomes.cool;
 
+import kipster.nt.blocks.BlockInit;
+import kipster.nt.world.gen.flowers.WorldGenAlliumFlower;
+import kipster.nt.world.gen.flowers.WorldGenAspalathusFlower;
+import kipster.nt.world.gen.flowers.WorldGenBarbareaFlower;
+import kipster.nt.world.gen.flowers.WorldGenVeronicaFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeBlueSpruce1;
 import kipster.nt.world.gen.trees.WorldGenTreeBlueSpruce2;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubBlueSpruce;
@@ -20,9 +25,12 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import java.util.Random;
 
 public class BiomeBlueTaiga extends Biome 
-{	
-	
-	 protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
+{
+
+	protected static final WorldGenerator VERONICAflower = new WorldGenVeronicaFlower(BlockInit.VERONICAFLOWER.getDefaultState());
+	protected static final WorldGenerator BARBAREAflower = new WorldGenBarbareaFlower(BlockInit.BARBAREAFLOWER.getDefaultState());
+
+	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
 	protected static final WorldGenAbstractTree BLUE_SPRUCE = new WorldGenTreeBlueSpruce2(false);
    private final WorldGenTreeBlueSpruce1 spruceGenerator = new WorldGenTreeBlueSpruce1();
 	protected static final WorldGenAbstractTree SHRUB_SPRUCE = new WorldGenTreeShrubBlueSpruce(); 
@@ -39,7 +47,6 @@ public class BiomeBlueTaiga extends Biome
        this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityWolf.class, 8, 4, 4));
        this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityRabbit.class, 4, 2, 3));
        this.decorator.treesPerChunk = 11;
-       this.decorator.flowersPerChunk = 5;
        this.decorator.grassPerChunk = 4;
 
 	}
@@ -70,17 +77,10 @@ public class BiomeBlueTaiga extends Biome
 
    public void decorate(World worldIn, Random rand, BlockPos pos)
    {
+	   int flowersPerChunk = 7;
 
-       DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.FERN);
-
-       if(net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.FLOWERS))
-       for (int i1 = 0; i1 < 7; ++i1)
-       {
-           int j1 = rand.nextInt(16) + 8;
-           int k1 = rand.nextInt(16) + 8;
-           int l1 = rand.nextInt(worldIn.getHeight(pos.add(j1, 0, k1)).getY() + 32);
-           DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, pos.add(j1, l1, k1));
-       }
+	   generateFlowers(worldIn, rand, pos, flowersPerChunk, VERONICAflower);
+	   generateFlowers(worldIn, rand, pos, flowersPerChunk, BARBAREAflower);
        
        net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
        WorldGenerator diamonds = new DiamondGenerator();
@@ -89,6 +89,32 @@ public class BiomeBlueTaiga extends Biome
 
        super.decorate(worldIn, rand, pos);
    }
+
+	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
+		for (int i = 0; i < flowersPerChunk; ++i) {
+
+			// Generate a random offset in x and z directions
+			int offsetX = rand.nextInt(16) + 8;
+			int offsetZ = rand.nextInt(16) + 8;
+
+			boolean success = false;
+
+			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+				BlockPos blockpos = pos.add(
+						offsetX,                  // Use random x offset
+						rand.nextInt(10) + 60,
+						offsetZ);                 // Use random z offset
+
+				if (flowerGenerator.generate(worldIn, rand, blockpos)) {
+					success = true;
+				}
+			}
+
+			if (success) {
+				break; // Move on to the next group of flowers
+			}
+		}
+	}
    
    @Override
  	public int getModdedBiomeGrassColor(int original) {

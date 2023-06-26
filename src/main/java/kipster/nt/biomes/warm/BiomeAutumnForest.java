@@ -1,5 +1,7 @@
 package kipster.nt.biomes.warm;
 
+import kipster.nt.blocks.BlockInit;
+import kipster.nt.world.gen.flowers.*;
 import kipster.nt.world.gen.trees.*;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockDoublePlant;
@@ -19,9 +21,12 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import java.util.Random;
 
 public class BiomeAutumnForest extends Biome 
-{	
-	
-	 protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
+{
+	protected static final WorldGenerator ALLIARIAFLOWER= new WorldGenAlliariaFlower(BlockInit.ALLIARIAFLOWER.getDefaultState());
+	protected static final WorldGenerator PLUCHEAGLUTONISAFLOWER = new WorldGenPlucheaGlutinosaFlower(BlockInit.PLUCHEAGLUTONISAFLOWER.getDefaultState());
+	protected static final WorldGenerator ACANTHUSBOTFLOWER = new WorldGenAcanthusBotFlower(BlockInit.ACANTHUSBOTFLOWER.getDefaultState());
+
+	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
 	protected static final WorldGenTreeDead DEAD_TREE = new WorldGenTreeDead(false);
 	protected static final WorldGenTreeAutumnOrange ORANGE_TREE = new WorldGenTreeAutumnOrange(false, false);
 	protected static final WorldGenTreeBigAutumnRed RED_TREE = new WorldGenTreeBigAutumnRed(false);
@@ -63,8 +68,33 @@ public class BiomeAutumnForest extends Biome
 		
 		}
 	}
-   
-   @Override
+	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
+		for (int i = 0; i < flowersPerChunk; ++i) {
+
+			// Generate a random offset in x and z directions
+			int offsetX = rand.nextInt(16) + 8;
+			int offsetZ = rand.nextInt(16) + 8;
+
+			boolean success = false;
+
+			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+				BlockPos blockpos = pos.add(
+						offsetX,                  // Use random x offset
+						rand.nextInt(10) + 60,
+						offsetZ);                 // Use random z offset
+
+				if (flowerGenerator.generate(worldIn, rand, blockpos)) {
+					success = true;
+				}
+			}
+
+			if (success) {
+				break; // Move on to the next group of flowers
+			}
+		}
+	}
+
+	@Override
    public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
        if (noiseVal > 2.50D) {
            this.topBlock = Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL);
@@ -85,18 +115,12 @@ public class BiomeAutumnForest extends Biome
 
    public void decorate(World worldIn, Random rand, BlockPos pos)
    {
+	   int flowersPerChunk = 7;
 
-       DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.FERN);
+	   generateFlowers(worldIn, rand, pos, flowersPerChunk, ALLIARIAFLOWER);
+	   generateFlowers(worldIn, rand, pos, flowersPerChunk, PLUCHEAGLUTONISAFLOWER);
+	   generateFlowers(worldIn, rand, pos, flowersPerChunk, ACANTHUSBOTFLOWER);
 
-       if(net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.FLOWERS))
-       for (int i1 = 0; i1 < 7; ++i1)
-       {
-           int j1 = rand.nextInt(16) + 8;
-           int k1 = rand.nextInt(16) + 8;
-           int l1 = rand.nextInt(worldIn.getHeight(pos.add(j1, 0, k1)).getY() + 32);
-           DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, pos.add(j1, l1, k1));
-       }
-       
        net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
        WorldGenerator emeralds = new EmeraldGenerator();
        if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, emeralds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.EMERALD))

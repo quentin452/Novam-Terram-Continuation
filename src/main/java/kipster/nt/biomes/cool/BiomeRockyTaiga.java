@@ -1,8 +1,10 @@
 package kipster.nt.biomes.cool;
 
+import kipster.nt.blocks.BlockInit;
 import kipster.nt.config.MiscConfig;
 import kipster.nt.world.gen.WorldGenLine;
 import kipster.nt.world.gen.WorldGenPatches;
+import kipster.nt.world.gen.flowers.*;
 import kipster.nt.world.gen.trees.WorldGenTreeRedSpruce1;
 import kipster.nt.world.gen.trees.WorldGenTreeRedSpruce2;
 import net.minecraft.block.BlockDoublePlant;
@@ -54,22 +56,46 @@ public class BiomeRockyTaiga extends Biome
    {
        return rand.nextInt(5) > 0 ? new WorldGenTallGrass(BlockTallGrass.EnumType.FERN) : new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);
    }
+	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
+		for (int i = 0; i < flowersPerChunk; ++i) {
 
-   public void decorate(World worldIn, Random rand, BlockPos pos)
+			// Generate a random offset in x and z directions
+			int offsetX = rand.nextInt(16) + 8;
+			int offsetZ = rand.nextInt(16) + 8;
+
+			boolean success = false;
+
+			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+				BlockPos blockpos = pos.add(
+						offsetX,                  // Use random x offset
+						rand.nextInt(10) + 60,
+						offsetZ);                 // Use random z offset
+
+				if (flowerGenerator.generate(worldIn, rand, blockpos)) {
+					success = true;
+				}
+			}
+
+			if (success) {
+				break; // Move on to the next group of flowers
+			}
+		}
+	}
+	protected static final WorldGenerator CLUSTEREDBROOMRAPEFLOWER= new WorldGenClusteredBroomrapeFlower(BlockInit.CLUSTEREDBROOMRAPEFLOWER.getDefaultState());
+	protected static final WorldGenerator BRACHYSTELMAFLOWER = new WorldGenBrachystelmaFlower(BlockInit.BRACHYSTELMAFLOWER.getDefaultState());
+	protected static final WorldGenerator BUCKBRUSHFLOWER = new WorldGenBuckBrushFlower(BlockInit.BUCKBRUSHFLOWER.getDefaultState());
+
+	public void decorate(World worldIn, Random rand, BlockPos pos)
    {
 
-       DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.FERN);
+	   int flowersPerChunk = 7;
 
-       if(net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.FLOWERS))
-       for (int i1 = 0; i1 < 7; ++i1)
-       {
-           int j1 = rand.nextInt(16) + 8;
-           int k1 = rand.nextInt(16) + 8;
-           int l1 = rand.nextInt(worldIn.getHeight(pos.add(j1, 0, k1)).getY() + 32);
-           DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, pos.add(j1, l1, k1));
-       }
-       
-       net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
+	   generateFlowers(worldIn, rand, pos, flowersPerChunk, CLUSTEREDBROOMRAPEFLOWER);
+	   generateFlowers(worldIn, rand, pos, flowersPerChunk, BRACHYSTELMAFLOWER);
+	   generateFlowers(worldIn, rand, pos, flowersPerChunk, BUCKBRUSHFLOWER);
+
+
+	   net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
        WorldGenerator diamonds = new DiamondGenerator();
        if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, diamonds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.DIAMOND))
     	   diamonds.generate(worldIn, rand, pos);

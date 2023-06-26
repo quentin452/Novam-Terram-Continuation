@@ -1,7 +1,9 @@
 package kipster.nt.biomes.desert;
 
+import kipster.nt.blocks.BlockInit;
 import kipster.nt.config.MiscConfig;
 import kipster.nt.world.gen.WorldGenLine;
+import kipster.nt.world.gen.flowers.*;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubOak;
 import net.minecraft.entity.monster.EntityHusk;
 import net.minecraft.entity.monster.EntityZombie;
@@ -80,8 +82,35 @@ public class BiomeClayland extends Biome
         
 		
 	}
-	
-	  public WorldGenAbstractTree getRandomTreeFeature(Random rand)
+	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
+		for (int i = 0; i < flowersPerChunk; ++i) {
+
+			// Generate a random offset in x and z directions
+			int offsetX = rand.nextInt(16) + 8;
+			int offsetZ = rand.nextInt(16) + 8;
+
+			boolean success = false;
+
+			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+				BlockPos blockpos = pos.add(
+						offsetX,                  // Use random x offset
+						rand.nextInt(10) + 60,
+						offsetZ);                 // Use random z offset
+
+				if (flowerGenerator.generate(worldIn, rand, blockpos)) {
+					success = true;
+				}
+			}
+
+			if (success) {
+				break; // Move on to the next group of flowers
+			}
+		}
+	}
+	protected static final WorldGenerator FABACEAEFLOWER= new WorldGenFabaceaeFlower(BlockInit.FABACEAEFLOWER.getDefaultState());
+	protected static final WorldGenerator ARIZONAPOPPYFLOWER = new WorldGenArizonaPoppyFlower(BlockInit.ARIZONAPOPPYFLOWER.getDefaultState());
+
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand)
 	     {
 	         return (WorldGenAbstractTree)(rand.nextInt(5) > 0 ? SHRUB_OAK : TREE_FEATURE);
 	     }
@@ -90,7 +119,13 @@ public class BiomeClayland extends Biome
 	        {
 	            super.decorate(worldIn, rand, pos);
 
-	            net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
+				int flowersPerChunk = 3;
+
+				generateFlowers(worldIn, rand, pos, flowersPerChunk, FABACEAEFLOWER);
+				generateFlowers(worldIn, rand, pos, flowersPerChunk, ARIZONAPOPPYFLOWER);
+
+
+				net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
 		 	       WorldGenerator gold = new GoldGenerator();
 		 	       if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, gold, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.GOLD))
 		 	    	   gold.generate(worldIn, rand, pos);

@@ -1,6 +1,9 @@
 package kipster.nt.biomes.cool;
 
 import kipster.nt.blocks.BlockInit;
+import kipster.nt.world.gen.flowers.WorldGenAeschynanthusFlower;
+import kipster.nt.world.gen.flowers.WorldGenCephalophyllumFlower;
+import kipster.nt.world.gen.flowers.WorldGenDisaFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeBigMaple;
 import kipster.nt.world.gen.trees.WorldGenTreeMegaRedSpruce;
 import net.minecraft.block.BlockDirt;
@@ -26,8 +29,37 @@ public class BiomeMegaMapleForest extends Biome
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
 	protected static final WorldGenAbstractTree MAPLE_TREE = new WorldGenTreeBigMaple(false);
 	private final WorldGenTreeMegaRedSpruce spruceGenerator= new WorldGenTreeMegaRedSpruce(false, true);
-	 
-	   public BiomeMegaMapleForest(BiomeProperties properties)
+
+	protected static final WorldGenerator CEPHALOPHYLLIUMflower= new WorldGenCephalophyllumFlower(BlockInit.CEPHALOPHYLLUMFLOWER.getDefaultState());
+	protected static final WorldGenerator DISAflower = new WorldGenDisaFlower(BlockInit.DISAFLOWER.getDefaultState());
+	protected static final WorldGenerator AESCHYNANTHUSflower = new WorldGenAeschynanthusFlower(BlockInit.AESCHYNANTHUSFLOWER.getDefaultState());
+
+	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
+		for (int i = 0; i < flowersPerChunk; ++i) {
+
+			// Generate a random offset in x and z directions
+			int offsetX = rand.nextInt(16) + 8;
+			int offsetZ = rand.nextInt(16) + 8;
+
+			boolean success = false;
+
+			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+				BlockPos blockpos = pos.add(
+						offsetX,                  // Use random x offset
+						rand.nextInt(10) + 60,
+						offsetZ);                 // Use random z offset
+
+				if (flowerGenerator.generate(worldIn, rand, blockpos)) {
+					success = true;
+				}
+			}
+
+			if (success) {
+				break; // Move on to the next group of flowers
+			}
+		}
+	}
+	public BiomeMegaMapleForest(BiomeProperties properties)
 		{	
 			super(properties);
 		
@@ -77,16 +109,12 @@ public class BiomeMegaMapleForest extends Biome
    public void decorate(World worldIn, Random rand, BlockPos pos)
    {
 
-       DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.FERN);
+	   int flowersPerChunk = 7;
 
-       if(net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.FLOWERS))
-       for (int i1 = 0; i1 < 7; ++i1)
-       {
-           int j1 = rand.nextInt(16) + 8;
-           int k1 = rand.nextInt(16) + 8;
-           int l1 = rand.nextInt(worldIn.getHeight(pos.add(j1, 0, k1)).getY() + 32);
-           DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, pos.add(j1, l1, k1));
-       }
+	   generateFlowers(worldIn, rand, pos, flowersPerChunk, CEPHALOPHYLLIUMflower);
+	   generateFlowers(worldIn, rand, pos, flowersPerChunk, DISAflower);
+	   generateFlowers(worldIn, rand, pos, flowersPerChunk, AESCHYNANTHUSflower);
+
        net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
        WorldGenerator diamonds = new DiamondGenerator();
        if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, diamonds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.DIAMOND))

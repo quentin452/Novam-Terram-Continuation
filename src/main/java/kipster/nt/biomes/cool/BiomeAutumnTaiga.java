@@ -1,6 +1,11 @@
 package kipster.nt.biomes.cool;
 
 import com.google.common.collect.ImmutableSet;
+import kipster.nt.blocks.BlockInit;
+import kipster.nt.world.gen.flowers.WorldGenAlliumFlower;
+import kipster.nt.world.gen.flowers.WorldGenAspalathusFlower;
+import kipster.nt.world.gen.flowers.WorldGenChrysanthemumFlower;
+import kipster.nt.world.gen.flowers.WorldGenPrimevereFlower;
 import kipster.nt.world.gen.trees.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
@@ -24,14 +29,15 @@ public class BiomeAutumnTaiga extends Biome
 {
 
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
+	protected static final WorldGenerator CHRYSANTHEMUMflower= new WorldGenChrysanthemumFlower(BlockInit.CHRYSANTHEMUMFLOWER.getDefaultState());
+	protected static final WorldGenerator AMBROSIAflower = new WorldGenAlliumFlower(BlockInit.AMBROSIAFLOWER.getDefaultState());
+	protected static final WorldGenerator AGAPANTHUSflower = new WorldGenAspalathusFlower(BlockInit.AGAPANTHUSFLOWER.getDefaultState());
 
 	protected static final WorldGenAbstractTree YELLOW_TREE = new WorldGenTreeAutumnTaigaYellow(false, false);
 	protected static final WorldGenAbstractTree ORANGE_TREE = new WorldGenTreeAutumnTaigaOrange(false, false);
 
 	private static final WorldGenTreeDead DEAD_TREE = new WorldGenTreeDead(false);
 	private static final WorldGenTreeShrubSpruce SHRUB_SPRUCE = new WorldGenTreeShrubSpruce();
-
-	private static final WorldGenDoublePlant DOUBLE_PLANT_GENERATOR = new WorldGenDoublePlant();
 
 	private final WorldGenTreeTallSpruce spruceGenerator = new WorldGenTreeTallSpruce(true);
 
@@ -48,7 +54,6 @@ public class BiomeAutumnTaiga extends Biome
        this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityWolf.class, 8, 4, 4));
        this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityRabbit.class, 4, 2, 3));
        this.decorator.treesPerChunk = 7;
-       this.decorator.flowersPerChunk = 2;
        this.decorator.grassPerChunk = 4;
        this.decorator.gravelPatchesPerChunk = 4;
 
@@ -87,30 +92,13 @@ public class BiomeAutumnTaiga extends Biome
        return rand.nextInt(5) > 0 ? new WorldGenTallGrass(BlockTallGrass.EnumType.FERN) : new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);
    }
 
-	private static final int MAX_PLANTS = 7;
-	private static final int PLANT_DISTANCE = 8;
-	private static final int PLANT_HEIGHT = 32;
-	private static final int WATER_LAKE_CHANCE = 12;
-
 	public void decorate(World worldIn, Random rand, BlockPos pos) {
-		DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.FERN);
+		int flowersPerChunk = 16;
 
-		if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.FLOWERS)) {
-			int numPlants = 0;
-			ConcurrentHashMap<BlockPos, Boolean> generatedPositions = new ConcurrentHashMap<>();
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, CHRYSANTHEMUMflower);
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, AMBROSIAflower);
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, AGAPANTHUSflower);
 
-			while (numPlants < MAX_PLANTS) {
-				int x = rand.nextInt(PLANT_DISTANCE * 2) + PLANT_DISTANCE;
-				int z = rand.nextInt(PLANT_DISTANCE * 2) + PLANT_DISTANCE;
-				int y = rand.nextInt(worldIn.getHeight(pos.add(x, 0, z)).getY() + PLANT_HEIGHT);
-				BlockPos plantPos = pos.add(x, y, z);
-				if (!generatedPositions.containsKey(plantPos)) {
-					DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, plantPos);
-					generatedPositions.put(plantPos, true);
-					numPlants++;
-				}
-			}
-		}
 		net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
 		WorldGenerator diamonds = new DiamondGenerator();
 		if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, diamonds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.DIAMOND)) {
@@ -119,6 +107,31 @@ public class BiomeAutumnTaiga extends Biome
 
 		super.decorate(worldIn, rand, pos);
 
+	}
+	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
+		for (int i = 0; i < flowersPerChunk; ++i) {
+
+			// Generate a random offset in x and z directions
+			int offsetX = rand.nextInt(16) + 8;
+			int offsetZ = rand.nextInt(16) + 8;
+
+			boolean success = false;
+
+			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+				BlockPos blockpos = pos.add(
+						offsetX,                  // Use random x offset
+						rand.nextInt(10) + 60,
+						offsetZ);                 // Use random z offset
+
+				if (flowerGenerator.generate(worldIn, rand, blockpos)) {
+					success = true;
+				}
+			}
+
+			if (success) {
+				break; // Move on to the next group of flowers
+			}
+		}
 	}
 
 	@Override

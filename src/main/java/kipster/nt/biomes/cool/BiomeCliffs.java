@@ -1,7 +1,12 @@
 package kipster.nt.biomes.cool;
 
+import kipster.nt.blocks.BlockInit;
 import kipster.nt.config.MiscConfig;
 import kipster.nt.world.gen.WorldGenLine;
+import kipster.nt.world.gen.flowers.WorldGenBegoniaFlower;
+import kipster.nt.world.gen.flowers.WorldGenBrachystelmaFlower;
+import kipster.nt.world.gen.flowers.WorldGenBuckBrushFlower;
+import kipster.nt.world.gen.flowers.WorldGenHelleboreFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubSpruce;
 import kipster.nt.world.gen.trees.WorldGenTreeTallSpruce;
 import net.minecraft.entity.passive.EntityLlama;
@@ -49,8 +54,41 @@ public class BiomeCliffs extends Biome
             return (WorldGenAbstractTree)(rand.nextInt(3) == 0 ? SPRUCE_GENERATOR : TREE);
         
     }
+	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
+		for (int i = 0; i < flowersPerChunk; ++i) {
+
+			// Generate a random offset in x and z directions
+			int offsetX = rand.nextInt(16) + 8;
+			int offsetZ = rand.nextInt(16) + 8;
+
+			boolean success = false;
+
+			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+				BlockPos blockpos = pos.add(
+						offsetX,                  // Use random x offset
+						rand.nextInt(10) + 60,
+						offsetZ);                 // Use random z offset
+
+				if (flowerGenerator.generate(worldIn, rand, blockpos)) {
+					success = true;
+				}
+			}
+
+			if (success) {
+				break; // Move on to the next group of flowers
+			}
+		}
+	}
+	protected static final WorldGenerator BEGONIAFLOWER = new WorldGenBegoniaFlower(BlockInit.BEGONIAFLOWER.getDefaultState());
+	protected static final WorldGenerator HELLEBOREFLOWER = new WorldGenHelleboreFlower(BlockInit.HELLEBOREFLOWER.getDefaultState());
+
 	@Override
 	public void decorate(World worldIn, Random rand, BlockPos pos) {
+
+		int flowersPerChunk = 1;
+
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, BEGONIAFLOWER);
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, HELLEBOREFLOWER);
 
 		 net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
 	       WorldGenerator diamonds = new DiamondGenerator();

@@ -1,5 +1,7 @@
 package kipster.nt.biomes.cool;
 
+import kipster.nt.blocks.BlockInit;
+import kipster.nt.world.gen.flowers.*;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubSpruce;
 import kipster.nt.world.gen.trees.WorldGenTreeTallSpruce;
 import net.minecraft.block.BlockTallGrass;
@@ -18,7 +20,10 @@ import java.util.Random;
 
 public class BiomePineland extends Biome 
 {
-	
+	protected static final WorldGenerator AETHIONEMAFLOWER= new WorldGenAethionemaFlower(BlockInit.AETHIONEMAFLOWER.getDefaultState());
+	protected static final WorldGenerator AMBROSIAFLOWER = new WorldGenAmbrosiaFlower(BlockInit.AMBROSIAFLOWER.getDefaultState());
+	protected static final WorldGenerator WorldGenAgapantusFlower = new WorldGenAgapantusFlower(BlockInit.AGAPANTHUSFLOWER.getDefaultState());
+
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
 	protected static final WorldGenAbstractTree SHRUB_SPRUCE = new WorldGenTreeShrubSpruce();
 	   private final WorldGenTreeTallSpruce spruceGenerator = new WorldGenTreeTallSpruce(true);
@@ -53,7 +58,31 @@ public class BiomePineland extends Biome
 	}
 	
 	}
-	
+	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
+		for (int i = 0; i < flowersPerChunk; ++i) {
+
+			// Generate a random offset in x and z directions
+			int offsetX = rand.nextInt(16) + 8;
+			int offsetZ = rand.nextInt(16) + 8;
+
+			boolean success = false;
+
+			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+				BlockPos blockpos = pos.add(
+						offsetX,                  // Use random x offset
+						rand.nextInt(10) + 60,
+						offsetZ);                 // Use random z offset
+
+				if (flowerGenerator.generate(worldIn, rand, blockpos)) {
+					success = true;
+				}
+			}
+
+			if (success) {
+				break; // Move on to the next group of flowers
+			}
+		}
+	}
 	public WorldGenerator getRandomWorldGenForGrass(Random rand)
 	{
 	    return rand.nextInt(4) == 0 ? new WorldGenTallGrass(BlockTallGrass.EnumType.FERN) : new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);
@@ -62,6 +91,12 @@ public class BiomePineland extends Biome
     
 	public void decorate(World worldIn, Random rand, BlockPos pos)
 	{
+		int flowersPerChunk = 1;
+
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, AETHIONEMAFLOWER);
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, AMBROSIAFLOWER);
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, WorldGenAgapantusFlower);
+
 		   net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
 	       WorldGenerator diamonds = new DiamondGenerator();
 	       if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, diamonds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.DIAMOND))

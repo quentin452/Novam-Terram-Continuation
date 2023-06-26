@@ -1,6 +1,10 @@
 package kipster.nt.biomes.icy;
 
+import kipster.nt.blocks.BlockInit;
 import kipster.nt.world.gen.WorldGenPatches;
+import kipster.nt.world.gen.flowers.WorldGenNeglectedScorpionweedFlower;
+import kipster.nt.world.gen.flowers.WorldGenSumastraFlower;
+import kipster.nt.world.gen.flowers.WorldGenVeronicaFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeTallSpruce;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockSilverfish;
@@ -78,30 +82,43 @@ import java.util.Random;
 		{
 		    return rand.nextInt(4) == 0 ? new WorldGenTallGrass(BlockTallGrass.EnumType.FERN) : new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);
 		}
+		private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
+			for (int i = 0; i < flowersPerChunk; ++i) {
+
+				// Generate a random offset in x and z directions
+				int offsetX = rand.nextInt(16) + 8;
+				int offsetZ = rand.nextInt(16) + 8;
+
+				boolean success = false;
+
+				for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+					BlockPos blockpos = pos.add(
+							offsetX,                  // Use random x offset
+							rand.nextInt(10) + 60,
+							offsetZ);                 // Use random z offset
+
+					if (flowerGenerator.generate(worldIn, rand, blockpos)) {
+						success = true;
+					}
+				}
+
+				if (success) {
+					break; // Move on to the next group of flowers
+				}
+			}
+		}
+		protected static final WorldGenerator NEGLECTEDSCORPIONWEEDFLOWER= new WorldGenNeglectedScorpionweedFlower(BlockInit.NEGLECTEDSCORPIONWEEDFLOWER.getDefaultState());
+		protected static final WorldGenerator VERONICAFLOWER= new WorldGenVeronicaFlower(BlockInit.VERONICAFLOWER.getDefaultState());
 
 		public void decorate(World worldIn, Random rand, BlockPos pos)
 		{
+			int flowersPerChunk = 4
+					;
 		    super.decorate(worldIn, rand, pos);
+			generateFlowers(worldIn, rand, pos, flowersPerChunk, NEGLECTEDSCORPIONWEEDFLOWER);
+			generateFlowers(worldIn, rand, pos, flowersPerChunk, VERONICAFLOWER);
 
-		    int grassChance = rand.nextInt(4);
-			if (grassChance == 0) {
-				int k6 = rand.nextInt(16) + 8;
-				int l = rand.nextInt(16) + 8;
-				BlockPos blockpos = worldIn.getHeight(pos.add(k6, 0, l));
-				GRASS.generate(worldIn, rand, blockpos);
-			}
-		    DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.GRASS);
-
-		    if(net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.GRASS))
-		    for (int i = 0; i < 7; ++i)
-		    {
-		        int j = rand.nextInt(16) + 8;
-		        int k = rand.nextInt(16) + 8;
-		        int l = rand.nextInt(worldIn.getHeight(pos.add(j, 0, k)).getY() + 32);
-		        DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, pos.add(j, l, k));
-		    }
-		    
-		    net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
+			net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
 		       WorldGenerator lapis = new LapisGenerator();
 		       if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, lapis, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.LAPIS))
 		    	   lapis.generate(worldIn, rand, pos);

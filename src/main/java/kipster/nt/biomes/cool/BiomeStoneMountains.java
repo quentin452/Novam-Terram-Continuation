@@ -1,5 +1,7 @@
 package kipster.nt.biomes.cool;
 
+import kipster.nt.blocks.BlockInit;
+import kipster.nt.world.gen.flowers.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSilverfish;
 import net.minecraft.block.BlockStone;
@@ -132,8 +134,46 @@ public class BiomeStoneMountains extends Biome {
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
 		return rand.nextInt(3) > 0 ? this.spruceGenerator : super.getRandomTreeFeature(rand);
 	}
+	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
+		for (int i = 0; i < flowersPerChunk; ++i) {
+
+			// Generate a random offset in x and z directions
+			int offsetX = rand.nextInt(16) + 8;
+			int offsetZ = rand.nextInt(16) + 8;
+
+			boolean success = false;
+
+			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+				BlockPos blockpos = pos.add(
+						offsetX,                  // Use random x offset
+						rand.nextInt(10) + 60,
+						offsetZ);                 // Use random z offset
+
+				if (flowerGenerator.generate(worldIn, rand, blockpos)) {
+					success = true;
+				}
+			}
+
+			if (success) {
+				break; // Move on to the next group of flowers
+			}
+		}
+	}
+	protected static final WorldGenerator FRUITBOTFLOWER= new WorldGenFruitTopFlower(BlockInit.FRUITBOTFLOWER.getDefaultState());
+	protected static final WorldGenerator ALCEAFLOWER = new WorldGenAlceaFlower(BlockInit.ALCEAFLOWER.getDefaultState());
+
+	protected static final WorldGenerator AJUGAFLOWER= new WorldGenAjugaFlower(BlockInit.AJUGAFLOWER.getDefaultState());
+	protected static final WorldGenerator ASCLEPIASFLOWER = new WorldGenAsclepiasFlower(BlockInit.ASCLEPIASFLOWER.getDefaultState());
 
 	public void decorate(World worldIn, Random rand, BlockPos pos) {
+		int flowersPerChunk = 7;
+
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, FRUITBOTFLOWER);
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, ALCEAFLOWER);
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, AJUGAFLOWER);
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, ASCLEPIASFLOWER);
+
+
 		net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
 		WorldGenerator diamonds = new DiamondGenerator();
 		if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, diamonds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.DIAMOND))

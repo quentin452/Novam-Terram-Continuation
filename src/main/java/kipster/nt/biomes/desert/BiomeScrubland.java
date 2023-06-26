@@ -1,5 +1,10 @@
 package kipster.nt.biomes.desert;
 
+import kipster.nt.blocks.BlockInit;
+import kipster.nt.world.gen.flowers.WorldGenAlopecurusFlower;
+import kipster.nt.world.gen.flowers.WorldGenGalanthusFlower;
+import kipster.nt.world.gen.flowers.WorldGenNartheciumFlower;
+import kipster.nt.world.gen.flowers.WorldGenRoyalBluebellFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubAcacia;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.entity.monster.EntityHusk;
@@ -73,20 +78,42 @@ public class BiomeScrubland extends Biome
 
 		       this.generateBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
 		}
-		
-	     
-	     public void decorate(World worldIn, Random rand, BlockPos pos)
-	     {
-	         DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.GRASS);
+	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
+		for (int i = 0; i < flowersPerChunk; ++i) {
 
-	         if(net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, new net.minecraft.util.math.ChunkPos(pos), net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.GRASS))
-	         for (int i = 0; i < 7; ++i)
-	         {
-	             int j = rand.nextInt(16) + 8;
-	             int k = rand.nextInt(16) + 8;
-	             int l = rand.nextInt(worldIn.getHeight(pos.add(j, 0, k)).getY() + 32);
-	             DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, pos.add(j, l, k));
-	         }
+			// Generate a random offset in x and z directions
+			int offsetX = rand.nextInt(16) + 8;
+			int offsetZ = rand.nextInt(16) + 8;
+
+			boolean success = false;
+
+			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+				BlockPos blockpos = pos.add(
+						offsetX,                  // Use random x offset
+						rand.nextInt(10) + 60,
+						offsetZ);                 // Use random z offset
+
+				if (flowerGenerator.generate(worldIn, rand, blockpos)) {
+					success = true;
+				}
+			}
+
+			if (success) {
+				break; // Move on to the next group of flowers
+			}
+		}
+	}
+	protected static final WorldGenerator GALANTHUSFLOWER= new WorldGenGalanthusFlower(BlockInit.GALANTHUSFLOWER.getDefaultState());
+	protected static final WorldGenerator NARTHECIUMFLOWER = new WorldGenNartheciumFlower(BlockInit.NARTHECIUMFLOWER.getDefaultState());
+
+
+	public void decorate(World worldIn, Random rand, BlockPos pos)
+	     {
+			 int flowersPerChunk = 7;
+
+			 generateFlowers(worldIn, rand, pos, flowersPerChunk, GALANTHUSFLOWER);
+			 generateFlowers(worldIn, rand, pos, flowersPerChunk, NARTHECIUMFLOWER);
+
 	         if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.LAKE_LAVA)) {
   	           int boulderChance = rand.nextInt(12);
   	           if (boulderChance == 0) {

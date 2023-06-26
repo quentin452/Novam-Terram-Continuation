@@ -1,6 +1,11 @@
 package kipster.nt.biomes.warm;
 
+import kipster.nt.blocks.BlockInit;
 import kipster.nt.config.MiscConfig;
+import kipster.nt.world.gen.flowers.WorldGenCambridgeBlueFlower;
+import kipster.nt.world.gen.flowers.WorldGenCrassulaFlower;
+import kipster.nt.world.gen.flowers.WorldGenNeglectedScorpionweedFlower;
+import kipster.nt.world.gen.flowers.WorldGenVeronicaFlower;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.init.Blocks;
@@ -47,12 +52,43 @@ public class BiomeAegeanArchipelago extends Biome
 
 	        this.generateBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
 	}
+	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
+		for (int i = 0; i < flowersPerChunk; ++i) {
+
+			// Generate a random offset in x and z directions
+			int offsetX = rand.nextInt(16) + 8;
+			int offsetZ = rand.nextInt(16) + 8;
+
+			boolean success = false;
+
+			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+				BlockPos blockpos = pos.add(
+						offsetX,                  // Use random x offset
+						rand.nextInt(10) + 60,
+						offsetZ);                 // Use random z offset
+
+				if (flowerGenerator.generate(worldIn, rand, blockpos)) {
+					success = true;
+				}
+			}
+
+			if (success) {
+				break; // Move on to the next group of flowers
+			}
+		}
+	}
+	protected static final WorldGenerator CAMBRIDGEBLUEFLOWER= new WorldGenCambridgeBlueFlower(BlockInit.CAMBRIDGEBLUEFLOWER.getDefaultState());
+	protected static final WorldGenerator CRASSULAFLOWER= new WorldGenCrassulaFlower(BlockInit.CRASSULAFLOWER.getDefaultState());
 
 	    public void decorate(World worldIn, Random rand, BlockPos pos)
 	    {
 	        super.decorate(worldIn, rand, pos);
-	        
-	        if (!MiscConfig.disableBouldersInAegeanArchipelago && net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.ROCK)) {
+			int flowersPerChunk = 2;
+			generateFlowers(worldIn, rand, pos, flowersPerChunk, CAMBRIDGEBLUEFLOWER);
+			generateFlowers(worldIn, rand, pos, flowersPerChunk, CRASSULAFLOWER);
+
+
+			if (!MiscConfig.disableBouldersInAegeanArchipelago && net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.ROCK)) {
 	            int genChance = rand.nextInt(3);
 	            if (genChance == 0) {
 	                int k6 = rand.nextInt(16) + 8;

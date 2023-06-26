@@ -1,6 +1,7 @@
 package kipster.nt.biomes.cool;
 
 import kipster.nt.blocks.BlockInit;
+import kipster.nt.world.gen.flowers.*;
 import kipster.nt.world.gen.trees.WorldGenTreeMaple;
 import kipster.nt.world.gen.trees.WorldGenTreeRedSpruce2;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubOak;
@@ -29,6 +30,9 @@ public class BiomeMapleForest extends Biome {
     private static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
     private static final WorldGenAbstractTree MAPLE_TREE = new WorldGenTreeMaple(false, false);
     private final WorldGenTreeRedSpruce2 spruceGenerator = new WorldGenTreeRedSpruce2(true);
+    protected static final WorldGenerator CEPHALOPHYLLIUMflower= new WorldGenCephalophyllumFlower(BlockInit.CEPHALOPHYLLUMFLOWER.getDefaultState());
+    protected static final WorldGenerator DISAflower = new WorldGenDisaFlower(BlockInit.DISAFLOWER.getDefaultState());
+    protected static final WorldGenerator AESCHYNANTHUSflower = new WorldGenAeschynanthusFlower(BlockInit.AESCHYNANTHUSFLOWER.getDefaultState());
 
     public BiomeMapleForest(BiomeProperties properties) {
         super(properties);
@@ -39,7 +43,31 @@ public class BiomeMapleForest extends Biome {
         this.decorator.flowersPerChunk = 2;
         this.decorator.grassPerChunk = 4;
     }
+    private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
+        for (int i = 0; i < flowersPerChunk; ++i) {
 
+            // Generate a random offset in x and z directions
+            int offsetX = rand.nextInt(16) + 8;
+            int offsetZ = rand.nextInt(16) + 8;
+
+            boolean success = false;
+
+            for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+                BlockPos blockpos = pos.add(
+                        offsetX,                  // Use random x offset
+                        rand.nextInt(10) + 60,
+                        offsetZ);                 // Use random z offset
+
+                if (flowerGenerator.generate(worldIn, rand, blockpos)) {
+                    success = true;
+                }
+            }
+
+            if (success) {
+                break; // Move on to the next group of flowers
+            }
+        }
+    }
     @Override
     public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
         if (rand.nextInt(1) > 0) {
@@ -97,16 +125,6 @@ public class BiomeMapleForest extends Biome {
     }
 
     public void decorate(World worldIn, Random rand, BlockPos pos) {
-        DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.FERN);
-
-        if (TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.FLOWERS)) {
-            for (int i1 = 0; i1 < 7; ++i1) {
-                int j1 = rand.nextInt(16) + 8;
-                int k1 = rand.nextInt(16) + 8;
-                int l1 = rand.nextInt(worldIn.getHeight(pos.add(j1, 0, k1)).getY() + 32);
-                DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, pos.add(j1, l1, k1));
-            }
-        }
 
         MinecraftForge.ORE_GEN_BUS.post(new OreGenEvent.Pre(worldIn, rand, pos));
         WorldGenerator diamonds = new DiamondGenerator();
@@ -123,35 +141,11 @@ public class BiomeMapleForest extends Biome {
                 generateFallenTree(worldIn, rand, pos.add(x, y, z));
             }
         }
+        int flowersPerChunk = 7;
 
-        // Generate flowers
-        WorldGenerator flowers = new WorldGenFlowers(Blocks.RED_FLOWER, BlockFlower.EnumFlowerType.POPPY);
-        WorldGenerator otherFlowers = new WorldGenFlowers(Blocks.YELLOW_FLOWER, BlockFlower.EnumFlowerType.DANDELION);
-        WorldGenerator thirdFlower = new WorldGenFlowers(Blocks.RED_FLOWER, BlockFlower.EnumFlowerType.BLUE_ORCHID);
-
-        if (TerrainGen.decorate(worldIn, rand, pos, DecorateBiomeEvent.Decorate.EventType.FLOWERS)) {
-            for (int i = 0; i < 5; i++) {
-                int x = rand.nextInt(16) + 8;
-                int y = rand.nextInt(128);
-                int z = rand.nextInt(16) + 8;
-
-                // Generate a random flower type
-                int flowerType = rand.nextInt(3);
-                switch (flowerType) {
-                    case 0:
-                        flowers.generate(worldIn, rand, pos.add(x, y, z));
-                        break;
-                    case 1:
-                        otherFlowers.generate(worldIn, rand, pos.add(x, y, z));
-                        break;
-                    case 2:
-                        thirdFlower.generate(worldIn, rand, pos.add(x, y, z));
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
+        generateFlowers(worldIn, rand, pos, flowersPerChunk, CEPHALOPHYLLIUMflower);
+        generateFlowers(worldIn, rand, pos, flowersPerChunk, DISAflower);
+        generateFlowers(worldIn, rand, pos, flowersPerChunk, AESCHYNANTHUSflower);
 
         super.decorate(worldIn, rand, pos);
     }
