@@ -51,7 +51,7 @@ public class BiomeAliumMeadow extends Biome {
 		int flowersPerChunk = 5;
 
 		generateFlowers(worldIn, rand, pos, flowersPerChunk, PRIMEVEflower);
-		generateFlowers(worldIn, rand, pos, flowersPerChunk, PRIMEVEflower);
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, ALLIUMflower);
 		generateFlowers(worldIn, rand, pos, flowersPerChunk, ASPALATHUSflower);
 
 		super.decorate(worldIn, rand, pos);

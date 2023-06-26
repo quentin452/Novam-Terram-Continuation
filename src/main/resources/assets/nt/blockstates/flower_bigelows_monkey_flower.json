@@ -1,0 +1,12 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "nt:flower_bigelows_monkey_flower",
+    "uvlock": true
+  },
+  "variants": {
+    "normal": [{ }],
+    "inventory": [{ }],
+    "stage=0":[{ "model": "nt:flower_bigelows_monkey_flower"}]
+  }
+}

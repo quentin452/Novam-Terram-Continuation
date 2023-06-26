@@ -3,8 +3,6 @@
   "package": "kipster.nt.mixin",
   "refmap": "refmap.threadai.json",
   "mixins": [
-    "BlockLeavesMixin",
-    "MinecraftServerMixin"
   ],
   "client": [],
   "server": []

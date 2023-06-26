@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "nt:blocks/flower_agonis_bot"
+  }
+}

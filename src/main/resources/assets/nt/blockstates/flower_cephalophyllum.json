@@ -1,0 +1,12 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "nt:flower_cephalophyllum",
+    "uvlock": true
+  },
+  "variants": {
+    "normal": [{ }],
+    "inventory": [{ }],
+    "stage=0":[{ "model": "nt:flower_cephalophyllum"}]
+  }
+}

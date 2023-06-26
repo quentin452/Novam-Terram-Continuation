@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "nt:blocks/flower_bulbil_buglelily_top"
+  }
+}
