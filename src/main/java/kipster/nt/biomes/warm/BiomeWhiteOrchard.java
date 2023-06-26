@@ -13,7 +13,6 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenBigTree;
 import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
 import java.util.Random;
 

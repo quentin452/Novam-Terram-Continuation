@@ -9,7 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.*;
-import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
 import java.util.Random;
 

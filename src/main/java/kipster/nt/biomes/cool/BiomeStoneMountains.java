@@ -18,7 +18,6 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.IntStream;
 
 public class BiomeStoneMountains extends Biome {
 	private final WorldGenerator silverfishSpawner = new WorldGenMinable(Blocks.MONSTER_EGG.getDefaultState().withProperty(BlockSilverfish.VARIANT, BlockSilverfish.EnumType.STONE), 9);
