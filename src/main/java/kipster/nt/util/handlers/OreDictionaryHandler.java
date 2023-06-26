@@ -62,8 +62,9 @@ public class OreDictionaryHandler {
 		OreDictionary.registerOre("treeSapling", BlockInit.ORCHARDSAPLING);
 
 		//Flowers
-		OreDictionary.registerOre("primevere_flower", BlockInit.PRIMEVEREFLOWER);
-
+		OreDictionary.registerOre("flower", BlockInit.PRIMEVEREFLOWER);
+		OreDictionary.registerOre("flower", BlockInit.ASPALATHUSFLOWER);
+		OreDictionary.registerOre("flower", BlockInit.ALLIUMFLOWER);
 		//Sands
 		OreDictionary.registerOre("sand", BlockInit.WHITESAND);
 		OreDictionary.registerOre("sandstone", BlockInit.WHITESANDSTONE);

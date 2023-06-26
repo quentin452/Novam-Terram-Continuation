@@ -1,6 +1,8 @@
 package kipster.nt.biomes.warm;
 
 import kipster.nt.blocks.BlockInit;
+import kipster.nt.world.gen.flowers.WorldGenAlliumFlower;
+import kipster.nt.world.gen.flowers.WorldGenAspalathusFlower;
 import kipster.nt.world.gen.flowers.WorldGenPrimevereFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeBigJacaranda;
 import net.minecraft.block.state.IBlockState;
@@ -19,7 +21,8 @@ public class BiomeAliumMeadow extends Biome {
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
 	protected static final WorldGenAbstractTree JACARANDA_TREE = new WorldGenTreeBigJacaranda(false);
 	protected static final WorldGenerator PRIMEVEflower = new WorldGenPrimevereFlower(BlockInit.PRIMEVEREFLOWER.getDefaultState());
-
+	protected static final WorldGenerator ALLIUMflower = new WorldGenAlliumFlower(BlockInit.ALLIUMFLOWER.getDefaultState());
+	protected static final WorldGenerator ASPALATHUSflower = new WorldGenAspalathusFlower(BlockInit.ASPALATHUSFLOWER.getDefaultState());
 	public BiomeAliumMeadow(BiomeProperties properties) {
 		super(properties);
 
@@ -46,17 +49,30 @@ public class BiomeAliumMeadow extends Biome {
 	@Override
 	public void decorate(World worldIn, Random rand, BlockPos pos) {
 		int flowersPerChunk = 5;
-		// Generate groups of primevere flowers
+
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, PRIMEVEflower);
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, PRIMEVEflower);
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, ASPALATHUSflower);
+
+		super.decorate(worldIn, rand, pos);
+	}
+
+	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
 		for (int i = 0; i < flowersPerChunk; ++i) {
-			BlockPos blockpos = pos.add(
-					rand.nextInt(16) + 8,
-					rand.nextInt(10) + 60,
-					rand.nextInt(16) + 8);
+
+			// Generate a random offset in x and z directions
+			int offsetX = rand.nextInt(16) + 8;
+			int offsetZ = rand.nextInt(16) + 8;
 
 			boolean success = false;
 
 			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
-				if (PRIMEVEflower.generate(worldIn, rand, blockpos)) {
+				BlockPos blockpos = pos.add(
+						offsetX,                  // Use random x offset
+						rand.nextInt(10) + 60,
+						offsetZ);                 // Use random z offset
+
+				if (flowerGenerator.generate(worldIn, rand, blockpos)) {
 					success = true;
 				}
 			}
@@ -65,8 +81,6 @@ public class BiomeAliumMeadow extends Biome {
 				break; // Move on to the next group of flowers
 			}
 		}
-
-		super.decorate(worldIn, rand, pos);
 	}
 
 	@Override

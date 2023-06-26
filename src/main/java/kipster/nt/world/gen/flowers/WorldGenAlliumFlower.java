@@ -11,13 +11,12 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-
-public class WorldGenPrimevereFlower extends WorldGenerator {
+public class WorldGenAlliumFlower extends WorldGenerator {
     private final IBlockState plantState;
     private final BlockBush plantBlock;
     private final Set<BlockPos> triedPositions = new HashSet<>();
 
-    public WorldGenPrimevereFlower(IBlockState plant) {
+    public WorldGenAlliumFlower(IBlockState plant) {
         this.plantState = plant;
         this.plantBlock = (BlockBush) plant.getBlock();
     }

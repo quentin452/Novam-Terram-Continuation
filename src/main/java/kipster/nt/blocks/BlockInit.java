@@ -1,6 +1,11 @@
 package kipster.nt.blocks;
 
 import kipster.nt.blocks.blocks.*;
+import kipster.nt.blocks.blocks.blockflower.BlockFlowerAllium;
+import kipster.nt.blocks.blocks.blockflower.BlockFlowerAspalathus;
+import kipster.nt.blocks.blocks.blockflower.BlockFlowerPrimevere;
+import kipster.nt.blocks.blocks.blockleaves.*;
+import kipster.nt.blocks.blocks.blockspalings.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
@@ -32,6 +37,8 @@ public class BlockInit {
 
 	//FLOWER
 	public static final Block PRIMEVEREFLOWER = new BlockFlowerPrimevere("flower_primevere", Material.PLANTS);
+	public static final Block ALLIUMFLOWER = new BlockFlowerAllium("flower_allium", Material.PLANTS);
+	public static final Block ASPALATHUSFLOWER = new BlockFlowerAspalathus("flower_aspalathus", Material.PLANTS);
 
 	//SAPLING
 	public static final Block CONIFERSAPLINGYELLOW = new BlockSaplingConiferYellow("conifer_sapling_yellow", Material.LEAVES);
