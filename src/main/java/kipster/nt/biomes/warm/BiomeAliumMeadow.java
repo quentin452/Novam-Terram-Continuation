@@ -1,9 +1,12 @@
 package kipster.nt.biomes.warm;
 
+import kipster.nt.blocks.BlockFlowerModdedEnumType;
 import kipster.nt.blocks.BlockInit;
 import kipster.nt.blocks.blocks.BlockFlowerPrimevere;
 import kipster.nt.world.gen.flowers.WorldGenPrimevereFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeBigJacaranda;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockFlower;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.passive.*;
@@ -11,9 +14,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenLakes;
-import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraft.world.gen.feature.*;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
 import java.util.Random;
@@ -21,7 +22,7 @@ import java.util.Random;
 public class BiomeAliumMeadow extends Biome {
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
 	protected static final WorldGenAbstractTree JACARANDA_TREE = new WorldGenTreeBigJacaranda(false);
-	protected static final WorldGenPrimevereFlower PRIMEVERE_FLOWER = new WorldGenPrimevereFlower(new BlockFlowerPrimevere("primevere_flower", Material.PLANTS));
+	protected static final WorldGenerator PRIMEVEflower = new WorldGenPrimevereFlower(BlockInit.PRIMEVEREFLOWER.getDefaultState());
 
 	public BiomeAliumMeadow(BiomeProperties properties) {
 		super(properties);
@@ -31,6 +32,7 @@ public class BiomeAliumMeadow extends Biome {
 
 		this.decorator.extraTreeChance = 0.3F;
 		this.decorator.grassPerChunk = 35;
+
 		this.decorator.generateFalls = true;
 
 		this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityRabbit.class, 4, 2, 3));
@@ -42,17 +44,33 @@ public class BiomeAliumMeadow extends Biome {
 
 	@Override
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-		return rand.nextInt(1) == 0 ? JACARANDA_TREE : JACARANDA_TREE;
+		return JACARANDA_TREE;
 	}
 
 	@Override
 	public void decorate(World worldIn, Random rand, BlockPos pos) {
-		super.decorate(worldIn, rand, pos);
+		int flowersPerChunk = 5;
+		// Generate groups of primevere flowers
+		for (int i = 0; i < flowersPerChunk; ++i) {
+			BlockPos blockpos = pos.add(
+					rand.nextInt(16) + 8,
+					rand.nextInt(10) + 60,
+					rand.nextInt(16) + 8);
 
-		net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
-		WorldGenerator emeralds = new EmeraldGenerator();
-		if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, emeralds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.EMERALD))
-			emeralds.generate(worldIn, rand, pos);
+			boolean success = false;
+
+			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+				if (PRIMEVEflower.generate(worldIn, rand, blockpos)) {
+					success = true;
+				}
+			}
+
+			if (success) {
+				break; // Move on to the next group of flowers
+			}
+		}
+
+		super.decorate(worldIn, rand, pos);
 	}
 
 	@Override
@@ -68,39 +86,6 @@ public class BiomeAliumMeadow extends Biome {
 	public static class EmeraldGenerator extends WorldGenerator {
 		@Override
 		public boolean generate(World worldIn, Random rand, BlockPos pos) {
-
-			float spawnChance = 0.5f; // Adjust the spawn chance as needed
-
-			if (rand.nextFloat() <= spawnChance) {
-				int chunkX = pos.getX() >> 4;
-				int chunkZ = pos.getZ() >> 4;
-				long seedX = (rand.nextLong() >> 2) + 1L;
-				long seedZ = (rand.nextLong() >> 2) + 1L;
-				rand.setSeed(chunkX * seedX + chunkZ * seedZ ^ worldIn.getSeed());
-
-				int x = rand.nextInt(16) + (chunkX << 4);
-				int z = rand.nextInt(16) + (chunkZ << 4);
-
-				BlockPos topPos = worldIn.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z));
-				int y = topPos.getY();
-
-				BlockPos flowerPos = new BlockPos(x, y, z);
-
-				Biome biome = worldIn.getBiome(flowerPos);
-				if (biome instanceof BiomeAliumMeadow) {
-					IBlockState blockState = worldIn.getBlockState(flowerPos.down());
-					if (blockState.getBlock() == Blocks.GRASS && blockState.isFullBlock()) {
-						PRIMEVERE_FLOWER.generate(worldIn, rand, flowerPos);
-						System.out.println("Generated Primevere flower at " + flowerPos);
-						System.out.println("Block at flowerPos: " + blockState.getBlock());
-						System.out.println("Is block full: " + blockState.isFullBlock());
-					} else {
-						System.out.println("Failed to generate Primevere flower at " + flowerPos);
-						System.out.println("Block at flowerPos: " + blockState.getBlock());
-						System.out.println("Is block full: " + blockState.isFullBlock());
-					}
-				}
-			}
 
 			int count = 10 + rand.nextInt(6);
 
