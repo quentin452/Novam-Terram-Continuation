@@ -16,7 +16,6 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.*;
 import net.minecraftforge.common.ForgeModContainer;
-import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
 import java.util.*;
 import java.util.concurrent.*;
