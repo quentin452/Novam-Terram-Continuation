@@ -16,6 +16,7 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenTaiga2;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.common.ForgeModContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,31 +82,35 @@ public class BiomeStoneMountains extends Biome {
 					double distanceSq = x * x + y * y + z * z;
 					if (distanceSq <= radiusSq + rand.nextDouble() * 0.5) {
 						BlockPos blockPos = pos.add(x, y, z);
-						Block block = world.getBlockState(blockPos).getBlock();
 
-						// Check if the stone block exists
-						if (block == Blocks.STONE) {
-							// Only replace blocks that can be replaced by stone
-							if (block.isReplaceableOreGen(world.getBlockState(blockPos), world, blockPos, state -> state.getBlock() == Blocks.STONE)) {
-								// Calculate the blend factor based on distance from the center
-								double blendFactor = 1.0 - (distanceSq / radiusSq);
+						// Check if the block position is within the StoneMountains biome
+						if (world.getBiome(blockPos) instanceof BiomeStoneMountains) {
+							Block block = world.getBlockState(blockPos).getBlock();
 
-								// Interpolate between the stone and variant states based on the blend factor
-								IBlockState interpolatedState;
-								if (blendFactor < 0.2) {
-									interpolatedState = stoneState;
-								} else if (blendFactor < 0.4) {
-									interpolatedState = graniteState;
-								} else if (blendFactor < 0.6) {
-									interpolatedState = dioriteState;
-								} else if (blendFactor < 0.8) {
-									interpolatedState = andesiteState;
-								} else {
-									interpolatedState = andesiteState;
+							// Check if the stone block exists
+							if (block == Blocks.STONE) {
+								// Only replace blocks that can be replaced by stone
+								if (block.isReplaceableOreGen(world.getBlockState(blockPos), world, blockPos, state -> state.getBlock() == Blocks.STONE)) {
+									// Calculate the blend factor based on distance from the center
+									double blendFactor = 1.0 - (distanceSq / radiusSq);
+
+									// Interpolate between the stone and variant states based on the blend factor
+									IBlockState interpolatedState;
+									if (blendFactor < 0.2) {
+										interpolatedState = stoneState;
+									} else if (blendFactor < 0.4) {
+										interpolatedState = graniteState;
+									} else if (blendFactor < 0.6) {
+										interpolatedState = dioriteState;
+									} else if (blendFactor < 0.8) {
+										interpolatedState = andesiteState;
+									} else {
+										interpolatedState = andesiteState;
+									}
+
+									modifiedBlocks.add(blockPos);
+									world.setBlockState(blockPos, interpolatedState, 2);
 								}
-
-								modifiedBlocks.add(blockPos);
-								world.setBlockState(blockPos, interpolatedState, 2);
 							}
 						}
 					}
@@ -179,18 +184,13 @@ public class BiomeStoneMountains extends Biome {
 		if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, diamonds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.DIAMOND))
 			diamonds.generate(worldIn, rand, pos);
 
-		for (int j1 = 0; j1 < 7; ++j1) {
-			int k1 = rand.nextInt(16);
-			int l1 = rand.nextInt(64);
-			int i2 = rand.nextInt(16);
-			if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, silverfishSpawner, pos.add(j1, k1, l1), net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.SILVERFISH))
-				this.silverfishSpawner.generate(worldIn, rand, pos.add(j1, k1, l1));
+		if (worldIn.getBiome(pos) instanceof BiomeStoneMountains) {
+			this.silverfishSpawner.generate(worldIn, rand, pos);
 		}
 
 		// Generate rock formations
-		for (BlockPos modifiedPos : modifications) {
-			generateRockFormation(worldIn, rand, modifiedPos);
-		}
+		generateRockFormation(worldIn, rand, pos);
+
 		// Generate caves
 		generateCaves(worldIn, rand, pos);
 
