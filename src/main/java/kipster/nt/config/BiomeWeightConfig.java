@@ -62,7 +62,7 @@ public class BiomeWeightConfig {
 	public static int tundraWeight = 6;
         
 	//WARM
-	public static int aegeanarchipelagoWeight = 1;
+	public static int aegeanarchipelagoWeight = 4;
 	public static int aliummeadowWeight = 2;
 	public static int autumnforesthillsWeight = 2;
 	public static int autumnforestWeight = 8;

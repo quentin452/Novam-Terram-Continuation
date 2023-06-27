@@ -21,7 +21,6 @@ import java.util.Random;
 
 public class BiomeAegeanArchipelago extends Biome 
 {
-	protected static final IBlockState WATER_LILY = Blocks.WATERLILY.getDefaultState();
 	protected static final WorldGenBlockBlob STONE_BOULDER_FEATURE = new WorldGenBlockBlob(Blocks.STONE, 1);
 	
 	public BiomeAegeanArchipelago(BiomeProperties properties)
