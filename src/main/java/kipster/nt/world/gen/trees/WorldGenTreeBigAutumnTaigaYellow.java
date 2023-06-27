@@ -40,6 +40,10 @@ public class WorldGenTreeBigAutumnTaigaYellow extends WorldGenAbstractTree
     /**
      * Generates a list of leaf nodes for the tree, to be populated by generateLeaves.
      */
+    public void setBlockAndNotifyAdequately(World worldIn, BlockPos position, IBlockState state) {
+        worldIn.setBlockState(position, state, 3);
+        worldIn.notifyBlockUpdate(position, state, state, 3);
+    }
     void generateLeafNodeList()
     {
         this.height = (int)((double)this.heightLimit * this.heightAttenuation);

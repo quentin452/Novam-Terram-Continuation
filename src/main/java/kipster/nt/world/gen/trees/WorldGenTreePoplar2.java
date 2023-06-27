@@ -142,4 +142,8 @@ public class WorldGenTreePoplar2 extends WorldGenAbstractTree
             return false;
         }
     }
+    public void setBlockAndNotifyAdequately(World worldIn, BlockPos position, IBlockState state) {
+        worldIn.setBlockState(position, state, 3);
+        worldIn.notifyBlockUpdate(position, state, state, 3);
+    }
 }

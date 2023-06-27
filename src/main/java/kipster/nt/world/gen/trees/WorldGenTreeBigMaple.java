@@ -31,7 +31,10 @@ public class WorldGenTreeBigMaple extends WorldGenAbstractTree
     /** Sets the distance limit for how far away the generator will populate leaves from the base leaf node. */
     int leafDistanceLimit = 4;
     List<WorldGenTreeBigMaple.FoliageCoordinates> foliageCoords;
-
+    public void setBlockAndNotifyAdequately(World worldIn, BlockPos position, IBlockState state) {
+        worldIn.setBlockState(position, state, 3);
+        worldIn.notifyBlockUpdate(position, state, state, 3);
+    }
     public WorldGenTreeBigMaple(boolean notify)
     {
         super(notify);

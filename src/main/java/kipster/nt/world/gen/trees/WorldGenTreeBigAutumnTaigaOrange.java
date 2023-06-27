@@ -31,7 +31,10 @@ public class WorldGenTreeBigAutumnTaigaOrange extends WorldGenAbstractTree
     /** Sets the distance limit for how far away the generator will populate leaves from the base leaf node. */
     int leafDistanceLimit = 4;
     List<WorldGenTreeBigAutumnTaigaOrange.FoliageCoordinates> foliageCoords;
-
+    public void setBlockAndNotifyAdequately(World worldIn, BlockPos position, IBlockState state) {
+        worldIn.setBlockState(position, state, 3);
+        worldIn.notifyBlockUpdate(position, state, state, 3);
+    }
     public WorldGenTreeBigAutumnTaigaOrange(boolean notify)
     {
         super(notify);

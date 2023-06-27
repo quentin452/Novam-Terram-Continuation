@@ -192,7 +192,10 @@ public class WorldGenTreeSandSwamp extends WorldGenAbstractTree
             return false;
         }
     }
-
+    public void setBlockAndNotifyAdequately(World worldIn, BlockPos position, IBlockState state) {
+        worldIn.setBlockState(position, state, 3);
+        worldIn.notifyBlockUpdate(position, state, state, 3);
+    }
     private void addVine(World worldIn, BlockPos pos, PropertyBool prop)
     {
         IBlockState iblockstate = Blocks.VINE.getDefaultState().withProperty(prop, Boolean.valueOf(true));

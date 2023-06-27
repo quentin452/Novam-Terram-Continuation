@@ -21,7 +21,10 @@ public class WorldGenTreeBlueSpruce1 extends WorldGenAbstractTree
         super(false);
     }
 
-
+    public void setBlockAndNotifyAdequately(World worldIn, BlockPos position, IBlockState state) {
+        worldIn.setBlockState(position, state, 3);
+        worldIn.notifyBlockUpdate(position, state, state, 3);
+    }
     public boolean generate(World worldIn, Random rand, BlockPos position)
     {
         int i = rand.nextInt(5) + 7;

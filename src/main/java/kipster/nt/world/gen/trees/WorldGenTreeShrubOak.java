@@ -66,8 +66,8 @@ public class WorldGenTreeShrubOak extends WorldGenTrees
         return true;
     }
 
-	private void setBlockAndNotifyAdequately(World worldIn, BlockPos position, Block woodMetadata2) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void setBlockAndNotifyAdequately(World worldIn, BlockPos position, IBlockState state) {
+        worldIn.setBlockState(position, state, 3);
+        worldIn.notifyBlockUpdate(position, state, state, 3);
+    }
 }

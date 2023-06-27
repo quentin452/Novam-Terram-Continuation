@@ -342,7 +342,10 @@ public class WorldGenTreeBigJacaranda extends WorldGenAbstractTree
             return true;
         }
     }
-
+    public void setBlockAndNotifyAdequately(World worldIn, BlockPos position, IBlockState state) {
+        worldIn.setBlockState(position, state, 3);
+        worldIn.notifyBlockUpdate(position, state, state, 3);
+    }
     /**
      * Returns a boolean indicating whether or not the current location for the tree, spanning basePos to to the height
      * limit, is valid.

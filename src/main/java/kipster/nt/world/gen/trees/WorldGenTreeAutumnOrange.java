@@ -22,7 +22,10 @@ public class WorldGenTreeAutumnOrange extends WorldGenAbstractTree
         super(notify);
         this.useExtraRandomHeight = useExtraRandomHeightIn;
     }
-
+    public void setBlockAndNotifyAdequately(World worldIn, BlockPos position, IBlockState state) {
+        worldIn.setBlockState(position, state, 3);
+        worldIn.notifyBlockUpdate(position, state, state, 3);
+    }
     public boolean generate(World worldIn, Random rand, BlockPos position)
     {
         int i = rand.nextInt(3) + 5;

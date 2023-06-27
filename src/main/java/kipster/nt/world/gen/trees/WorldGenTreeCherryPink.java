@@ -16,7 +16,10 @@ public class WorldGenTreeCherryPink extends WorldGenAbstractTree
     private static final IBlockState LOG = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.BIRCH);
     private static final IBlockState LEAF = BlockInit.CHERRYLEAVESPINK.getDefaultState();
     private final boolean useExtraRandomHeight;
-
+    public void setBlockAndNotifyAdequately(World worldIn, BlockPos position, IBlockState state) {
+        worldIn.setBlockState(position, state, 3);
+        worldIn.notifyBlockUpdate(position, state, state, 3);
+    }
     public WorldGenTreeCherryPink(boolean notify, boolean useExtraRandomHeightIn)
     {
         super(notify);

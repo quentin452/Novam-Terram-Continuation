@@ -15,7 +15,10 @@ public class WorldGenTreeDead extends WorldGenAbstractTree
 {
     private static final IBlockState TRUNK = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.OAK);
     private static final IBlockState LEAF = Blocks.AIR.getDefaultState();
-
+    public void setBlockAndNotifyAdequately(World worldIn, BlockPos position, IBlockState state) {
+        worldIn.setBlockState(position, state, 3);
+        worldIn.notifyBlockUpdate(position, state, state, 3);
+    }
     public WorldGenTreeDead(boolean doBlockNotify)
     {
         super(doBlockNotify);

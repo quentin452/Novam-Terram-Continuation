@@ -17,7 +17,7 @@ public class WorldTypeIslands extends WorldType
 	@Override
 	public BiomeProvider getBiomeProvider(World world) 
 	{
-		BiomeProvider provider = new BiomeProviderSingle(BiomeInit.aegeanarchipelago);
+		BiomeProvider provider = new BiomeProviderSingle(BiomeInit.aliummeadow);
 		return provider;
 	}
 	
