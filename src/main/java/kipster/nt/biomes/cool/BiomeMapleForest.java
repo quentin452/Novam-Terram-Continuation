@@ -6,6 +6,7 @@ import kipster.nt.world.gen.trees.WorldGenTreeMaple;
 import kipster.nt.world.gen.trees.WorldGenTreeRedSpruce2;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubOak;
 import net.minecraft.block.*;
+import net.minecraft.block.state.BlockStateBase;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.entity.passive.EntityRabbit;
@@ -78,10 +79,10 @@ public class BiomeMapleForest extends Biome {
     }
 
     private void generateFallenTree(World worldIn, Random rand, BlockPos pos) {
-        Block woodBlock = Blocks.LOG; // Adjust this to the desired wood block
-        IBlockState woodState = woodBlock.getDefaultState().withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.NONE); // Adjust the property values as needed
+        Block woodBlock = Blocks.LOG; // Ajustez cela au bloc de bois souhaité
+        IBlockState woodState = woodBlock.getDefaultState().withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.NONE); // Ajustez les valeurs des propriétés selon vos besoins
 
-        // Adjust the probability value as desired (lower value = less frequent spawning)
+        // Ajustez la valeur de probabilité selon vos souhaits (une valeur plus faible = moins fréquent)
         double spawnProbability = 0.2;
 
         // Check if the random number is within the desired probability range
@@ -105,9 +106,39 @@ public class BiomeMapleForest extends Biome {
         // Generate the fallen tree by placing wood blocks side by side
         for (int i = 0; i < trunkHeight; i++) {
             BlockPos blockPos = startPos.offset(direction.getOpposite(), i);
-            worldIn.setBlockState(blockPos, woodState, 2 | 16); // Use flag 16 to prevent cascading during generation
+            worldIn.setBlockState(blockPos, woodState, 2 | 16);
+
+            // Add mushrooms to the left and right
+            if (isValidMushroomSpawnPosition(worldIn, blockPos.offset(EnumFacing.NORTH))) {
+                worldIn.setBlockState(blockPos.offset(EnumFacing.NORTH), BlockInit.CEPSWALLMUSHROOM.getDefaultState(), 2);
+            }
+            if (isValidMushroomSpawnPosition(worldIn, blockPos.offset(EnumFacing.SOUTH))) {
+                worldIn.setBlockState(blockPos.offset(EnumFacing.SOUTH), BlockInit.CEPSWALLMUSHROOM.getDefaultState(), 2);
+            }
+            BlockPos topMushroomPos = null;
+
+            if (i == trunkHeight - 1) {
+
+                EnumFacing mushroomDirection =
+                        direction.rotateYCCW(); // Direction for left mushroom
+
+                BlockPos leftMushroomPos = blockPos.up().offset(mushroomDirection, rand.nextInt(3) - 1);
+
+                mushroomDirection = direction.rotateY();  // Direction for right mushroom
+                BlockPos rightMushroomPos = blockPos.up().offset(mushroomDirection, rand.nextInt(3) - 1);
+
+            }
         }
     }
+
+    private boolean isValidMushroomSpawnPosition(World world, BlockPos pos) {
+        Block block = world.getBlockState(pos).getBlock();
+        if (block == BlockInit.CEPSWALLMUSHROOM) {
+            return false;   // Cannot spawn on another mushroom
+        }
+        return block.isAir(world.getBlockState(pos), world, pos) || block.isReplaceable(world, pos);
+    }
+
 
     private boolean checkLeavesIntersect(World worldIn, BlockPos startPos, EnumFacing direction, int trunkHeight) {
         for (int i = 0; i < trunkHeight; i++) {

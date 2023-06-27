@@ -22,6 +22,9 @@ tile.paulownia_leaves.name=Paulownia Leaves
 tile.orchard_leaves.name=White Leaves
 tile.whitemyrtle_leaves.name=White Myrtle Leaves
 
+//Mushrooms
+tile.mushroom_ceps_wall.name=Ceps Mushroom
+
 //Flowers
 tile.flower_primevere.name=Primevere Flower
 tile.flower_allium.name=Allium Flower
