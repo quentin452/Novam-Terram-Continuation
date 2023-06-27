@@ -3,7 +3,6 @@ package kipster.nt.blocks;
 import kipster.nt.blocks.blocks.*;
 import kipster.nt.blocks.blocks.blockflower.*;
 import kipster.nt.blocks.blocks.blockleaves.*;
-import kipster.nt.blocks.blocks.blockmushroom.BlockWallCepsMushroom;
 import kipster.nt.blocks.blocks.blockspalings.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -33,9 +32,6 @@ public class BlockInit {
 	public static final Block PAULOWNIALEAVES = new BlockLeavesPaulownia("paulownia_leaves", Material.LEAVES);
 	public static final Block ORCHARDLEAVES = new BlockLeavesOrchard("orchard_leaves", Material.LEAVES);
 	public static final Block WHITEMYRTLELEAVES = new BlockLeavesWhiteMyrtle("whitemyrtle_leaves", Material.LEAVES);
-
-	//MUSHROOM
-	public static final Block CEPSWALLMUSHROOM = new BlockWallCepsMushroom("mushroom_ceps_wall", Material.LEAVES);
 
 	//FLOWER
 	public static final Block PRIMEVEREFLOWER = new BlockFlowerPrimevere("flower_primevere", Material.PLANTS);
