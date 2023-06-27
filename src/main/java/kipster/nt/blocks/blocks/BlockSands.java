@@ -15,6 +15,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSands extends BlockFalling implements IHasModel
 {
@@ -31,7 +33,7 @@ public class BlockSands extends BlockFalling implements IHasModel
 		BlockInit.BLOCKS.add(this);
 		ItemInit.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
 	}
-	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerModels() 
 	{

@@ -169,6 +169,7 @@ public class BlockLeavesBase extends BlockLeaves implements IHasModel
         setGraphicsLevel(!Blocks.LEAVES.isOpaqueCube(blockState));
         return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }
+    @SideOnly(Side.CLIENT)
     @Override
     public void registerModels()
     {

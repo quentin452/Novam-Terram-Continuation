@@ -14,6 +14,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockFlowerBase extends BlockBush implements IHasModel {
 
@@ -39,7 +41,7 @@ public class BlockFlowerBase extends BlockBush implements IHasModel {
     public Item getItemDropped(IBlockState state, java.util.Random rand, int fortune) {
         return Item.getItemFromBlock(this);
     }
-
+    @SideOnly(Side.CLIENT)
     @Override
     public void registerModels() {
         NovamTerram.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");

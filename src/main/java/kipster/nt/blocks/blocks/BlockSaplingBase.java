@@ -22,6 +22,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
@@ -118,6 +120,7 @@ public class BlockSaplingBase extends BlockBush implements IHasModel, IGrowable
     {
         return new BlockStateContainer(this, new IProperty[] {STAGE});
     }
+    @SideOnly(Side.CLIENT)
     @Override
     public void registerModels()
     {

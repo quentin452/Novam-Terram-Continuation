@@ -21,6 +21,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
@@ -117,6 +119,7 @@ public class BlockPodzols extends Block implements IHasModel
     {
         return new BlockStateContainer(this, new IProperty[] {SNOWY});
 }
+    @SideOnly(Side.CLIENT)
 	@Override
 	public void registerModels() 
 	{
