@@ -111,6 +111,19 @@ public class BlockLeavesBase extends BlockLeaves implements IHasModel
         return new BlockStateContainer(this, new IProperty[] {CHECK_DECAY, DECAYABLE});
     }
 
+    @Override
+    public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return true;
+    }
+    @Override
+    public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return 30;
+    }
+
+    @Override
+    public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face)  {
+        return 60;
+    }
 
     @Override
     public int damageDropped(IBlockState state)
