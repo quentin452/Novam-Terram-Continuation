@@ -133,12 +133,12 @@ public class BiomeAutumnForest extends Biome
    
 	@Override
 	public int getModdedBiomeGrassColor(int original) {
-		return super.getModdedBiomeGrassColor(0xA4BA6B);
+		return super.getModdedBiomeGrassColor(0x8A9B37);
 		//return super.getModdedBiomeGrassColor(0xB5C558);
 		}
 	@Override
 	public int getModdedBiomeFoliageColor(int original) {
-		return super.getModdedBiomeFoliageColor(0x96D065);
+		return super.getModdedBiomeFoliageColor(0xABA144);
 		//return super.getModdedBiomeFoliageColor(0x9DC558);
 		}
 	
