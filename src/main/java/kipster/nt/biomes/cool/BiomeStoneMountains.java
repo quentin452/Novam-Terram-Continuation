@@ -38,28 +38,30 @@ public class BiomeStoneMountains extends Biome {
 		this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityLlama.class, 5, 4, 6));
 	}
 	private void generateCaves(World world, Random rand, BlockPos pos) {
-		if (rand.nextInt(100) < 20) { // Chance of generating a cave, adjust the percentage as desired
-			int caveHeight = 30 + rand.nextInt(20); // Adjust the height range of the cave as desired
-			int caveRadius = 8 + rand.nextInt(8); // Adjust the radius of the cave as desired
+		if (rand.nextInt(100) < 20) {
+			int caveHeight = 30 + rand.nextInt(20);
+			int caveRadius = 8 + rand.nextInt(8);
+
+			List<BlockPos> modifiedBlocks = new ArrayList<>();
+
+			// Get base block state
+			IBlockState baseBlockState = world.getBlockState(pos);
+			boolean isReplaceable = baseBlockState.getBlock().isReplaceable(world, pos);
 
 			for (int y = -caveHeight; y <= 0; y++) {
 				for (int x = -caveRadius; x <= caveRadius; x++) {
-					for (int z = -caveRadius; z <= caveRadius; z++) {
-						int distanceSq = x * x + y * y + z * z;
-						int radiusSq = (int) ((caveRadius + rand.nextDouble() * 0.5) * (caveRadius + rand.nextDouble() * 0.5));
-						if (distanceSq <= radiusSq) {
-							BlockPos blockPos = pos.add(x, y, z);
-							IBlockState blockState = world.getBlockState(blockPos);
-							Block block = blockState.getBlock();
-
-							// Replace blocks with air to create the cave
-							if (block.isReplaceable(world, blockPos)) {
-								world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 2);
-							}
-						}
+					if (isReplaceable) {
+						modifiedBlocks.add(pos.add(x, y, x));
 					}
 				}
 			}
+
+			// Apply block changes in bulk
+			for (BlockPos blockPos : modifiedBlocks) {
+				world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 2);
+			}
+
+			modifiedBlocks.clear();
 		}
 	}
 
@@ -76,41 +78,42 @@ public class BiomeStoneMountains extends Biome {
 
 		List<BlockPos> modifiedBlocks = new ArrayList<>();
 
+		// Get the block state before the loops
+		IBlockState baseBlockState = world.getBlockState(pos);
+
 		for (int x = -radius; x <= radius; x++) {
 			for (int y = 0; y < height; y++) {
 				for (int z = -radius; z <= radius; z++) {
 					double distanceSq = x * x + y * y + z * z;
-					if (distanceSq <= radiusSq + rand.nextDouble() * 0.5) {
-						BlockPos blockPos = pos.add(x, y, z);
+					BlockPos blockPos = pos.add(x, y, z);
 
-						// Check if the block position is within the StoneMountains biome
-						if (world.getBiome(blockPos) instanceof BiomeStoneMountains) {
-							Block block = world.getBlockState(blockPos).getBlock();
+					// Check if the block position is within the StoneMountains biome
+					BlockPos biomeCheckPos = pos.add(x, y - 1, z); // Use separate BlockPos for biome check
+					if (world.getBiome(biomeCheckPos) instanceof BiomeStoneMountains) {
 
-							// Check if the stone block exists
-							if (block == Blocks.STONE) {
-								// Only replace blocks that can be replaced by stone
-								if (block.isReplaceableOreGen(world.getBlockState(blockPos), world, blockPos, state -> state.getBlock() == Blocks.STONE)) {
-									// Calculate the blend factor based on distance from the center
-									double blendFactor = 1.0 - (distanceSq / radiusSq);
+						// Check if the stone block exists
+						if (baseBlockState.getBlock() == Blocks.STONE) {
+							// Only replace blocks that can be replaced by stone
+							if (baseBlockState.getBlock().isReplaceableOreGen(baseBlockState, world, blockPos, state -> state.getBlock() == Blocks.STONE)) {
+								// Calculate the blend factor based on distance from the center
+								double blendFactor = 1.0 - (distanceSq / radiusSq);
 
-									// Interpolate between the stone and variant states based on the blend factor
-									IBlockState interpolatedState;
-									if (blendFactor < 0.2) {
-										interpolatedState = stoneState;
-									} else if (blendFactor < 0.4) {
-										interpolatedState = graniteState;
-									} else if (blendFactor < 0.6) {
-										interpolatedState = dioriteState;
-									} else if (blendFactor < 0.8) {
-										interpolatedState = andesiteState;
-									} else {
-										interpolatedState = andesiteState;
-									}
-
-									modifiedBlocks.add(blockPos);
-									world.setBlockState(blockPos, interpolatedState, 2);
+								// Interpolate between the stone and variant states based on the blend factor
+								IBlockState interpolatedState;
+								if (blendFactor < 0.2) {
+									interpolatedState = stoneState;
+								} else if (blendFactor < 0.4) {
+									interpolatedState = graniteState;
+								} else if (blendFactor < 0.6) {
+									interpolatedState = dioriteState;
+								} else if (blendFactor < 0.8) {
+									interpolatedState = andesiteState;
+								} else {
+									interpolatedState = andesiteState;
 								}
+
+								modifiedBlocks.add(blockPos);
+								world.setBlockState(blockPos, interpolatedState, 2);
 							}
 						}
 					}
@@ -122,6 +125,7 @@ public class BiomeStoneMountains extends Biome {
 		for (BlockPos modifiedPos : modifiedBlocks) {
 			world.notifyBlockUpdate(modifiedPos, world.getBlockState(modifiedPos), world.getBlockState(modifiedPos), 3);
 		}
+		modifiedBlocks.clear();
 	}
 
 	@Override
@@ -189,7 +193,7 @@ public class BiomeStoneMountains extends Biome {
 		}
 
 		// Generate rock formations
-		generateRockFormation(worldIn, rand, pos);
+	    generateRockFormation(worldIn, rand, pos);
 
 		// Generate caves
 		generateCaves(worldIn, rand, pos);
