@@ -61,27 +61,30 @@ public class BiomeWhiteOrchard extends Biome
 		{
         return BlockFlower.EnumFlowerType.HOUSTONIA;
     }
-    
-	
-	public void decorate(World worldIn, Random rand, BlockPos pos)
-	{
-		 net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
-	        WorldGenerator emeralds = new EmeraldGenerator();
-	        if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, emeralds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.EMERALD))
-	            emeralds.generate(worldIn, rand, pos);
-	        DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.GRASS);
-	        
-			 if(net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.GRASS))
-			 for (int i = 0; i < 7; ++i)
-			 {
-			     int j = rand.nextInt(8) + 8;
-			     int k = rand.nextInt(8) + 8;
-			     int l = rand.nextInt(worldIn.getHeight(pos.add(j, 0, k)).getY() + 32);
-			     DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, pos.add(j, l, k));
-			
-			 }
-	    super.decorate(worldIn, rand, pos);
+
+
+	public void decorate(World worldIn, Random rand, BlockPos pos) {
+		super.decorate(worldIn, rand, pos);
+
+		// Perform parent biome's decorations first
+
+		// Add specific decorations for this biome
+		net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
+		WorldGenerator emeralds = new EmeraldGenerator();
+		if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, emeralds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.EMERALD))
+			emeralds.generate(worldIn, rand, pos);
+		DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.GRASS);
+
+		if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, pos, net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.GRASS)) {
+			for (int i = 0; i < 7; ++i) {
+				int j = rand.nextInt(8) + 8;
+				int k = rand.nextInt(8) + 8;
+				int l = rand.nextInt(worldIn.getHeight(pos.add(j, 0, k)).getY() + 32);
+				DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, pos.add(j, l, k));
+			}
+		}
 	}
+
 	 @Override
 	    public void addDefaultFlowers()
 	    {
