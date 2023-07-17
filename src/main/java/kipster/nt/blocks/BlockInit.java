@@ -15,8 +15,6 @@ public class BlockInit {
 	public static final List<Block> BLOCKS = new ArrayList<Block>();
 
 	//LEAVES
-	public static final Block OLIVELEAVES = new BlockLeavesOlive("olive_leaves_green", Material.LEAVES);
-
 	public static final Block CONIFERLEAVESYELLOW = new BlockLeavesConiferYellow("conifer_leaves_yellow", Material.LEAVES);
 	public static final Block CONIFERLEAVESORANGE = new BlockLeavesConiferOrange("conifer_leaves_orange", Material.LEAVES);
 	public static final Block CHERRYLEAVESPURPLE = new BlockLeavesCherryPurple("cherry_leaves_purple", Material.LEAVES);
