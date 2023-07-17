@@ -21,14 +21,13 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.*;
 import net.minecraftforge.common.ForgeModContainer;
+import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
 import java.util.*;
 import java.util.concurrent.*;
 
-public class BiomeAutumnTaiga extends Biome 
+public class BiomeAutumnTaiga extends Biome
 {
-
-	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
 	protected static final WorldGenerator CHRYSANTHEMUMflower= new WorldGenChrysanthemumFlower(BlockInit.CHRYSANTHEMUMFLOWER.getDefaultState());
 	protected static final WorldGenerator AMBROSIAflower = new WorldGenAlliumFlower(BlockInit.AMBROSIAFLOWER.getDefaultState());
 	protected static final WorldGenerator AGAPANTHUSflower = new WorldGenAspalathusFlower(BlockInit.AGAPANTHUSFLOWER.getDefaultState());
@@ -41,110 +40,7 @@ public class BiomeAutumnTaiga extends Biome
 
 	private final WorldGenTreeTallSpruce spruceGenerator = new WorldGenTreeTallSpruce(true);
 
-	private static final DiamondGenerator DIAMOND_GENERATOR = new DiamondGenerator();
-   public BiomeAutumnTaiga(BiomeProperties properties)
-	{	
-		super(properties);
-	
-		topBlock = Blocks.GRASS.getDefaultState();
-		fillerBlock = Blocks.DIRT.getDefaultState();
-		
-		 this.decorator.generateFalls = true;
-       
-       this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityWolf.class, 8, 4, 4));
-       this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityRabbit.class, 4, 2, 3));
-       this.decorator.treesPerChunk = 7;
-       this.decorator.grassPerChunk = 4;
-       this.decorator.gravelPatchesPerChunk = 4;
-
-	}
-
-   @Override
-	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-	   rand.nextInt(1);
-	   if (rand.nextInt(3) > 0)
-	   {
-			 return this.spruceGenerator;
-	   }
-
-	   else
-	   {
-			 return rand.nextInt(4) == 0 ? YELLOW_TREE : ORANGE_TREE;
-
-		   }
-	}
-
-	   @Override
-	   public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
-	       if (noiseVal > 2.50D) {
-	           this.topBlock = Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL);
-	           this.fillerBlock = Blocks.DIRT.getDefaultState();  }
-	       else {
-	        this.topBlock = Blocks.GRASS.getDefaultState();
-	           this.fillerBlock = Blocks.DIRT.getDefaultState();
-	       }
-
-	       this.generateBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
-	}
-
-	public WorldGenerator getRandomWorldGenForGrass(Random rand)
-   {
-       return rand.nextInt(5) > 0 ? new WorldGenTallGrass(BlockTallGrass.EnumType.FERN) : new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);
-   }
-
-	public void decorate(World worldIn, Random rand, BlockPos pos) {
-		int flowersPerChunk = 16;
-
-		generateFlowers(worldIn, rand, pos, flowersPerChunk, CHRYSANTHEMUMflower);
-		generateFlowers(worldIn, rand, pos, flowersPerChunk, AMBROSIAflower);
-		generateFlowers(worldIn, rand, pos, flowersPerChunk, AGAPANTHUSflower);
-
-		net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
-		WorldGenerator diamonds = new DiamondGenerator();
-		if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, diamonds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.DIAMOND)) {
-			diamonds.generate(worldIn, rand, pos);
-		}
-
-		super.decorate(worldIn, rand, pos);
-
-	}
-	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
-		for (int i = 0; i < flowersPerChunk; ++i) {
-
-			// Generate a random offset in x and z directions
-			int offsetX = rand.nextInt(16) + 8;
-			int offsetZ = rand.nextInt(16) + 8;
-
-			boolean success = false;
-
-			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
-				BlockPos blockpos = pos.add(
-						offsetX,                  // Use random x offset
-						rand.nextInt(10) + 60,
-						offsetZ);                 // Use random z offset
-
-				if (flowerGenerator.generate(worldIn, rand, blockpos)) {
-					success = true;
-				}
-			}
-
-			if (success) {
-				break; // Move on to the next group of flowers
-			}
-		}
-	}
-
-	@Override
-	public int getModdedBiomeGrassColor(int original) {
-	    return super.getModdedBiomeGrassColor(0xA4BA6B);
-	}
-	@Override
-	public int getModdedBiomeFoliageColor(int original) {
-	    return super.getModdedBiomeFoliageColor(0xA4BA6B);
-	}
-
-	public static class DiamondGenerator extends WorldGenerator {
-
+	private static class DiamondGenerator extends WorldGenerator {
 		private final Set<Block> replaceableBlocks = ImmutableSet.of(Blocks.STONE);
 
 		@Override
@@ -180,6 +76,7 @@ public class BiomeAutumnTaiga extends Biome
 					return null;
 				});
 			}
+
 			try {
 				ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 				executor.invokeAll(tasks);
@@ -191,5 +88,93 @@ public class BiomeAutumnTaiga extends Biome
 
 			return blockStates;
 		}
+	}
+
+	public BiomeAutumnTaiga(BiomeProperties properties) {
+		super(properties);
+
+		topBlock = Blocks.GRASS.getDefaultState();
+		fillerBlock = Blocks.DIRT.getDefaultState();
+
+		this.decorator.generateFalls = true;
+		this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityWolf.class, 8, 4, 4));
+		this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityRabbit.class, 4, 2, 3));
+		this.decorator.treesPerChunk = 7;
+		this.decorator.grassPerChunk = 4;
+		this.decorator.gravelPatchesPerChunk = 4;
+	}
+
+	@Override
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+		rand.nextInt(1);
+		if (rand.nextInt(3) > 0) {
+			return this.spruceGenerator;
+		} else {
+			return rand.nextInt(4) == 0 ? YELLOW_TREE : ORANGE_TREE;
+		}
+	}
+
+	@Override
+	public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
+		if (noiseVal > 2.50D) {
+			this.topBlock = Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL);
+			this.fillerBlock = Blocks.DIRT.getDefaultState();
+		} else {
+			this.topBlock = Blocks.GRASS.getDefaultState();
+			this.fillerBlock = Blocks.DIRT.getDefaultState();
+		}
+
+		this.generateBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
+	}
+
+	public WorldGenerator getRandomWorldGenForGrass(Random rand) {
+		return rand.nextInt(5) > 0 ? new WorldGenTallGrass(BlockTallGrass.EnumType.FERN) : new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);
+	}
+
+	public void decorate(World worldIn, Random rand, BlockPos pos) {
+		int flowersPerChunk = 16;
+
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, CHRYSANTHEMUMflower);
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, AMBROSIAflower);
+		generateFlowers(worldIn, rand, pos, flowersPerChunk, AGAPANTHUSflower);
+
+		net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
+		WorldGenerator diamonds = new DiamondGenerator();
+		if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, diamonds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.DIAMOND)) {
+			diamonds.generate(worldIn, rand, pos);
+		}
+
+		super.decorate(worldIn, rand, pos);
+	}
+
+	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
+		for (int i = 0; i < flowersPerChunk; ++i) {
+			// Generate a random offset in x and z directions
+			int offsetX = rand.nextInt(16) + 8;
+			int offsetZ = rand.nextInt(16) + 8;
+			boolean success = false;
+
+			for (int j = 0; j < 3 + rand.nextInt(3); j++) {
+				BlockPos blockpos = pos.add(offsetX, rand.nextInt(10) + 60, offsetZ);
+
+				if (flowerGenerator.generate(worldIn, rand, blockpos)) {
+					success = true;
+				}
+			}
+
+			if (success) {
+				break; // Move on to the next group of flowers
+			}
+		}
+	}
+
+	@Override
+	public int getModdedBiomeGrassColor(int original) {
+		return super.getModdedBiomeGrassColor(0xA4BA6B);
+	}
+
+	@Override
+	public int getModdedBiomeFoliageColor(int original) {
+		return super.getModdedBiomeFoliageColor(0xA4BA6B);
 	}
 }
