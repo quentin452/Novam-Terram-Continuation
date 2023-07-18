@@ -64,10 +64,6 @@ public class BiomeWhiteOrchard extends Biome
 
 
 	public void decorate(World worldIn, Random rand, BlockPos pos) {
-		super.decorate(worldIn, rand, pos);
-
-		// Perform parent biome's decorations first
-
 		// Add specific decorations for this biome
 		net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
 		WorldGenerator emeralds = new EmeraldGenerator();
@@ -83,6 +79,7 @@ public class BiomeWhiteOrchard extends Biome
 				DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, pos.add(j, l, k));
 			}
 		}
+		super.decorate(worldIn, rand, pos);
 	}
 
 	 @Override

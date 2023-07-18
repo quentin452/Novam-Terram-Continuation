@@ -114,7 +114,6 @@ import java.util.Random;
 		{
 			int flowersPerChunk = 4
 					;
-		    super.decorate(worldIn, rand, pos);
 			generateFlowers(worldIn, rand, pos, flowersPerChunk, NEGLECTEDSCORPIONWEEDFLOWER);
 			generateFlowers(worldIn, rand, pos, flowersPerChunk, VERONICAFLOWER);
 
@@ -132,6 +131,7 @@ import java.util.Random;
 		        this.silverfishSpawner.generate(worldIn, rand, pos.add(k1, l1, i2));
 		    }
 		    net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Post(worldIn, rand, pos));
+			super.decorate(worldIn, rand, pos);
 		}
 		
 		public static class LapisGenerator extends WorldGenerator

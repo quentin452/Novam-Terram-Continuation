@@ -81,7 +81,6 @@ public class BiomeAegeanArchipelago extends Biome
 
 	    public void decorate(World worldIn, Random rand, BlockPos pos)
 	    {
-	        super.decorate(worldIn, rand, pos);
 			int flowersPerChunk = 2;
 			generateFlowers(worldIn, rand, pos, flowersPerChunk, CAMBRIDGEBLUEFLOWER);
 			generateFlowers(worldIn, rand, pos, flowersPerChunk, CRASSULAFLOWER);
@@ -106,7 +105,8 @@ public class BiomeAegeanArchipelago extends Biome
 	            emeralds.generate(worldIn, rand, pos);
 	      
 	        net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Post(worldIn, rand, pos));
-	    }
+			super.decorate(worldIn, rand, pos);
+		}
 	        @Override
 	    	public int getModdedBiomeGrassColor(int original) {
 	    	    return super.getModdedBiomeGrassColor(0x96db1c);

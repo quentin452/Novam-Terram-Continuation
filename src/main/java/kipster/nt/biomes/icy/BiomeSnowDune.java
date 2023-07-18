@@ -67,9 +67,6 @@ public class BiomeSnowDune extends Biome
 				BlockPos blockpos = worldIn.getHeight(pos.add(k6, 0, l));
 				ICE_PATCHES.generate(worldIn, rand, blockpos);
 			}
-		
-
-           
 	    super.decorate(worldIn, rand, pos);
 		}
 

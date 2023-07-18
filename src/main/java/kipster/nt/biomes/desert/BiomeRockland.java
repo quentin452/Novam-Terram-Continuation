@@ -120,8 +120,6 @@ public class BiomeRockland extends Biome
 	
 	        public void decorate(World worldIn, Random rand, BlockPos pos)
 	        {
-	            super.decorate(worldIn, rand, pos);
-
 				int flowersPerChunk = 3;
 
 				generateFlowers(worldIn, rand, pos, flowersPerChunk, ROYALBLUEBELLFLOWER);
@@ -175,6 +173,7 @@ public class BiomeRockland extends Biome
 			                STONE.generate(worldIn, rand, blockpos);
 			            }
 		            }
+				super.decorate(worldIn, rand, pos);
 	          }
 	        
 	        @Override

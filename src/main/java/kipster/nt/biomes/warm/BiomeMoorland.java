@@ -47,8 +47,6 @@ public class BiomeMoorland extends Biome
 	    }
 
 	public void decorate(World worldIn, Random rand, BlockPos pos) {
-		super.decorate(worldIn, rand, pos);
-
 		if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, new net.minecraft.util.math.ChunkPos(pos), net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.FOSSIL)) {
 			if (rand.nextInt(64) == 0) {
 				(new WorldGenFossils()).generate(worldIn, rand, pos);
@@ -60,6 +58,7 @@ public class BiomeMoorland extends Biome
 		if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, emeralds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.EMERALD)) {
 			emeralds.generate(worldIn, rand, pos);
 		}
+		super.decorate(worldIn, rand, pos);
 	}
 
 	@Override

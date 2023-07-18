@@ -45,8 +45,6 @@ public class BiomeLake extends Biome
 
 	public void decorate(World worldIn, Random rand, BlockPos pos)
 	{
-	    super.decorate(worldIn, rand, pos);
-
 	    net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
         WorldGenerator emeralds = new EmeraldGenerator();
         if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, emeralds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.EMERALD))
@@ -62,6 +60,7 @@ public class BiomeLake extends Biome
 	        int l = rand.nextInt(worldIn.getHeight(pos.add(j, 0, k)).getY() + 32);
 	        DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, pos.add(j, l, k));
 	    }
+		super.decorate(worldIn, rand, pos);
 	}
 	    public static class EmeraldGenerator extends WorldGenerator
 	    {

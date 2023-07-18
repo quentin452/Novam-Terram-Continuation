@@ -110,9 +110,7 @@ public class BiomeCliffs extends Biome
 				COBBLESTONE_LINE.generate(worldIn, rand, blockpos);
 			}
 		}
-
 		super.decorate(worldIn, rand, pos);
-
 	}
 	@Override
 	public int getModdedBiomeGrassColor(int original) {

@@ -26,14 +26,12 @@ public class BiomeBrownBeach extends Biome
     }
 	 public void decorate(World worldIn, Random rand, BlockPos pos)
      {
-         super.decorate(worldIn, rand, pos);
-         
+
          net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
          WorldGenerator emeralds = new EmeraldGenerator();
          if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, emeralds, pos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.EMERALD))
              emeralds.generate(worldIn, rand, pos);
-         
-	           
+		 super.decorate(worldIn, rand, pos);
      }
 	      public static class EmeraldGenerator extends WorldGenerator
 		    {

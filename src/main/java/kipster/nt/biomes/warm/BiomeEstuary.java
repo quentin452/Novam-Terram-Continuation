@@ -102,8 +102,6 @@ public class BiomeEstuary extends Biome
 
 	    public void decorate(World worldIn, Random rand, BlockPos pos)
 	    {
-	        super.decorate(worldIn, rand, pos);
-
 	        if(net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, new net.minecraft.util.math.ChunkPos(pos), net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.FOSSIL))
 	        if (rand.nextInt(64) == 0)
 	        {
@@ -115,7 +113,8 @@ public class BiomeEstuary extends Biome
 	            emeralds.generate(worldIn, rand, pos);
 	      
 	        net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Post(worldIn, rand, pos));
-	    }
+			super.decorate(worldIn, rand, pos);
+		}
 	  	@Override
 	   	public int getModdedBiomeGrassColor(int original) {
 	   	    return 0x92B25C;
