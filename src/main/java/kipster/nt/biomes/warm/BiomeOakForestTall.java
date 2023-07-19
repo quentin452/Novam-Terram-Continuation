@@ -10,6 +10,8 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeOakForestTall extends Biome 
@@ -34,15 +36,23 @@ public class BiomeOakForestTall extends Biome
 	    this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityWolf.class, 5, 4, 4));
 		
 	}
-	
-	public WorldGenAbstractTree getRandomTreeFeature(Random rand)
-    {
-		
-            return (WorldGenAbstractTree)(rand.nextInt(10) == 0 ? TALL_OAK_TREE : OAK_TREE);
-      
-            
-    }
-    
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
+		int tallOakWeight = 1;
+		int oakWeight = 9;
+
+		int totalWeight = tallOakWeight + oakWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(TALL_OAK_TREE);
+		treeList.add(OAK_TREE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+	}
+
 	public void decorate(World worldIn, Random rand, BlockPos pos)
 	{
 		 net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));

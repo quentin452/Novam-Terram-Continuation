@@ -2,8 +2,6 @@ package kipster.nt.biomes.desert;
 
 import kipster.nt.blocks.BlockInit;
 import kipster.nt.world.gen.WorldGenPatches;
-import kipster.nt.world.gen.flowers.WorldGenGalanthusFlower;
-import kipster.nt.world.gen.flowers.WorldGenNartheciumFlower;
 import kipster.nt.world.gen.flowers.WorldGenSumastraFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubJungle;
 import net.minecraft.block.*;
@@ -19,7 +17,9 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeTropicalDesert extends Biome 
@@ -70,12 +70,24 @@ public class BiomeTropicalDesert extends Biome
 	    {
 	        return rand.nextInt(4) == 0 ? new WorldGenTallGrass(BlockTallGrass.EnumType.FERN) : new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);
 	    }
-	
-	public WorldGenAbstractTree getRandomTreeFeature(Random rand)
-    {
-        return (WorldGenAbstractTree)(rand.nextInt(4) > 0 ? new WorldGenTrees(false, 4 + rand.nextInt(7), JUNGLE_LOG, JUNGLE_LEAF, true) : SHRUB_JUNGLE);
-}
-	
+
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
+		int jungleTreeWeight = 4;
+		int shrubWeight = 1;
+
+		int totalWeight = jungleTreeWeight + shrubWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(new WorldGenTrees(false, 4 + rand.nextInt(7), JUNGLE_LOG, JUNGLE_LEAF, true));
+		treeList.add(SHRUB_JUNGLE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+	}
+
 	@Override
     public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
         if (noiseVal > 1.85D) {

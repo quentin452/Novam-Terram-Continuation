@@ -13,6 +13,8 @@ import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeTundra extends Biome 
@@ -37,11 +39,21 @@ public class BiomeTundra extends Biome
 	    
 	    this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityRabbit.class, 4, 2, 3));
 	}
-	
-	@Override
-	public WorldGenAbstractTree getRandomTreeFeature(Random rand) 
-	{
-		return (WorldGenAbstractTree)(rand.nextInt(2) == 0 ? SHRUB_SPRUCE : SHRUB_SPRUCE);
+
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
+		int spruceShrubWeight = 1;
+
+		int totalWeight = spruceShrubWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(SHRUB_SPRUCE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+
 	}
 	
 	public WorldGenerator getRandomWorldGenForGrass(Random rand)

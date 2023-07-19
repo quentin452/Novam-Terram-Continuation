@@ -14,6 +14,8 @@ import net.minecraft.world.gen.feature.WorldGenBigTree;
 import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeWhiteOrchard extends Biome 
@@ -42,19 +44,23 @@ public class BiomeWhiteOrchard extends Biome
 	    this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityPig.class, 5, 2, 6));
         this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityCow.class, 8, 4, 4));
 	}
-	
-	@Override
-	public WorldGenAbstractTree getRandomTreeFeature(Random rand) 
-	{
-	if (rand.nextInt(3) > 0)
-	{
-		return (WorldGenAbstractTree)(rand.nextInt(3) == 0 ? TREE_ORCHARD : OAK_TREE);
-	}
-	else
-	{
-		return (WorldGenAbstractTree)(rand.nextInt(3) == 0 ? SHRUB_WHITEMYRTLE : SHRUB_WHITEMYRTLE);
-		
-		}
+
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
+		int treeOrchardWeight = 1;
+		int oakWeight = 1;
+		int shrubWeight = 1;
+
+		int totalWeight = treeOrchardWeight + oakWeight + shrubWeight;
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(TREE_ORCHARD);
+		treeList.add(OAK_TREE);
+		treeList.add(SHRUB_WHITEMYRTLE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
 	}
 	public BlockFlower.EnumFlowerType pickRandomFlower(Random rand, BlockPos pos)
     

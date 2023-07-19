@@ -18,6 +18,8 @@ import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeLowland extends Biome 
@@ -47,24 +49,25 @@ public class BiomeLowland extends Biome
 	    this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityRabbit.class, 4, 2, 3));
 	    
 	}
-	
-	
-	@Override
-	public WorldGenAbstractTree getRandomTreeFeature(Random rand) 
-	{
-	if (rand.nextInt(3) > 0)
-	{
-		return (WorldGenAbstractTree)(rand.nextInt(3) == 0 ? this.spruceGenerator : this.spruceGenerator);
+
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
+		int spruceWeight = 1;
+		int spruceShrubWeight = 1;
+
+		int totalWeight = spruceWeight + spruceShrubWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(this.spruceGenerator);
+		treeList.add(SHRUB_SPRUCE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+
 	}
-	else
-	{
-		return (WorldGenAbstractTree)(rand.nextInt(3) == 0 ? SHRUB_SPRUCE : SHRUB_SPRUCE);
-		
-		}
-	}
-	
-	
-	
+
 	public WorldGenerator getRandomWorldGenForGrass(Random rand)
 	{
 	    return rand.nextInt(4) == 0 ? new WorldGenTallGrass(BlockTallGrass.EnumType.FERN) : new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);

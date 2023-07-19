@@ -17,7 +17,9 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeLushDesert extends Biome 
@@ -65,7 +67,20 @@ public class BiomeLushDesert extends Biome
 	    }
 
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-		return (WorldGenAbstractTree) (rand.nextInt(4) > 0 ? new WorldGenTrees(false, 4 + rand.nextInt(7), JUNGLE_LOG, JUNGLE_LEAF, true) : SHRUB_JUNGLE);
+
+		int jungleTreeWeight = 4;
+		int jungleShrubWeight = 1;
+
+		int totalWeight = jungleTreeWeight + jungleShrubWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(new WorldGenTrees(false, 4 + rand.nextInt(7), JUNGLE_LOG, JUNGLE_LEAF, true));
+		treeList.add(SHRUB_JUNGLE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
 	}
 	
 	@Override

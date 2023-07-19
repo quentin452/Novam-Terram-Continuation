@@ -4,6 +4,7 @@ import kipster.nt.world.gen.trees.WorldGenTreeShrubAcacia;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubDarkOak;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubJacaranda;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubOak;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.entity.passive.EntityCow;
@@ -18,6 +19,8 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeHeath extends Biome 
@@ -44,22 +47,27 @@ public class BiomeHeath extends Biome
 	    this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityPig.class, 5, 2, 6));
         this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityCow.class, 8, 4, 4));
 	}
-	
-	@Override
+
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-	if (rand.nextInt(2) > 0)
-	{
-		return SHRUB_JACARANDA;
-	}
-	else if (rand.nextInt(3) == 0)
-	 {
-	     return SHRUB_ACACIA;
-	 }
-	else
-	{
-		return (WorldGenAbstractTree)(rand.nextInt(4) == 0 ? SHRUB_OAK : SHRUB_DARKOAK);
-		
-		}
+
+		int jacarandaShrubWeight = 1;
+		int acaciaShrubWeight  = 4;
+		int oakShrubWeight = 3;
+		int darkOakShrubWeight = 1;
+
+		int totalWeight = jacarandaShrubWeight + acaciaShrubWeight +
+				oakShrubWeight + darkOakShrubWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(SHRUB_JACARANDA);
+		treeList.add(SHRUB_ACACIA);
+		treeList.add(SHRUB_OAK);
+		treeList.add(SHRUB_DARKOAK);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
 	}
 	
 	
@@ -74,31 +82,40 @@ public class BiomeHeath extends Biome
         return BlockFlower.EnumFlowerType.ALLIUM;
     }
     }
-	
-	
-	public void addDoublePlants(World p_185378_1_, Random p_185378_2_, BlockPos p_185378_3_, int p_185378_4_)
-	{
-	    for (int i = 0; i < p_185378_4_; ++i)
-	    {
-	        int j = p_185378_2_.nextInt(3);
 
-	        if (j == 0)
-	        {
-	            DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.SYRINGA);
-	        }
 
-	        for (int k = 0; k < 5; ++k)
-	        {
-	            int l = p_185378_2_.nextInt(16) + 8;
-	            int i1 = p_185378_2_.nextInt(16) + 8;
-	            int j1 = p_185378_2_.nextInt(p_185378_1_.getHeight(p_185378_3_.add(l, 0, i1)).getY() + 32);
+	public void addDoublePlants(World world, Random random, BlockPos pos, int count) {
 
-	            if (DOUBLE_PLANT_GENERATOR.generate(p_185378_1_, p_185378_2_, new BlockPos(p_185378_3_.getX() + l, j1, p_185378_3_.getZ() + i1)))
-	            {
-	                break;
-	            }
-	        }
-	    }
+
+		ArrayList<BlockDoublePlant.EnumPlantType> validPlantTypes = new ArrayList<>();
+		validPlantTypes.add(BlockDoublePlant.EnumPlantType.SYRINGA);
+		validPlantTypes.add(BlockDoublePlant.EnumPlantType.ROSE);
+		validPlantTypes.add(BlockDoublePlant.EnumPlantType.PAEONIA);
+
+		BlockDoublePlant.EnumPlantType plantType = getRandomPlantType(random, validPlantTypes);
+		DOUBLE_PLANT_GENERATOR.setPlantType(plantType);
+
+		for (int i = 0; i < count; i++) {
+
+			int x = random.nextInt(16) + 8;
+			int z = random.nextInt(16) + 8;
+			BlockPos plantPos = pos.add(x, findTopNonAirBlock(world, pos.add(x, 0, z)), z);
+
+			DOUBLE_PLANT_GENERATOR.generate(world, random, plantPos);
+		}
+	}
+
+	private BlockDoublePlant.EnumPlantType getRandomPlantType(Random random,
+															  ArrayList<BlockDoublePlant.EnumPlantType> plantTypes) {
+		return plantTypes.get(random.nextInt(plantTypes.size()));
+	}
+
+	private int findTopNonAirBlock(World world, BlockPos pos) {
+		for (int y = 255; y >=0 ; y--) {
+			Block block = world.getBlockState(pos.add(0, y , 0)).getBlock();
+			if (block != Blocks.AIR) return y+1;
+		}
+		return -1;
 	}
 	
 	

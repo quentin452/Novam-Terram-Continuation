@@ -15,6 +15,8 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenTaiga2;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeNHills extends Biome 
@@ -52,13 +54,23 @@ public class BiomeNHills extends Biome
         
 		
 	}
-	
-	 public WorldGenAbstractTree getRandomTreeFeature(Random rand)
-	    {
-	        return (WorldGenAbstractTree)(rand.nextInt(3) > 0 ? this.spruceGenerator : super.getRandomTreeFeature(rand));
-	    }
 
-	
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
+		int spruceWeight = 1;
+
+		int totalWeight = spruceWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(this.spruceGenerator);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+
+	}
+
 	public void decorate(World worldIn, Random rand, BlockPos pos)
 	{
 		 net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));

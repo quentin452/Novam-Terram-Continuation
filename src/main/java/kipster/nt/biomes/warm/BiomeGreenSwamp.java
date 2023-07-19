@@ -13,6 +13,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeGreenSwamp extends Biome 
@@ -44,14 +46,21 @@ public class BiomeGreenSwamp extends Biome
 
 	@Override
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-	if (rand.nextInt(2) > 0)
-	{
-		  return DEAD;
-	}
-	else
-	{
-	  return (WorldGenAbstractTree)(rand.nextInt(4) == 0 ? SWAMP_FEATURE : SWAMP_FEATURE);
-	}
+
+		int deadWeight = 2;
+		int swampWeight = 1;
+
+		int totalWeight = deadWeight + swampWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(DEAD);
+		treeList.add(SWAMP_FEATURE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+
 	}
 	    public WorldGenerator getRandomWorldGenForGrass(Random rand)
 	    {

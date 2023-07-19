@@ -2,6 +2,7 @@ package kipster.nt.biomes.warm;
 
 import kipster.nt.world.gen.trees.WorldGenTreeJacaranda;
 import kipster.nt.world.gen.trees.WorldGenTreePaulownia;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.entity.passive.EntityWolf;
@@ -14,6 +15,8 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeRoyalForest extends Biome 
@@ -50,47 +53,56 @@ public class BiomeRoyalForest extends Biome
             BlockFlower.EnumFlowerType blockflower$enumflowertype = BlockFlower.EnumFlowerType.values()[(int)(d0 * (double)BlockFlower.EnumFlowerType.values().length)];
             return blockflower$enumflowertype == BlockFlower.EnumFlowerType.BLUE_ORCHID ? BlockFlower.EnumFlowerType.POPPY : blockflower$enumflowertype;
 	}
-	
-	@Override
+
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-	{
-	  return (WorldGenAbstractTree)(rand.nextInt(4) == 0 ? JACARANDA_TREE : PAULOWNIA_TREE);
-	}
-	}
-	
-	public void addDoublePlants(World p_185378_1_, Random p_185378_2_, BlockPos p_185378_3_, int p_185378_4_)
-	{
-	    for (int i = 0; i < p_185378_4_; ++i)
-	    {
-	        int j = p_185378_2_.nextInt(3);
 
-	        if (j == 0)
-	        {
-	            DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.SYRINGA);
-	        }
-	        else if (j == 1)
-	        {
-	            DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.ROSE);
-	        }
-	        else if (j == 2)
-	        {
-	            DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.PAEONIA);
-	        }
+		int jacarandaWeight = 1;
+		int paulowniaWeight = 3;
 
-	        for (int k = 0; k < 5; ++k)
-	        {
-	            int l = p_185378_2_.nextInt(16) + 8;
-	            int i1 = p_185378_2_.nextInt(16) + 8;
-	            int j1 = p_185378_2_.nextInt(p_185378_1_.getHeight(p_185378_3_.add(l, 0, i1)).getY() + 32);
+		int totalWeight = jacarandaWeight + paulowniaWeight;
 
-	            if (DOUBLE_PLANT_GENERATOR.generate(p_185378_1_, p_185378_2_, new BlockPos(p_185378_3_.getX() + l, j1, p_185378_3_.getZ() + i1)))
-	            {
-	                break;
-	            }
-	        }
-	    }
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(JACARANDA_TREE);
+		treeList.add(PAULOWNIA_TREE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
 	}
-    
+
+	public void addDoublePlants(World world, Random random, BlockPos pos, int count) {
+
+		ArrayList<BlockDoublePlant.EnumPlantType> validPlantTypes = new ArrayList<>();
+		validPlantTypes.add(BlockDoublePlant.EnumPlantType.SYRINGA);
+		validPlantTypes.add(BlockDoublePlant.EnumPlantType.ROSE);
+		validPlantTypes.add(BlockDoublePlant.EnumPlantType.PAEONIA);
+
+		BlockDoublePlant.EnumPlantType plantType = getRandomPlantType(random, validPlantTypes);
+		DOUBLE_PLANT_GENERATOR.setPlantType(plantType);
+
+		for (int i = 0; i < count; i++) {
+
+			int x = random.nextInt(16) + 8;
+			int z = random.nextInt(16) + 8;
+			BlockPos plantPos = pos.add(x, findTopNonAirBlock(world, pos.add(x, 0, z)), z);
+
+			DOUBLE_PLANT_GENERATOR.generate(world, random, plantPos);
+		}
+	}
+
+	private BlockDoublePlant.EnumPlantType getRandomPlantType(Random random,
+															  ArrayList<BlockDoublePlant.EnumPlantType> plantTypes) {
+		return plantTypes.get(random.nextInt(plantTypes.size()));
+	}
+
+	private int findTopNonAirBlock(World world, BlockPos pos) {
+		for (int y = 255; y >=0 ; y--) {
+			Block block = world.getBlockState(pos.add(0, y , 0)).getBlock();
+			if (block != Blocks.AIR) return y+1;
+		}
+		return -1;
+	}
 	public void decorate(World worldIn, Random rand, BlockPos pos)
 	{
 		 net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));

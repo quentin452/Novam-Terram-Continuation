@@ -1,0 +1,7 @@
+
+{
+    "parent": "block/leaves",
+    "textures": {
+        "all": "nt:blocks/olive_leaves_green"
+    }
+}

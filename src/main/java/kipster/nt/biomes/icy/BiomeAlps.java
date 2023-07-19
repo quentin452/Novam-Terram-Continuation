@@ -3,10 +3,8 @@ package kipster.nt.biomes.icy;
 import kipster.nt.blocks.BlockInit;
 import kipster.nt.world.gen.WorldGenPatches;
 import kipster.nt.world.gen.flowers.WorldGenNeglectedScorpionweedFlower;
-import kipster.nt.world.gen.flowers.WorldGenSumastraFlower;
 import kipster.nt.world.gen.flowers.WorldGenVeronicaFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeTallSpruce;
-import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockSilverfish;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -23,7 +21,9 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 	public class BiomeAlps extends Biome 
@@ -73,9 +73,20 @@ import java.util.Random;
 	        this.generateBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
 	}
 
-		public WorldGenAbstractTree getRandomTreeFeature(Random rand)
-		{
-		    return (WorldGenAbstractTree)(rand.nextInt(3) > 0 ? this.spruceGenerator : this.spruceGenerator);
+		public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
+			int spruceWeight = 1;
+
+			int totalWeight = spruceWeight;
+
+			int randomWeight = rand.nextInt(totalWeight);
+
+			List<WorldGenAbstractTree> treeList = new ArrayList<>();
+			treeList.add(this.spruceGenerator);
+
+			int treeIndex = randomWeight % treeList.size();
+			return treeList.get(treeIndex);
+
 		}
 		
 		public WorldGenerator getRandomWorldGenForGrass(Random rand)

@@ -14,6 +14,8 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeBirchHills extends Biome 
@@ -39,18 +41,22 @@ public class BiomeBirchHills extends Biome
 	    this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntitySheep.class, 5, 2, 6));
 	    this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityPig.class, 5, 2, 6));
 	}
-	
-	@Override
+
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-	if (rand.nextInt(3) > 0)
-	{
-		return SHRUB_BIRCH;
-	}
-	else
-	{
-		return (WorldGenAbstractTree)(rand.nextInt(3) == 0 ? POPLAR_TREE : POPLAR_TREE);
-		
-		}
+
+		int shrubBirchWeight = 1;
+		int poplarTreeWeight = 3;
+
+		int totalWeight = shrubBirchWeight + poplarTreeWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(SHRUB_BIRCH);
+		treeList.add(POPLAR_TREE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
 	}
 	
 	public void decorate(World worldIn, Random rand, BlockPos pos)

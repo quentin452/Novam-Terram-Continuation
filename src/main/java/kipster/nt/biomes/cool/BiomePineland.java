@@ -1,7 +1,9 @@
 package kipster.nt.biomes.cool;
 
 import kipster.nt.blocks.BlockInit;
-import kipster.nt.world.gen.flowers.*;
+import kipster.nt.world.gen.flowers.WorldGenAethionemaFlower;
+import kipster.nt.world.gen.flowers.WorldGenAgapantusFlower;
+import kipster.nt.world.gen.flowers.WorldGenAmbrosiaFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubSpruce;
 import kipster.nt.world.gen.trees.WorldGenTreeTallSpruce;
 import net.minecraft.block.BlockTallGrass;
@@ -16,6 +18,8 @@ import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomePineland extends Biome 
@@ -45,19 +49,25 @@ public class BiomePineland extends Biome
 	    this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntitySheep.class, 5, 2, 6));
 		
 	}
-	
-	@Override
+
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-	if (rand.nextInt(3) > 0)
-	{
-		  return this.spruceGenerator;
+
+		int spruceWeight = 1;
+		int spruceShrubWeight = 1;
+
+		int totalWeight = spruceWeight + spruceShrubWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(this.spruceGenerator);
+		treeList.add(SHRUB_SPRUCE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+
 	}
-	else
-	{
-	  return (WorldGenAbstractTree)(rand.nextInt(1) == 0 ? SHRUB_SPRUCE : SHRUB_SPRUCE);
-	}
-	
-	}
+
 	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
 		for (int i = 0; i < flowersPerChunk; ++i) {
 

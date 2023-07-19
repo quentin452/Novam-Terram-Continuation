@@ -9,6 +9,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeMixedForest extends Biome 
@@ -36,26 +38,29 @@ public class BiomeMixedForest extends Biome
 	    this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityWolf.class, 5, 4, 4));
 		
 	}
-	
-	public WorldGenAbstractTree getRandomTreeFeature(Random rand)
-	{
-		  if (rand.nextInt(3) > 0)
-	        {
-	    return (WorldGenAbstractTree)(rand.nextInt(3) > 0 ? this.spruceGenerator : super.getRandomTreeFeature(rand));
-	        }
-	    else if (rand.nextInt(5) != 0)
-        {
-            return (WorldGenAbstractTree)(rand.nextInt(10) == 0 ? BIG_TREE_FEATURE : SUPER_BIRCH_TREE);
-        }
-	    else if (rand.nextInt(4) != 0)
-        {
-            return (WorldGenAbstractTree)(rand.nextInt(10) == 0 ? this.otherspruceGenerator : TREE_FEATURE);
-        }
-        else
-        {
-            return OAK_TREE;
-        }
-}
+
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
+		int spruceWeight = 1;
+		int superBirchWeight = 10;
+		int bigSpruceWeight = 10;
+		int treeWeight = 1;
+		int oakWeight = 1;
+
+		int totalWeight = spruceWeight + superBirchWeight + bigSpruceWeight + treeWeight + oakWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(this.spruceGenerator);
+		treeList.add(SUPER_BIRCH_TREE);
+		treeList.add(BIG_TREE_FEATURE);
+		treeList.add(TREE_FEATURE);
+		treeList.add(OAK_TREE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+	}
     
 	public void decorate(World worldIn, Random rand, BlockPos pos)
 	{

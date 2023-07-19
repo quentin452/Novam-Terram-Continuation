@@ -17,7 +17,9 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.*;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeSandyScrubland extends Biome 
@@ -56,11 +58,21 @@ public class BiomeSandyScrubland extends Biome
 	        this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntityZombieVillager.class, 1, 1, 1));
 	        this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntityHusk.class, 80, 4, 4));
 	}
-	
-	public WorldGenAbstractTree getRandomTreeFeature(Random rand)
-    {
-        return (WorldGenAbstractTree)(rand.nextInt(4) > 0 ? SHRUB_ACACIA : SHRUB_ACACIA);
-}
+
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
+		int shrubWeight = 4;
+
+		int totalWeight = shrubWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(SHRUB_ACACIA);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+	}
 	
 	@Override
     public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {

@@ -3,7 +3,6 @@ package kipster.nt.biomes.icy;
 import kipster.nt.world.gen.trees.WorldGenTreeBlueSpruce1;
 import kipster.nt.world.gen.trees.WorldGenTreeBlueSpruce2;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubBlueSpruce;
-import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.entity.passive.EntityRabbit;
@@ -17,6 +16,8 @@ import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeColdBlueTaiga extends Biome 
@@ -48,19 +49,25 @@ public class BiomeColdBlueTaiga extends Biome
   {
       return BlockFlower.EnumFlowerType.ALLIUM;
   }
-  
-  @Override
-	public WorldGenAbstractTree getRandomTreeFeature(Random rand) 
-	{
-	if (rand.nextInt(3) > 0)
-	{
-		return (WorldGenAbstractTree)(rand.nextInt(3) == 0 ? this.spruceGenerator : this.BLUE_SPRUCE);
-	}
-	else
-	{
-		return (WorldGenAbstractTree)(rand.nextInt(3) == 0 ? this.spruceGenerator : SHRUB_SPRUCE);
-		
-		}
+
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
+		int spruceWeight = 1;
+		int blueSpruceWeight = 1;
+		int spruceShrubWeight = 1;
+
+		int totalWeight = spruceWeight + blueSpruceWeight + spruceShrubWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(this.spruceGenerator);
+		treeList.add(BLUE_SPRUCE);
+		treeList.add(SHRUB_SPRUCE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+
 	}
 	
 	public WorldGenerator getRandomWorldGenForGrass(Random rand)

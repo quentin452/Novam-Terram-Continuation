@@ -3,7 +3,8 @@ package kipster.nt.biomes.desert;
 import kipster.nt.blocks.BlockInit;
 import kipster.nt.config.MiscConfig;
 import kipster.nt.world.gen.WorldGenLine;
-import kipster.nt.world.gen.flowers.*;
+import kipster.nt.world.gen.flowers.WorldGenArizonaPoppyFlower;
+import kipster.nt.world.gen.flowers.WorldGenFabaceaeFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubOak;
 import net.minecraft.entity.monster.EntityHusk;
 import net.minecraft.entity.monster.EntityZombie;
@@ -19,7 +20,9 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.*;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeClayland extends Biome 
@@ -110,11 +113,23 @@ public class BiomeClayland extends Biome
 	protected static final WorldGenerator FABACEAEFLOWER= new WorldGenFabaceaeFlower(BlockInit.FABACEAEFLOWER.getDefaultState());
 	protected static final WorldGenerator ARIZONAPOPPYFLOWER = new WorldGenArizonaPoppyFlower(BlockInit.ARIZONAPOPPYFLOWER.getDefaultState());
 
-	public WorldGenAbstractTree getRandomTreeFeature(Random rand)
-	     {
-	         return (WorldGenAbstractTree)(rand.nextInt(5) > 0 ? SHRUB_OAK : TREE_FEATURE);
-	     }
-	
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
+		int oakShrubWeight = 1;
+		int treeWeight = 5;
+
+		int totalWeight = oakShrubWeight + treeWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(SHRUB_OAK);
+		treeList.add(TREE_FEATURE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+
+	}
 	        public void decorate(World worldIn, Random rand, BlockPos pos)
 	        {
 				int flowersPerChunk = 3;

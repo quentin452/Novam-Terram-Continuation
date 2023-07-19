@@ -1,12 +1,16 @@
 package kipster.nt.biomes.cool;
 
 import kipster.nt.blocks.BlockInit;
-import kipster.nt.world.gen.flowers.*;
+import kipster.nt.world.gen.flowers.WorldGenAeschynanthusFlower;
+import kipster.nt.world.gen.flowers.WorldGenCephalophyllumFlower;
+import kipster.nt.world.gen.flowers.WorldGenDisaFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeMaple;
 import kipster.nt.world.gen.trees.WorldGenTreeRedSpruce2;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubOak;
-import net.minecraft.block.*;
-import net.minecraft.block.state.BlockStateBase;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockLog;
+import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.entity.passive.EntityRabbit;
@@ -17,10 +21,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.WorldGenLakes;
+import net.minecraft.world.gen.feature.WorldGenTallGrass;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 

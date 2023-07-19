@@ -1,10 +1,11 @@
 package kipster.nt.biomes.warm;
 
 import kipster.nt.blocks.BlockInit;
-import kipster.nt.world.gen.flowers.*;
+import kipster.nt.world.gen.flowers.WorldGenAcanthusBotFlower;
+import kipster.nt.world.gen.flowers.WorldGenAlliariaFlower;
+import kipster.nt.world.gen.flowers.WorldGenPlucheaGlutinosaFlower;
 import kipster.nt.world.gen.trees.*;
 import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntityWolf;

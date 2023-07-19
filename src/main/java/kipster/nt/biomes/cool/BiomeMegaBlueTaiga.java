@@ -6,7 +6,6 @@ import kipster.nt.world.gen.flowers.WorldGenVeronicaFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeBlueSpruce2;
 import kipster.nt.world.gen.trees.WorldGenTreeMegaBlueSpruce;
 import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntityWolf;
@@ -20,6 +19,8 @@ import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeMegaBlueTaiga extends Biome 
@@ -62,17 +63,23 @@ public class BiomeMegaBlueTaiga extends Biome
         this.generateBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
     }
 
-	@Override
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-	if (rand.nextInt(2) > 0)
-	{
-		  return this.spruceGenerator;
+
+		int spruceWeight = 2;
+		int blueSpruceWeight = 1;
+
+		int totalWeight = spruceWeight + blueSpruceWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(this.spruceGenerator);
+		treeList.add(BLUE_SPRUCE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+
 	}
-	else
-	{
-	  return (WorldGenAbstractTree)(rand.nextInt(4) == 0 ? BLUE_SPRUCE : BLUE_SPRUCE);
-	}
-}
 	public WorldGenerator getRandomWorldGenForGrass(Random rand)
    {
        return rand.nextInt(5) > 0 ? new WorldGenTallGrass(BlockTallGrass.EnumType.FERN) : new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);

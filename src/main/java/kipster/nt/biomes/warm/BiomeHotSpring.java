@@ -16,6 +16,8 @@ import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeHotSpring extends Biome 
@@ -56,13 +58,20 @@ public class BiomeHotSpring extends Biome
         this.generateBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
         
 		}
-	
-	@Override
+
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-	{
-	  return (WorldGenAbstractTree)(rand.nextInt(1) == 0 ? this.spruceGenerator : this.spruceGenerator);
-	}
-	
+
+		int spruceWeight = 1;
+
+		int totalWeight = spruceWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(this.spruceGenerator);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
 	}
 	
 	public WorldGenerator getRandomWorldGenForGrass(Random rand)

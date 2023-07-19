@@ -1,12 +1,9 @@
 package kipster.nt.biomes.desert;
 
 import kipster.nt.blocks.BlockInit;
-import kipster.nt.world.gen.flowers.WorldGenAlopecurusFlower;
 import kipster.nt.world.gen.flowers.WorldGenGalanthusFlower;
 import kipster.nt.world.gen.flowers.WorldGenNartheciumFlower;
-import kipster.nt.world.gen.flowers.WorldGenRoyalBluebellFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeShrubAcacia;
-import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.entity.monster.EntityHusk;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.monster.EntityZombieVillager;
@@ -23,7 +20,9 @@ import net.minecraft.world.gen.feature.WorldGenSavannaTree;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeScrubland extends Biome 
@@ -60,12 +59,23 @@ public class BiomeScrubland extends Biome
 	        this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntityZombieVillager.class, 1, 1, 1));
 	        this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntityHusk.class, 80, 4, 4));
 	}
-		
-	     public WorldGenAbstractTree getRandomTreeFeature(Random rand)
-	     {
-	         return (WorldGenAbstractTree)(rand.nextInt(5) > 0 ? SHRUB_ACACIA : SAVANNA_TREE);
-	     }
-	     
+
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
+		int shrubWeight = 1;
+		int savannaWeight = 4;
+
+		int totalWeight = shrubWeight + savannaWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(SHRUB_ACACIA);
+		treeList.add(SAVANNA_TREE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+	}
 	     @Override
 		   public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
 		       if (noiseVal > 2.50D) {

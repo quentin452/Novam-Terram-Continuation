@@ -17,6 +17,8 @@ import net.minecraft.world.gen.feature.WorldGenFossils;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeEstuary extends Biome 
@@ -43,17 +45,25 @@ public class BiomeEstuary extends Biome
 	        this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySlime.class, 1, 1, 1));
 	    }
 
-	public WorldGenAbstractTree getRandomTreeFeature(Random rand)
-    {
-        return (WorldGenAbstractTree)(rand.nextInt(3) > 0 ? SWAMP_TREE : SWAMP_TREE);
-}
-	    
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
+		int swampTreeWeight = 3;
+
+		int totalWeight = swampTreeWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(SWAMP_TREE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+	}
+
 	    public WorldGenerator getRandomWorldGenForGrass(Random rand)
 	    {
 	        return rand.nextInt(4) == 0 ? new WorldGenTallGrass(BlockTallGrass.EnumType.FERN) : new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);
 	    }
-	    
-	    
 
 	    public BlockFlower.EnumFlowerType pickRandomFlower(Random rand, BlockPos pos)
 	    {

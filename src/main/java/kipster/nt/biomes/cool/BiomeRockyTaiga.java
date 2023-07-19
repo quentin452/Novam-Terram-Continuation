@@ -4,10 +4,11 @@ import kipster.nt.blocks.BlockInit;
 import kipster.nt.config.MiscConfig;
 import kipster.nt.world.gen.WorldGenLine;
 import kipster.nt.world.gen.WorldGenPatches;
-import kipster.nt.world.gen.flowers.*;
+import kipster.nt.world.gen.flowers.WorldGenBrachystelmaFlower;
+import kipster.nt.world.gen.flowers.WorldGenBuckBrushFlower;
+import kipster.nt.world.gen.flowers.WorldGenClusteredBroomrapeFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeRedSpruce1;
 import kipster.nt.world.gen.trees.WorldGenTreeRedSpruce2;
-import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntityWolf;
@@ -18,6 +19,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.*;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeRockyTaiga extends Biome 
@@ -46,10 +49,22 @@ public class BiomeRockyTaiga extends Biome
 
 	}
 
-	@Override
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
 
-	  return (WorldGenAbstractTree)(rand.nextInt(4) == 0 ? this.spruceGenerator : RED_SPRUCE);
+		int spruceWeight = 1;
+		int redSpruceWeight = 3;
+
+		int totalWeight = spruceWeight + redSpruceWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(this.spruceGenerator);
+		treeList.add(RED_SPRUCE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+
 	}
 
 	public WorldGenerator getRandomWorldGenForGrass(Random rand)

@@ -1,11 +1,12 @@
 package kipster.nt.biomes.cool;
 
 import kipster.nt.blocks.BlockInit;
-import kipster.nt.world.gen.flowers.*;
+import kipster.nt.world.gen.flowers.WorldGenAlliumFlower;
+import kipster.nt.world.gen.flowers.WorldGenAspalathusFlower;
+import kipster.nt.world.gen.flowers.WorldGenChrysanthemumFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeBigAutumnTaigaOrange;
 import kipster.nt.world.gen.trees.WorldGenTreeBigAutumnTaigaYellow;
 import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntityWolf;
@@ -16,6 +17,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeMegaAutumnTaiga extends Biome 
@@ -85,17 +88,25 @@ public class BiomeMegaAutumnTaiga extends Biome
         this.generateBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
     }
 
-	@Override
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-	if (rand.nextInt(2) > 0)
-	{
-		  return this.spruceGenerator;
+
+		int spruceWeight = 2;
+		int yellowWeight = 1;
+		int orangeWeight = 3;
+
+		int totalWeight = spruceWeight + yellowWeight + orangeWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(this.spruceGenerator);
+		treeList.add(YELLOW_TREE);
+		treeList.add(ORANGE_TREE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+
 	}
-	else
-	{
-	  return (WorldGenAbstractTree)(rand.nextInt(4) == 0 ? YELLOW_TREE : ORANGE_TREE);
-	}
-}
 	public WorldGenerator getRandomWorldGenForGrass(Random rand)
    {
        return rand.nextInt(5) > 0 ? new WorldGenTallGrass(BlockTallGrass.EnumType.FERN) : new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);

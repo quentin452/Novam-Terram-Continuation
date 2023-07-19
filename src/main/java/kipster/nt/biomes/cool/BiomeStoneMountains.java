@@ -1,7 +1,10 @@
 package kipster.nt.biomes.cool;
 
 import kipster.nt.blocks.BlockInit;
-import kipster.nt.world.gen.flowers.*;
+import kipster.nt.world.gen.flowers.WorldGenAjugaFlower;
+import kipster.nt.world.gen.flowers.WorldGenAlceaFlower;
+import kipster.nt.world.gen.flowers.WorldGenAsclepiasFlower;
+import kipster.nt.world.gen.flowers.WorldGenFruitTopFlower;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSilverfish;
 import net.minecraft.block.BlockStone;
@@ -16,7 +19,6 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenTaiga2;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraftforge.common.ForgeModContainer;
 
 import java.util.ArrayList;
 import java.util.List;

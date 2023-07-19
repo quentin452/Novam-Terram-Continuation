@@ -1,5 +1,6 @@
 package kipster.nt.biomes.warm;
 
+import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -13,6 +14,7 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.WorldGenFossils;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class BiomeFen extends Biome 
@@ -58,21 +60,37 @@ public class BiomeFen extends Biome
     }
     }
 
-	public void addDoublePlants(World p_185378_1_, Random p_185378_2_, BlockPos p_185378_3_, int p_185378_4_)
-	{
-	        for (int k = 0; k < 5; ++k)
-	        {
-	            int l = p_185378_2_.nextInt(16) + 8;
-	            int i1 = p_185378_2_.nextInt(16) + 8;
-	            int j1 = p_185378_2_.nextInt(p_185378_1_.getHeight(p_185378_3_.add(l, 0, i1)).getY() + 32);
+    public void addDoublePlants(World world, Random random, BlockPos pos) {
 
-	            if (DOUBLE_PLANT_GENERATOR.generate(p_185378_1_, p_185378_2_, new BlockPos(p_185378_3_.getX() + l, j1, p_185378_3_.getZ() + i1)))
-	            {
-	                break;
-	            }
-	        }
-	    
-	}
+        ArrayList<BlockDoublePlant.EnumPlantType> plantTypes = new ArrayList<>();
+        plantTypes.add(BlockDoublePlant.EnumPlantType.SYRINGA);
+        plantTypes.add(BlockDoublePlant.EnumPlantType.ROSE);
+        plantTypes.add(BlockDoublePlant.EnumPlantType.PAEONIA);
+
+        BlockDoublePlant.EnumPlantType plantType = getRandomPlantType(random, plantTypes);
+        DOUBLE_PLANT_GENERATOR.setPlantType(plantType);
+
+        int x = random.nextInt(16) + 8;
+        int z = random.nextInt(16) + 8;
+        int y = findTopNonAirBlock(world, pos.add(x, 0, z));
+        BlockPos plantPos = pos.add(x, y, z);
+
+        DOUBLE_PLANT_GENERATOR.generate(world, random, plantPos);
+    }
+
+    private BlockDoublePlant.EnumPlantType getRandomPlantType(Random random,
+                                                              ArrayList<BlockDoublePlant.EnumPlantType> plantTypes) {
+        return plantTypes.get(random.nextInt(plantTypes.size()));
+    }
+
+    private int findTopNonAirBlock(World world, BlockPos pos) {
+        for (int y = 255; y >= 0; y--) {
+            if(world.getBlockState(pos).getBlock() != Blocks.AIR)  {
+                return y + 1;
+            }
+        }
+        return -1;
+    }
 	
     public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
     {
@@ -113,6 +131,7 @@ public class BiomeFen extends Biome
         {
             (new WorldGenFossils()).generate(worldIn, rand, pos);
         }
+        this.addDoublePlants(worldIn, rand, pos);
         super.decorate(worldIn, rand, pos);
     }
         @Override

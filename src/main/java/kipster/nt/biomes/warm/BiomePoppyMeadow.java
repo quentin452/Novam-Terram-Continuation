@@ -11,6 +11,8 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomePoppyMeadow extends Biome 
@@ -43,14 +45,21 @@ public class BiomePoppyMeadow extends Biome
         return BlockFlower.EnumFlowerType.POPPY;
     }
 
-	
-	@Override
-	public WorldGenAbstractTree getRandomTreeFeature(Random rand) 
-	{
-		return (WorldGenAbstractTree)(rand.nextInt(1) == 0 ? REDOAK_TREE : REDOAK_TREE);
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
+		int redOakTreeWeight = 1;
+
+		int totalWeight = redOakTreeWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(REDOAK_TREE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
 	}
-	
-	
+
 	public void decorate(World worldIn, Random rand, BlockPos pos)
 	{
 		 net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));

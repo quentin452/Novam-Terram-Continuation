@@ -11,6 +11,8 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeGrassHills extends Biome 
@@ -37,11 +39,21 @@ public class BiomeGrassHills extends Biome
 	    this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityPig.class, 5, 2, 6));
         this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityCow.class, 8, 4, 4));
 	}
-	
-	@Override
-	public WorldGenAbstractTree getRandomTreeFeature(Random rand) 
-	{
-		return (WorldGenAbstractTree)(rand.nextInt(1) == 0 ? SHRUB_OAK : SHRUB_OAK);
+
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
+		int oakShrubWeight = 1;
+
+		int totalWeight = oakShrubWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(SHRUB_OAK);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+
 	}
 	
 	public void decorate(World worldIn, Random rand, BlockPos pos)

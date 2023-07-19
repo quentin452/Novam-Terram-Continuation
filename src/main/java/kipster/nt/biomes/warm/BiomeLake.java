@@ -1,16 +1,16 @@
 package kipster.nt.biomes.warm;
 
 import net.minecraft.block.BlockDoublePlant;
-import net.minecraft.block.BlockTallGrass;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenTaiga2;
-import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeLake extends Biome 
@@ -33,14 +33,19 @@ public class BiomeLake extends Biome
 	    this.decorator.grassPerChunk = 3;
 	    
 	}
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
 
-	public WorldGenAbstractTree getRandomTreeFeature(Random rand)
-	{
-	    return (WorldGenAbstractTree)(rand.nextInt(3) > 0 ? this.spruceGenerator : super.getRandomTreeFeature(rand));
-	}
-	public WorldGenerator getRandomWorldGenForGrass(Random rand)
-	{
-	    return rand.nextInt(4) == 0 ? new WorldGenTallGrass(BlockTallGrass.EnumType.FERN) : new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);
+		int spruceWeight = 1;
+
+		int totalWeight = spruceWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(this.spruceGenerator);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
 	}
 
 	public void decorate(World worldIn, Random rand, BlockPos pos)

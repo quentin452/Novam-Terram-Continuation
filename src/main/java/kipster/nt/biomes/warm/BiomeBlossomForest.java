@@ -16,6 +16,8 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeBlossomForest extends Biome
@@ -54,49 +56,48 @@ public class BiomeBlossomForest extends Biome
 		BlockFlower.EnumFlowerType blockflower$enumflowertype = BlockFlower.EnumFlowerType.values()[(int)(d0 * (double)BlockFlower.EnumFlowerType.values().length)];
 		return blockflower$enumflowertype == BlockFlower.EnumFlowerType.BLUE_ORCHID ? BlockFlower.EnumFlowerType.POPPY : blockflower$enumflowertype;
 	}
-	@Override
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-		if (rand.nextInt(2) > 0)
-		{
-			return WHITE_TREE;
-		}
-		else
-		{
-			return (WorldGenAbstractTree)(rand.nextInt(4) == 0 ? this.purpleCherryGenerator : PINK_TREE);
+
+		int whiteWeight = 2;
+		int purpleWeight = 1;
+		int pinkWeight = 3;
+
+		int totalWeight = whiteWeight + purpleWeight + pinkWeight;
+
+		int randomWeight = rand.nextInt(totalWeight);
+
+		List<WorldGenAbstractTree> treeList = new ArrayList<>();
+		treeList.add(WHITE_TREE);
+		treeList.add(this.purpleCherryGenerator);
+		treeList.add(PINK_TREE);
+
+		int treeIndex = randomWeight % treeList.size();
+		return treeList.get(treeIndex);
+
+	}
+
+	public void addDoublePlants(World world, Random random, BlockPos pos, int count) {
+		List<BlockDoublePlant.EnumPlantType> validPlantTypes = new ArrayList<>();
+		validPlantTypes.add(BlockDoublePlant.EnumPlantType.SYRINGA);
+		validPlantTypes.add(BlockDoublePlant.EnumPlantType.ROSE);
+		validPlantTypes.add(BlockDoublePlant.EnumPlantType.PAEONIA);
+
+		DOUBLE_PLANT_GENERATOR.setPlantType(getPlantType(random, validPlantTypes));
+
+		for (int i = 0; i < count; i++) {
+
+			int x, z, y;
+			do {
+				x = random.nextInt(16) + 8;
+				z = random.nextInt(16) + 8;
+				y = random.nextInt(world.getHeight(pos.add(x, 0, z)).getY() + 32);
+			} while (!DOUBLE_PLANT_GENERATOR.generate(world, random, pos.add(x, y, z)));
 		}
 	}
 
-	public void addDoublePlants(World p_185378_1_, Random p_185378_2_, BlockPos p_185378_3_, int p_185378_4_)
-	{
-		for (int i = 0; i < p_185378_4_; ++i)
-		{
-			int j = p_185378_2_.nextInt(3);
-
-			if (j == 0)
-			{
-				DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.SYRINGA);
-			}
-			else if (j == 1)
-			{
-				DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.ROSE);
-			}
-			else if (j == 2)
-			{
-				DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.PAEONIA);
-			}
-
-			for (int k = 0; k < 5; ++k)
-			{
-				int l = p_185378_2_.nextInt(16) + 8;
-				int i1 = p_185378_2_.nextInt(16) + 8;
-				int j1 = p_185378_2_.nextInt(p_185378_1_.getHeight(p_185378_3_.add(l, 0, i1)).getY() + 32);
-
-				if (DOUBLE_PLANT_GENERATOR.generate(p_185378_1_, p_185378_2_, new BlockPos(p_185378_3_.getX() + l, j1, p_185378_3_.getZ() + i1)))
-				{
-					break;
-				}
-			}
-		}
+	private BlockDoublePlant.EnumPlantType getPlantType(Random random, List<BlockDoublePlant.EnumPlantType> plants) {
+		int index = random.nextInt(plants.size());
+		return plants.get(index);
 	}
 
 	public void decorate(World worldIn, Random rand, BlockPos pos)

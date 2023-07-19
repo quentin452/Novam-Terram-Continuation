@@ -1,7 +1,6 @@
 package kipster.nt.world.gen.trees;
 
 import kipster.nt.blocks.BlockInit;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;

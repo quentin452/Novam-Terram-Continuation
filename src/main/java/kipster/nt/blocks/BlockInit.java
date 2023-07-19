@@ -15,6 +15,7 @@ public class BlockInit {
 	public static final List<Block> BLOCKS = new ArrayList<Block>();
 
 	//LEAVES
+	public static final Block OLIVELEAVES = new BlockLeavesOlive("olive_leaves_green", Material.LEAVES);
 	public static final Block CONIFERLEAVESYELLOW = new BlockLeavesConiferYellow("conifer_leaves_yellow", Material.LEAVES);
 	public static final Block CONIFERLEAVESORANGE = new BlockLeavesConiferOrange("conifer_leaves_orange", Material.LEAVES);
 	public static final Block CHERRYLEAVESPURPLE = new BlockLeavesCherryPurple("cherry_leaves_purple", Material.LEAVES);
@@ -161,6 +162,7 @@ public class BlockInit {
 	public static final Block WILDRICEFLOWER = new BlockFlowerWildRice("flower_wild_rice", Material.PLANTS);
 	public static final Block YELLOWROOTFLOWER = new BlockFlowerYellowroot("flower_yellowroot", Material.PLANTS);
 	public static final Block ZEBONIAFLOWER = new BlockFlowerZenobia("flower_zenobia", Material.PLANTS);
+	public static final Block OLIVEFLOWER = new BlockFlowerOlive("flower_olive", Material.PLANTS);
 
 	//SAPLING
 	public static final Block CONIFERSAPLINGYELLOW = new BlockSaplingConiferYellow("conifer_sapling_yellow", Material.LEAVES);
