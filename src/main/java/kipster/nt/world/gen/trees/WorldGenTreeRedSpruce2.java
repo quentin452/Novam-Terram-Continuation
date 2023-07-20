@@ -1,6 +1,7 @@
 package kipster.nt.world.gen.trees;
 
 import kipster.nt.blocks.BlockInit;
+import kipster.nt.world.gen.TreeGeneratorRegistry;
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.IBlockState;
@@ -13,16 +14,24 @@ import java.util.Random;
 
 public class WorldGenTreeRedSpruce2 extends WorldGenAbstractTree
 {
+    private final TreeGeneratorRegistry registry = new TreeGeneratorRegistry();
     private static final IBlockState TRUNK = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.SPRUCE);
     public static final IBlockState LEAF = BlockInit.SPRUCELEAVESRED.getDefaultState();
 
     public WorldGenTreeRedSpruce2(boolean p_i2025_1_)
     {
         super(p_i2025_1_);
+        registry.registerTreeGenerator(this);
     }
 
     public boolean generate(World worldIn, Random rand, BlockPos position)
     {
+        if (registry.containsTreeAt(worldIn, position, this)) {
+            return false;
+        }
+        if (registry.overlapsExistingTrees(worldIn, position)) {
+            return false;
+        }
         int i = rand.nextInt(1) + 14;
         int j = 2;
         int k = i - j;

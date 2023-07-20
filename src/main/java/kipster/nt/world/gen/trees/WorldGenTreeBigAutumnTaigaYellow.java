@@ -2,6 +2,7 @@ package kipster.nt.world.gen.trees;
 
 import com.google.common.collect.Lists;
 import kipster.nt.blocks.BlockInit;
+import kipster.nt.world.gen.TreeGeneratorRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
@@ -17,6 +18,7 @@ import java.util.Random;
 
 public class WorldGenTreeBigAutumnTaigaYellow extends WorldGenAbstractTree
 {
+    private final TreeGeneratorRegistry registry = new TreeGeneratorRegistry();
     private Random rand;
     private World world;
     private BlockPos basePos = BlockPos.ORIGIN;
@@ -35,6 +37,7 @@ public class WorldGenTreeBigAutumnTaigaYellow extends WorldGenAbstractTree
     public WorldGenTreeBigAutumnTaigaYellow(boolean notify)
     {
         super(notify);
+        registry.registerTreeGenerator(this);
     }
 
     /**
@@ -322,6 +325,12 @@ public class WorldGenTreeBigAutumnTaigaYellow extends WorldGenAbstractTree
 
     public boolean generate(World worldIn, Random rand, BlockPos position)
     {
+        if (registry.containsTreeAt(worldIn, position, this)) {
+            return false;
+        }
+        if (registry.overlapsExistingTrees(worldIn, position)) {
+            return false;
+        }
         this.world = worldIn;
         this.basePos = position;
         this.rand = new Random(rand.nextLong());

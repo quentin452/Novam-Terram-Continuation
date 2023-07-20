@@ -1,5 +1,6 @@
 package kipster.nt.world.gen.trees;
 
+import kipster.nt.world.gen.TreeGeneratorRegistry;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockOldLeaf;
 import net.minecraft.block.BlockOldLog;
@@ -16,14 +17,21 @@ public class WorldGenTreeTallSpruce extends WorldGenAbstractTree
 {
     private static final IBlockState TRUNK = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.SPRUCE);
     public static final IBlockState LEAF = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.SPRUCE).withProperty(BlockLeaves.CHECK_DECAY, false);
-
+    private final TreeGeneratorRegistry registry = new TreeGeneratorRegistry();
     public WorldGenTreeTallSpruce(boolean p_i2025_1_)
     {
         super(p_i2025_1_);
+        registry.registerTreeGenerator(this);
     }
 
     public boolean generate(World worldIn, Random rand, BlockPos position)
     {
+        if (registry.containsTreeAt(worldIn, position, this)) {
+            return false;
+        }
+        if (registry.overlapsExistingTrees(worldIn, position)) {
+            return false;
+        }
         int i = rand.nextInt(1) + 11;
         int j = 2;
         int k = i - j;

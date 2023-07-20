@@ -1,6 +1,7 @@
 package kipster.nt.world.gen.trees;
 
 import kipster.nt.blocks.BlockInit;
+import kipster.nt.world.gen.TreeGeneratorRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
@@ -16,6 +17,7 @@ import java.util.Random;
 
 public class WorldGenTreeMegaBlueSpruce extends WorldGenHugeTrees
 {
+    private final TreeGeneratorRegistry registry = new TreeGeneratorRegistry();
     private static final IBlockState TRUNK = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.SPRUCE);
     private static final IBlockState LEAF = BlockInit.SPRUCELEAVESBLUE.getDefaultState();
     private static final IBlockState PODZOL = BlockInit.BLUEPODZOL.getDefaultState();
@@ -25,10 +27,17 @@ public class WorldGenTreeMegaBlueSpruce extends WorldGenHugeTrees
     {
         super(notify, 14, 16, TRUNK, LEAF);
         this.useBaseHeight = p_i45457_2_;
+        registry.registerTreeGenerator(this);
     }
 
     public boolean generate(World worldIn, Random rand, BlockPos position)
     {
+        if (registry.containsTreeAt(worldIn, position, this)) {
+            return false;
+        }
+        if (registry.overlapsExistingTrees(worldIn, position)) {
+            return false;
+        }
         int i = this.getHeight(rand);
 
         if (!this.ensureGrowable(worldIn, rand, position, i))

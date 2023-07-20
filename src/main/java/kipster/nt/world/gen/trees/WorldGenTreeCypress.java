@@ -1,5 +1,6 @@
 package kipster.nt.world.gen.trees;
 
+import kipster.nt.world.gen.TreeGeneratorRegistry;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockOldLeaf;
@@ -11,16 +12,18 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 import java.util.Random;
-// # todo #todo bugged worldgen
 public class WorldGenTreeCypress extends WorldGenAbstractTree {
     private static final IBlockState LOG = Blocks.LOG.getDefaultState().withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.Y);
     private static final IBlockState LEAF = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.SPRUCE).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
+    private final TreeGeneratorRegistry registry = new TreeGeneratorRegistry();
 
     private final boolean useExtraRandomHeight;
 
     public WorldGenTreeCypress(boolean notify, boolean useExtraRandomHeightIn) {
         super(notify);
         this.useExtraRandomHeight = useExtraRandomHeightIn;
+
+        registry.registerTreeGenerator(this);
     }
 
     public void setBlockAndNotifyAdequately(World worldIn, BlockPos position, IBlockState state) {
@@ -29,8 +32,14 @@ public class WorldGenTreeCypress extends WorldGenAbstractTree {
     }
 
     public boolean generate(World worldIn, Random rand, BlockPos position) {
-        int height = 15 + rand.nextInt(6); // Ajustement de la hauteur
-        int radius = 10 + rand.nextInt(11);
+        if (registry.containsTreeAt(worldIn, position, this)) {
+            return false;
+        }
+        if (registry.overlapsExistingTrees(worldIn, position)) {
+            return false;
+        }
+
+        int height = 15 + rand.nextInt(6);
 
         if (this.useExtraRandomHeight) {
             height += rand.nextInt(11);

@@ -1,6 +1,7 @@
 package kipster.nt.world.gen.trees;
 
 import kipster.nt.blocks.BlockInit;
+import kipster.nt.world.gen.TreeGeneratorRegistry;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
@@ -14,6 +15,7 @@ import java.util.Random;
 
 public class WorldGenTreeShrubJacaranda extends WorldGenTrees
 {
+    private final TreeGeneratorRegistry registry = new TreeGeneratorRegistry();
     private final IBlockState leavesMetadata;
     private final IBlockState woodMetadata;
 
@@ -22,10 +24,17 @@ public class WorldGenTreeShrubJacaranda extends WorldGenTrees
         super(false);
         this.woodMetadata = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.OAK);
         this.leavesMetadata = BlockInit.JACARANDALEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, false);
+        registry.registerTreeGenerator(this);
     }
 
     public boolean generate(World worldIn, Random rand, BlockPos position)
     {
+        if (registry.containsTreeAt(worldIn, position, this)) {
+            return false;
+        }
+        if (registry.overlapsExistingTrees(worldIn, position)) {
+            return false;
+        }
         for (IBlockState iblockstate = worldIn.getBlockState(position); (iblockstate.getBlock().isAir(iblockstate, worldIn, position) || iblockstate.getBlock().isLeaves(iblockstate, worldIn, position)) && position.getY() > 0; iblockstate = worldIn.getBlockState(position))
         {
             position = position.down();

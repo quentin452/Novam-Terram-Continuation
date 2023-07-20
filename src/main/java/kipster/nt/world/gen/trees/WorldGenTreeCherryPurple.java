@@ -1,6 +1,7 @@
 package kipster.nt.world.gen.trees;
 
 import kipster.nt.blocks.BlockInit;
+import kipster.nt.world.gen.TreeGeneratorRegistry;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -11,6 +12,7 @@ import java.util.Random;
 
 public class WorldGenTreeCherryPurple extends WorldGenAbstractTree
 {
+    private final TreeGeneratorRegistry registry = new TreeGeneratorRegistry();
     private static final IBlockState LOG = Blocks.LOG.getDefaultState();
     private static final IBlockState LEAF = BlockInit.CHERRYLEAVESPURPLE.getDefaultState();
     private final boolean useExtraRandomHeight;
@@ -22,10 +24,17 @@ public class WorldGenTreeCherryPurple extends WorldGenAbstractTree
     {
         super(notify);
         this.useExtraRandomHeight = useExtraRandomHeightIn;
+        registry.registerTreeGenerator(this);
     }
 
     public boolean generate(World worldIn, Random rand, BlockPos position)
     {
+        if (registry.containsTreeAt(worldIn, position, this)) {
+            return false;
+        }
+        if (registry.overlapsExistingTrees(worldIn, position)) {
+            return false;
+        }
         int i = rand.nextInt(3) + 5;
 
         if (this.useExtraRandomHeight)

@@ -1,5 +1,6 @@
 package kipster.nt.world.gen.trees;
 
+import kipster.nt.world.gen.TreeGeneratorRegistry;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockNewLeaf;
 import net.minecraft.block.BlockNewLog;
@@ -14,6 +15,7 @@ import java.util.Random;
 
 public class WorldGenTreeShrubAcacia extends WorldGenTrees
 {
+    private final TreeGeneratorRegistry registry = new TreeGeneratorRegistry();
     private final IBlockState leavesMetadata;
     private final IBlockState woodMetadata;
 
@@ -22,10 +24,17 @@ public class WorldGenTreeShrubAcacia extends WorldGenTrees
         super(false);
         this.woodMetadata = Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.ACACIA);
         this.leavesMetadata = Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.ACACIA).withProperty(BlockLeaves.CHECK_DECAY, false);
+        registry.registerTreeGenerator(this);
     }
 
     public boolean generate(World worldIn, Random rand, BlockPos position)
     {
+        if (registry.containsTreeAt(worldIn, position, this)) {
+            return false;
+        }
+        if (registry.overlapsExistingTrees(worldIn, position)) {
+            return false;
+        }
         for (IBlockState iblockstate = worldIn.getBlockState(position); (iblockstate.getBlock().isAir(iblockstate, worldIn, position) || iblockstate.getBlock().isLeaves(iblockstate, worldIn, position)) && position.getY() > 0; iblockstate = worldIn.getBlockState(position))
         {
             position = position.down();
