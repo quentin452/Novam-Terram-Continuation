@@ -23,7 +23,7 @@ import java.util.Random;
 
 public class BiomeEstuary extends Biome 
 {
-	private static final WorldGenAbstractTree SWAMP_TREE = new WorldGenTreeSandSwamp();
+	private static final WorldGenTreeSandSwamp SWAMP_TREE = new WorldGenTreeSandSwamp();
 	protected static final WorldGenPatches GRASS_PATCHES = new WorldGenPatches(Blocks.GRASS.getDefaultState(), 7);
 	protected static final IBlockState WATER_LILY = Blocks.WATERLILY.getDefaultState();
 

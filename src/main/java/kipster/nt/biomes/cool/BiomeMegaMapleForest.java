@@ -28,12 +28,12 @@ public class BiomeMegaMapleForest extends Biome
 {	
    
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-	protected static final WorldGenAbstractTree MAPLE_TREE = new WorldGenTreeBigMaple(false);
+	protected static final WorldGenTreeBigMaple MAPLE_TREE = new WorldGenTreeBigMaple(false);
 	private final WorldGenTreeMegaRedSpruce spruceGenerator= new WorldGenTreeMegaRedSpruce(false, true);
 
-	protected static final WorldGenerator CEPHALOPHYLLIUMflower= new WorldGenCephalophyllumFlower(BlockInit.CEPHALOPHYLLUMFLOWER.getDefaultState());
-	protected static final WorldGenerator DISAflower = new WorldGenDisaFlower(BlockInit.DISAFLOWER.getDefaultState());
-	protected static final WorldGenerator AESCHYNANTHUSflower = new WorldGenAeschynanthusFlower(BlockInit.AESCHYNANTHUSFLOWER.getDefaultState());
+	protected static final WorldGenCephalophyllumFlower CEPHALOPHYLLIUMflower= new WorldGenCephalophyllumFlower(BlockInit.CEPHALOPHYLLUMFLOWER.getDefaultState());
+	protected static final WorldGenDisaFlower DISAflower = new WorldGenDisaFlower(BlockInit.DISAFLOWER.getDefaultState());
+	protected static final WorldGenAeschynanthusFlower AESCHYNANTHUSflower = new WorldGenAeschynanthusFlower(BlockInit.AESCHYNANTHUSFLOWER.getDefaultState());
 
 	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
 		for (int i = 0; i < flowersPerChunk; ++i) {

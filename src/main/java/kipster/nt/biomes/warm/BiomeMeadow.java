@@ -22,8 +22,8 @@ import java.util.Random;
 public class BiomeMeadow extends Biome 
 {
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-	protected static final WorldGenAbstractTree POPLAR_TREE = new WorldGenTreePoplar(false, false);
-	protected static final WorldGenAbstractTree SHRUB_BIRCH = new WorldGenTreeShrubBirch();
+	protected static final WorldGenTreePoplar POPLAR_TREE = new WorldGenTreePoplar(false, false);
+	protected static final WorldGenTreeShrubBirch SHRUB_BIRCH = new WorldGenTreeShrubBirch();
 	
 	public BiomeMeadow(BiomeProperties properties)
 	{	

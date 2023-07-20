@@ -24,7 +24,7 @@ public class BiomeColdDesert extends Biome
 {
 	protected static final WorldGenPatches GRAVEL_PATCHES = new WorldGenPatches(Blocks.GRAVEL.getDefaultState(), 5);
 	protected static final WorldGenPatches SNOW_PATCHES = new WorldGenPatches(Blocks.SNOW.getDefaultState(), 5);
-	protected static final WorldGenAbstractTree SHRUB_SPRUCE = new WorldGenTreeShrubSpruce();
+	protected static final WorldGenTreeShrubSpruce SHRUB_SPRUCE = new WorldGenTreeShrubSpruce();
 	protected static final WorldGenPatches DIRT_PATCHES = new WorldGenPatches(Blocks.DIRT.getDefaultState(), 5);
 	
 	

@@ -19,10 +19,10 @@ import java.util.Random;
 
 public class BiomeAliumMeadow extends Biome {
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-	protected static final WorldGenAbstractTree JACARANDA_TREE = new WorldGenTreeBigJacaranda(false);
-	protected static final WorldGenerator PRIMEVEflower = new WorldGenPrimevereFlower(BlockInit.PRIMEVEREFLOWER.getDefaultState());
-	protected static final WorldGenerator ALLIUMflower = new WorldGenAlliumFlower(BlockInit.ALLIUMFLOWER.getDefaultState());
-	protected static final WorldGenerator ASPALATHUSflower = new WorldGenAspalathusFlower(BlockInit.ASPALATHUSFLOWER.getDefaultState());
+	protected static final WorldGenTreeBigJacaranda JACARANDA_TREE = new WorldGenTreeBigJacaranda(false);
+	protected static final WorldGenPrimevereFlower PRIMEVEflower = new WorldGenPrimevereFlower(BlockInit.PRIMEVEREFLOWER.getDefaultState());
+	protected static final WorldGenAlliumFlower ALLIUMflower = new WorldGenAlliumFlower(BlockInit.ALLIUMFLOWER.getDefaultState());
+	protected static final WorldGenAspalathusFlower ASPALATHUSflower = new WorldGenAspalathusFlower(BlockInit.ASPALATHUSFLOWER.getDefaultState());
 	public BiomeAliumMeadow(BiomeProperties properties) {
 		super(properties);
 

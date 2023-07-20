@@ -23,7 +23,7 @@ public class BiomeWhiteOrchard extends Biome
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
 	protected static final WorldGenTreeBigOrchard TREE_ORCHARD = new WorldGenTreeBigOrchard(false);
 	protected static final WorldGenTreeWhiteMyrtle SHRUB_WHITEMYRTLE = new WorldGenTreeWhiteMyrtle();
-	protected static final WorldGenAbstractTree OAK_TREE = new WorldGenBigTree(false);
+	protected static final WorldGenBigTree OAK_TREE = new WorldGenBigTree(false);
 	
 	public BiomeWhiteOrchard(BiomeProperties properties)
 	{	

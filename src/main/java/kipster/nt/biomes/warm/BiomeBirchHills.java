@@ -21,7 +21,7 @@ import java.util.Random;
 public class BiomeBirchHills extends Biome 
 {
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-	protected static final WorldGenAbstractTree POPLAR_TREE = new WorldGenTreePoplar(false, false);
+	protected static final WorldGenTreePoplar POPLAR_TREE = new WorldGenTreePoplar(false, false);
 	protected static final WorldGenTreeShrubBirch SHRUB_BIRCH = new WorldGenTreeShrubBirch();
 	
 	public BiomeBirchHills(BiomeProperties properties)

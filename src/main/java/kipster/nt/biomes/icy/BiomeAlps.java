@@ -118,8 +118,8 @@ import java.util.Random;
 				}
 			}
 		}
-		protected static final WorldGenerator NEGLECTEDSCORPIONWEEDFLOWER= new WorldGenNeglectedScorpionweedFlower(BlockInit.NEGLECTEDSCORPIONWEEDFLOWER.getDefaultState());
-		protected static final WorldGenerator VERONICAFLOWER= new WorldGenVeronicaFlower(BlockInit.VERONICAFLOWER.getDefaultState());
+		protected static final WorldGenNeglectedScorpionweedFlower NEGLECTEDSCORPIONWEEDFLOWER= new WorldGenNeglectedScorpionweedFlower(BlockInit.NEGLECTEDSCORPIONWEEDFLOWER.getDefaultState());
+		protected static final WorldGenVeronicaFlower VERONICAFLOWER= new WorldGenVeronicaFlower(BlockInit.VERONICAFLOWER.getDefaultState());
 
 		public void decorate(World worldIn, Random rand, BlockPos pos)
 		{

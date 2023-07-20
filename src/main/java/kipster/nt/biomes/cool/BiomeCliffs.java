@@ -25,7 +25,7 @@ import java.util.Random;
 
 public class BiomeCliffs extends Biome
 {
-	protected static final WorldGenAbstractTree TREE = new WorldGenTreeShrubSpruce();
+	protected static final WorldGenTreeShrubSpruce TREE = new WorldGenTreeShrubSpruce();
 	private static final WorldGenTreeTallSpruce SPRUCE_GENERATOR = new WorldGenTreeTallSpruce(true);
 	protected static final WorldGenBlockBlob COBBLESTONE_BOULDER_FEATURE = new WorldGenBlockBlob(Blocks.COBBLESTONE, 1);
 	protected static final WorldGenLine COBBLESTONE_LINE = new WorldGenLine(Blocks.COBBLESTONE, 1);
@@ -91,8 +91,8 @@ public class BiomeCliffs extends Biome
 			}
 		}
 	}
-	protected static final WorldGenerator BEGONIAFLOWER = new WorldGenBegoniaFlower(BlockInit.BEGONIAFLOWER.getDefaultState());
-	protected static final WorldGenerator HELLEBOREFLOWER = new WorldGenHelleboreFlower(BlockInit.HELLEBOREFLOWER.getDefaultState());
+	protected static final WorldGenBegoniaFlower BEGONIAFLOWER = new WorldGenBegoniaFlower(BlockInit.BEGONIAFLOWER.getDefaultState());
+	protected static final WorldGenHelleboreFlower HELLEBOREFLOWER = new WorldGenHelleboreFlower(BlockInit.HELLEBOREFLOWER.getDefaultState());
 
 	@Override
 	public void decorate(World worldIn, Random rand, BlockPos pos) {

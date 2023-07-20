@@ -25,11 +25,11 @@ import java.util.Random;
 
 public class BiomeMegaBlueTaiga extends Biome 
 {
-	protected static final WorldGenerator VERONICAflower = new WorldGenVeronicaFlower(BlockInit.VERONICAFLOWER.getDefaultState());
-	protected static final WorldGenerator BARBAREAflower = new WorldGenBarbareaFlower(BlockInit.BARBAREAFLOWER.getDefaultState());
+	protected static final WorldGenVeronicaFlower VERONICAflower = new WorldGenVeronicaFlower(BlockInit.VERONICAFLOWER.getDefaultState());
+	protected static final WorldGenBarbareaFlower BARBAREAflower = new WorldGenBarbareaFlower(BlockInit.BARBAREAFLOWER.getDefaultState());
 
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-	protected static final WorldGenAbstractTree BLUE_SPRUCE = new WorldGenTreeBlueSpruce2(false);
+	protected static final WorldGenTreeBlueSpruce2 BLUE_SPRUCE = new WorldGenTreeBlueSpruce2(false);
 	private final WorldGenTreeMegaBlueSpruce spruceGenerator= new WorldGenTreeMegaBlueSpruce(false, true);
 	 
 	   public BiomeMegaBlueTaiga(BiomeProperties properties)

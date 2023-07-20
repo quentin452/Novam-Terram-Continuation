@@ -23,8 +23,8 @@ public class BiomeRoyalForest extends Biome
 {
 	
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-	protected static final WorldGenAbstractTree JACARANDA_TREE = new WorldGenTreeJacaranda(false, false);
-	protected static final WorldGenAbstractTree PAULOWNIA_TREE = new WorldGenTreePaulownia(false);
+	protected static final WorldGenTreeJacaranda JACARANDA_TREE = new WorldGenTreeJacaranda(false, false);
+	protected static final WorldGenTreePaulownia PAULOWNIA_TREE = new WorldGenTreePaulownia(false);
 	
 	public BiomeRoyalForest(BiomeProperties properties)
 	{	

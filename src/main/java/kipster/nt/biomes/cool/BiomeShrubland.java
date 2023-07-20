@@ -27,8 +27,8 @@ public class BiomeShrubland extends Biome
 {
 	
 
-	protected static final WorldGenAbstractTree SHRUB_SPRUCE = new WorldGenTreeShrubSpruce2();
-	protected static final WorldGenAbstractTree SPRUCE = new WorldGenTreeSpruce3();
+	protected static final WorldGenTreeShrubSpruce2 SHRUB_SPRUCE = new WorldGenTreeShrubSpruce2();
+	protected static final WorldGenTreeSpruce3 SPRUCE = new WorldGenTreeSpruce3();
 	
 	public BiomeShrubland(BiomeProperties properties)
 	{	
@@ -99,8 +99,8 @@ public class BiomeShrubland extends Biome
 			}
 		}
 	}
-	protected static final WorldGenerator CANAIGREFLOWER = new WorldGenCanaigreFlower(BlockInit.CANAIGREFLOWER.getDefaultState());
-	protected static final WorldGenerator ACALYPHARFLOWER = new WorldGenAcalyphaRFlower(BlockInit.ACALYPHARFLOWER.getDefaultState());
+	protected static final WorldGenCanaigreFlower CANAIGREFLOWER = new WorldGenCanaigreFlower(BlockInit.CANAIGREFLOWER.getDefaultState());
+	protected static final WorldGenAcalyphaRFlower ACALYPHARFLOWER = new WorldGenAcalyphaRFlower(BlockInit.ACALYPHARFLOWER.getDefaultState());
 
 	public void decorate(World worldIn, Random rand, BlockPos pos)
 	{

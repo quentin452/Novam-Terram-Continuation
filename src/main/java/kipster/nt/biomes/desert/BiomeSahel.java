@@ -21,9 +21,9 @@ import java.util.Random;
 
 public class BiomeSahel extends Biome 
 {
-	private static final WorldGenAbstractTree SAVANNA_TREE = new WorldGenSavannaTree(false);
+	private static final WorldGenSavannaTree SAVANNA_TREE = new WorldGenSavannaTree(false);
 	protected static final WorldGenPatches GRASS_PATCHES = new WorldGenPatches(Blocks.GRASS.getDefaultState(), 5);
-	protected static final WorldGenAbstractTree SHRUB_ACACIA = new WorldGenTreeShrubAcacia();
+	protected static final WorldGenTreeShrubAcacia SHRUB_ACACIA = new WorldGenTreeShrubAcacia();
 	
 	public BiomeSahel(BiomeProperties properties)
 	{	

@@ -26,9 +26,9 @@ public class BiomeLowland extends Biome
 {
 	
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-	private final WorldGenAbstractTree spruceGenerator = new WorldGenTreeTallSpruce2(true);
+	private final WorldGenTreeTallSpruce2 spruceGenerator = new WorldGenTreeTallSpruce2(true);
 	protected static final IBlockState WATER_LILY = Blocks.WATERLILY.getDefaultState();
-	protected static final WorldGenAbstractTree SHRUB_SPRUCE = new WorldGenTreeShrubLowland();
+	protected static final WorldGenTreeShrubLowland SHRUB_SPRUCE = new WorldGenTreeShrubLowland();
 	
 	public BiomeLowland(BiomeProperties properties)
 	{	

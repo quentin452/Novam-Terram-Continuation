@@ -25,7 +25,7 @@ public class BiomeIcyTundra extends Biome
 	private final WorldGenIcePath icePatch = new WorldGenIcePath(4);
 	protected static final WorldGenPatches GRAVEL_PATCHES = new WorldGenPatches(Blocks.GRAVEL.getDefaultState(), 5);
 	protected static final WorldGenPatches SNOW_PATCHES = new WorldGenPatches(Blocks.SNOW.getDefaultState(), 5);
-	protected static final WorldGenAbstractTree SHRUB_SPRUCE = new WorldGenTreeShrubSpruce();
+	protected static final WorldGenTreeShrubSpruce SHRUB_SPRUCE = new WorldGenTreeShrubSpruce();
 	
 	public BiomeIcyTundra(BiomeProperties properties)
 	{	

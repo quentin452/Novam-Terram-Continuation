@@ -15,35 +15,35 @@ import java.util.Random;
 
 public class BiomeHighland extends Biome 
 {
-	
+
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-	protected static final WorldGenAbstractTree SHRUB_OAK = new WorldGenTreeShrubOak();
-	
+	protected static final WorldGenTreeShrubOak SHRUB_OAK = new WorldGenTreeShrubOak();
+
 	public BiomeHighland(BiomeProperties properties)
-	{	
+	{
 		super(properties);
-	
+
 		topBlock = Blocks.GRASS.getDefaultState();
 		fillerBlock = Blocks.DIRT.getDefaultState();
-		
+
 		this.decorator.treesPerChunk = 3;
 		this.decorator.flowersPerChunk = 4;
 	    this.decorator.grassPerChunk = 8;
 	    this.decorator.gravelPatchesPerChunk = 2;
 	    this.decorator.generateFalls = true;
-	    
+
 	    this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityWolf.class, 5, 4, 4));
 	    this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntitySheep.class, 5, 2, 6));
-		
+
 	}
-	
+
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand)
     {
-		
+
             return SHRUB_OAK;
-            
+
     }
-    
+
 	public void decorate(World worldIn, Random rand, BlockPos pos)
 	{
 		 net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
@@ -53,7 +53,7 @@ public class BiomeHighland extends Biome
 
 	    super.decorate(worldIn, rand, pos);
 	        }
-	
+
 	 public static class EmeraldGenerator extends WorldGenerator
 	    {
 	        @Override
@@ -74,15 +74,15 @@ public class BiomeHighland extends Biome
 	            return true;
         }
     }
-	
+
 	 @Override
 	 public int getModdedBiomeGrassColor(int original) {
 		    return super.getModdedBiomeGrassColor(0x94BB50);
 		}
-	 
+
 	 @Override
 	 public int getModdedBiomeFoliageColor(int original) {
 		    return super.getModdedBiomeFoliageColor(0x91BD44);
-		    
+
 	}
 }

@@ -23,7 +23,7 @@ public class BiomeTundra extends Biome
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
 	protected static final WorldGenPatches ICE_PATCHES = new WorldGenPatches(Blocks.ICE.getDefaultState(), 5);
 	protected static final WorldGenPatches GRAVEL_PATCHES = new WorldGenPatches(Blocks.GRAVEL.getDefaultState(), 5);
-	protected static final WorldGenAbstractTree SHRUB_SPRUCE = new WorldGenTreeShrubSpruce();
+	protected static final WorldGenTreeShrubSpruce SHRUB_SPRUCE = new WorldGenTreeShrubSpruce();
 	
 	public BiomeTundra(BiomeProperties properties)
 	{	

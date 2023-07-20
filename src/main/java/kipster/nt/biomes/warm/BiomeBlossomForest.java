@@ -24,8 +24,8 @@ public class BiomeBlossomForest extends Biome
 {
 
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-	protected static final WorldGenAbstractTree WHITE_TREE = new WorldGenTreeCherryWhite(false, false);
-	protected static final WorldGenAbstractTree PINK_TREE = new WorldGenTreeCherryPink(false, false);
+	protected static final WorldGenTreeCherryWhite WHITE_TREE = new WorldGenTreeCherryWhite(false, false);
+	protected static final WorldGenTreeCherryPink PINK_TREE = new WorldGenTreeCherryPink(false, false);
 	private final WorldGenTreeBigPurpleCherry purpleCherryGenerator = new WorldGenTreeBigPurpleCherry(false);
 
 	public BiomeBlossomForest(BiomeProperties properties)

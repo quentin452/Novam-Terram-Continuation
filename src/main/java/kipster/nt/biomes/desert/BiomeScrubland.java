@@ -27,8 +27,8 @@ import java.util.Random;
 
 public class BiomeScrubland extends Biome 
 {
-	private static final WorldGenAbstractTree SAVANNA_TREE = new WorldGenSavannaTree(false);
-	protected static final WorldGenAbstractTree SHRUB_ACACIA = new WorldGenTreeShrubAcacia();
+	private static final WorldGenSavannaTree SAVANNA_TREE = new WorldGenSavannaTree(false);
+	protected static final WorldGenTreeShrubAcacia SHRUB_ACACIA = new WorldGenTreeShrubAcacia();
 	protected static final WorldGenLakes LAVA_LAKE_FEATURE = new WorldGenLakes(Blocks.LAVA);
 	public BiomeScrubland(BiomeProperties properties)
 	{	
@@ -113,8 +113,8 @@ public class BiomeScrubland extends Biome
 			}
 		}
 	}
-	protected static final WorldGenerator GALANTHUSFLOWER= new WorldGenGalanthusFlower(BlockInit.GALANTHUSFLOWER.getDefaultState());
-	protected static final WorldGenerator NARTHECIUMFLOWER = new WorldGenNartheciumFlower(BlockInit.NARTHECIUMFLOWER.getDefaultState());
+	protected static final WorldGenGalanthusFlower GALANTHUSFLOWER= new WorldGenGalanthusFlower(BlockInit.GALANTHUSFLOWER.getDefaultState());
+	protected static final WorldGenNartheciumFlower NARTHECIUMFLOWER = new WorldGenNartheciumFlower(BlockInit.NARTHECIUMFLOWER.getDefaultState());
 
 
 	public void decorate(World worldIn, Random rand, BlockPos pos)

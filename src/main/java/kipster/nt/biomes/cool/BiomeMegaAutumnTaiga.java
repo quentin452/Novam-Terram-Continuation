@@ -24,13 +24,13 @@ import java.util.Random;
 public class BiomeMegaAutumnTaiga extends Biome 
 {
 
-	protected static final WorldGenerator CHRYSANTHEMUMflower= new WorldGenChrysanthemumFlower(BlockInit.CHRYSANTHEMUMFLOWER.getDefaultState());
-	protected static final WorldGenerator AMBROSIAflower = new WorldGenAlliumFlower(BlockInit.AMBROSIAFLOWER.getDefaultState());
-	protected static final WorldGenerator AGAPANTHUSflower = new WorldGenAspalathusFlower(BlockInit.AGAPANTHUSFLOWER.getDefaultState());
+	protected static final WorldGenChrysanthemumFlower CHRYSANTHEMUMflower= new WorldGenChrysanthemumFlower(BlockInit.CHRYSANTHEMUMFLOWER.getDefaultState());
+	protected static final WorldGenAlliumFlower AMBROSIAflower = new WorldGenAlliumFlower(BlockInit.AMBROSIAFLOWER.getDefaultState());
+	protected static final WorldGenAspalathusFlower AGAPANTHUSflower = new WorldGenAspalathusFlower(BlockInit.AGAPANTHUSFLOWER.getDefaultState());
 
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-	protected static final WorldGenAbstractTree YELLOW_TREE = new WorldGenTreeBigAutumnTaigaYellow(true);
-	protected static final WorldGenAbstractTree ORANGE_TREE = new WorldGenTreeBigAutumnTaigaOrange(true);
+	protected static final WorldGenTreeBigAutumnTaigaYellow YELLOW_TREE = new WorldGenTreeBigAutumnTaigaYellow(true);
+	protected static final WorldGenTreeBigAutumnTaigaOrange ORANGE_TREE = new WorldGenTreeBigAutumnTaigaOrange(true);
 	private final WorldGenMegaPineTree spruceGenerator= new WorldGenMegaPineTree(false, true);
 	 
 	   public BiomeMegaAutumnTaiga(BiomeProperties properties)

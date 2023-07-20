@@ -47,24 +47,59 @@ public class BlockLeavesBase extends BlockLeaves implements IHasModel {
 
     @Override
     protected void dropApple(World worldIn, BlockPos pos, IBlockState state, int chance) {
-        if (worldIn.rand.nextInt(chance) == 0) {
-            spawnAsEntity(worldIn, pos, new ItemStack(Items.STICK));
+        // Check if the block is decayable
+        if (state.getValue(DECAYABLE)) {
+            // Spawn leaf items instead of sticks
+            spawnAsEntity(worldIn, pos, new ItemStack(this));
         }
     }
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        // Return leaf items instead of the block item
         return Item.getItemFromBlock(this);
+    }
+
+    @Override
+    protected ItemStack getSilkTouchDrop(IBlockState state) {
+        // Return leaf items instead of the block item
+        return new ItemStack(this);
+    }
+
+    @Override
+    public List<ItemStack> onSheared(ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
+        // Return leaf items instead of the block item
+        List<ItemStack> drops = new ArrayList<>();
+        drops.add(new ItemStack(this));
+        return drops;
+    }
+
+    private boolean hasAdjacentLeaves(IBlockAccess world, BlockPos pos) {
+        // Check for adjacent leaves in all 6 directions
+        for (EnumFacing facing : EnumFacing.VALUES) {
+            BlockPos neighborPos = pos.offset(facing);
+            IBlockState neighborState = world.getBlockState(neighborPos);
+            if (neighborState.getBlock() instanceof BlockLeaves) {
+                return true;
+            }
+        }
+        return false;
+    }
+    // Add logic to trigger leaf decay based on the DECAYABLE property and other conditions
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+        if (worldIn.isRemote) {
+            return;
+        }
+
+        if (state.getValue(DECAYABLE) && !hasAdjacentLeaves(worldIn, pos)) {
+            worldIn.setBlockToAir(pos);
+        }
     }
 
     @Override
     public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
         items.add(new ItemStack(this));
-    }
-
-    @Override
-    protected ItemStack getSilkTouchDrop(IBlockState state) {
-        return new ItemStack(Item.getItemFromBlock(this));
     }
 
     @Override
@@ -119,13 +154,6 @@ public class BlockLeavesBase extends BlockLeaves implements IHasModel {
         } else {
             super.harvestBlock(worldIn, player, pos, state, te, stack);
         }
-    }
-
-    @Override
-    public List<ItemStack> onSheared(ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
-        List<ItemStack> drops = new ArrayList<>();
-        drops.add(new ItemStack(this));
-        return drops;
     }
 
     @Override

@@ -25,7 +25,7 @@ import java.util.Random;
 public class BiomeSandyScrubland extends Biome 
 {
 	protected static final WorldGenPatches GRASS_PATCHES = new WorldGenPatches(Blocks.GRASS.getDefaultState(), 7);
-	protected static final WorldGenAbstractTree SHRUB_ACACIA = new WorldGenTreeShrubAcacia();
+	protected static final WorldGenTreeShrubAcacia SHRUB_ACACIA = new WorldGenTreeShrubAcacia();
 	protected static final WorldGenBlockBlob SAND_BOULDER_FEATURE = new WorldGenBlockBlob(Blocks.SANDSTONE, 1);
 	protected static final WorldGenLakes LAVA_LAKE_FEATURE = new WorldGenLakes(Blocks.LAVA);
 	public BiomeSandyScrubland(BiomeProperties properties)

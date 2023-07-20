@@ -20,7 +20,7 @@ import java.util.Random;
 public class BiomeGreenSwamp extends Biome 
 {
 	protected static final IBlockState WATER_LILY = Blocks.WATERLILY.getDefaultState();
-	protected static final WorldGenAbstractTree DEAD = new WorldGenTreeDead(false);
+	protected static final WorldGenTreeDead DEAD = new WorldGenTreeDead(false);
 	 
 		
 	public BiomeGreenSwamp(BiomeProperties properties)

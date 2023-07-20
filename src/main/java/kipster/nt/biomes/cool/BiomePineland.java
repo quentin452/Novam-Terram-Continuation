@@ -24,12 +24,12 @@ import java.util.Random;
 
 public class BiomePineland extends Biome 
 {
-	protected static final WorldGenerator AETHIONEMAFLOWER= new WorldGenAethionemaFlower(BlockInit.AETHIONEMAFLOWER.getDefaultState());
-	protected static final WorldGenerator AMBROSIAFLOWER = new WorldGenAmbrosiaFlower(BlockInit.AMBROSIAFLOWER.getDefaultState());
-	protected static final WorldGenerator WorldGenAgapantusFlower = new WorldGenAgapantusFlower(BlockInit.AGAPANTHUSFLOWER.getDefaultState());
+	protected static final WorldGenAethionemaFlower AETHIONEMAFLOWER= new WorldGenAethionemaFlower(BlockInit.AETHIONEMAFLOWER.getDefaultState());
+	protected static final WorldGenAmbrosiaFlower AMBROSIAFLOWER = new WorldGenAmbrosiaFlower(BlockInit.AMBROSIAFLOWER.getDefaultState());
+	protected static final WorldGenAgapantusFlower WorldGenAgapantusFlower = new WorldGenAgapantusFlower(BlockInit.AGAPANTHUSFLOWER.getDefaultState());
 
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-	protected static final WorldGenAbstractTree SHRUB_SPRUCE = new WorldGenTreeShrubSpruce();
+	protected static final WorldGenTreeShrubSpruce SHRUB_SPRUCE = new WorldGenTreeShrubSpruce();
 	   private final WorldGenTreeTallSpruce spruceGenerator = new WorldGenTreeTallSpruce(true);
 	
 		 public BiomePineland(BiomeProperties properties)

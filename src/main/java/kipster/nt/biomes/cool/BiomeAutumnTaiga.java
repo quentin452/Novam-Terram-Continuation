@@ -27,12 +27,12 @@ import java.util.concurrent.*;
 
 public class BiomeAutumnTaiga extends Biome
 {
-	protected static final WorldGenerator CHRYSANTHEMUMflower= new WorldGenChrysanthemumFlower(BlockInit.CHRYSANTHEMUMFLOWER.getDefaultState());
-	protected static final WorldGenerator AMBROSIAflower = new WorldGenAlliumFlower(BlockInit.AMBROSIAFLOWER.getDefaultState());
-	protected static final WorldGenerator AGAPANTHUSflower = new WorldGenAspalathusFlower(BlockInit.AGAPANTHUSFLOWER.getDefaultState());
+	protected static final WorldGenChrysanthemumFlower CHRYSANTHEMUMflower= new WorldGenChrysanthemumFlower(BlockInit.CHRYSANTHEMUMFLOWER.getDefaultState());
+	protected static final WorldGenAlliumFlower AMBROSIAflower = new WorldGenAlliumFlower(BlockInit.AMBROSIAFLOWER.getDefaultState());
+	protected static final WorldGenAspalathusFlower AGAPANTHUSflower = new WorldGenAspalathusFlower(BlockInit.AGAPANTHUSFLOWER.getDefaultState());
 
-	protected static final WorldGenAbstractTree YELLOW_TREE = new WorldGenTreeAutumnTaigaYellow(false, false);
-	protected static final WorldGenAbstractTree ORANGE_TREE = new WorldGenTreeAutumnTaigaOrange(false, false);
+	protected static final WorldGenTreeAutumnTaigaYellow YELLOW_TREE = new WorldGenTreeAutumnTaigaYellow(false, false);
+	protected static final WorldGenTreeAutumnTaigaOrange ORANGE_TREE = new WorldGenTreeAutumnTaigaOrange(false, false);
 
 	private static final WorldGenTreeDead DEAD_TREE = new WorldGenTreeDead(false);
 	private static final WorldGenTreeShrubSpruce SHRUB_SPRUCE = new WorldGenTreeShrubSpruce();

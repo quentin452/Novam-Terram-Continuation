@@ -25,12 +25,11 @@ import java.util.Random;
 
 public class BiomeMonsoonForest extends Biome 
 	{
-	protected static final WorldGenAbstractTree JACARANDA_TREE = new WorldGenTreeBigJacaranda(false);
-	protected static final IBlockState WATER_LILY = Blocks.WATERLILY.getDefaultState();
+	protected static final WorldGenTreeBigJacaranda JACARANDA_TREE = new WorldGenTreeBigJacaranda(false);
 	protected static final WorldGenBlockBlob STONE_BOULDER_FEATURE = new WorldGenBlockBlob(Blocks.MOSSY_COBBLESTONE, 1);
-	private static final WorldGenAbstractTree SAVANNA_TREE = new WorldGenSavannaTree(false);
+	private static final WorldGenSavannaTree SAVANNA_TREE = new WorldGenSavannaTree(false);
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-    private static final WorldGenAbstractTree JUNGLE_TREE = new WorldGenTreeShrubJungle();
+    private static final WorldGenTreeShrubJungle JUNGLE_TREE = new WorldGenTreeShrubJungle();
     public BiomeMonsoonForest(BiomeProperties properties)
 	{	
 		super(properties);

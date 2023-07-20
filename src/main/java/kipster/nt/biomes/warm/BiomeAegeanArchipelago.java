@@ -7,6 +7,7 @@ import kipster.nt.world.gen.flowers.WorldGenCrassulaFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeBigPalmTree;
 import kipster.nt.world.gen.trees.WorldGenTreeCypress;
 import kipster.nt.world.gen.trees.WorldGenTreeOlive;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.init.Blocks;
@@ -25,8 +26,8 @@ import java.util.Random;
 
 public class BiomeAegeanArchipelago extends Biome {
 	protected static final WorldGenBlockBlob STONE_BOULDER_FEATURE = new WorldGenBlockBlob(Blocks.STONE, 1);
-	protected static final WorldGenerator CAMBRIDGEBLUEFLOWER = new WorldGenCambridgeBlueFlower(BlockInit.CAMBRIDGEBLUEFLOWER.getDefaultState());
-	protected static final WorldGenerator CRASSULAFLOWER = new WorldGenCrassulaFlower(BlockInit.CRASSULAFLOWER.getDefaultState());
+	protected static final WorldGenCambridgeBlueFlower CAMBRIDGEBLUEFLOWER = new WorldGenCambridgeBlueFlower(BlockInit.CAMBRIDGEBLUEFLOWER.getDefaultState());
+	protected static final WorldGenCrassulaFlower CRASSULAFLOWER = new WorldGenCrassulaFlower(BlockInit.CRASSULAFLOWER.getDefaultState());
 	protected static final WorldGenTreeBigPalmTree PALM_TREE = new WorldGenTreeBigPalmTree(false);
 	protected static final WorldGenTreeOlive OLIVE_TREE = new WorldGenTreeOlive(false, false);
 	protected static final WorldGenTreeCypress CYPRESS_TREE = new WorldGenTreeCypress(false, false);
@@ -62,6 +63,7 @@ public class BiomeAegeanArchipelago extends Biome {
 
 	@Override
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+
 		int pamltreeweight = 18;
 		int olivetreeweight = 2;
 		int cypresstreeweight = 1;
@@ -73,11 +75,9 @@ public class BiomeAegeanArchipelago extends Biome {
 
 		List<WorldGenAbstractTree> treeList = new ArrayList<>();
 		treeList.add(PALM_TREE);
-		//#todo # todo fix cascadingworldgen
 		 treeList.add(OLIVE_TREE);
 		// #todo # todo fix cascadingworldgen(not sure) + not worldgenned correctly
-		//  treeList.add(CYPRESS_TREE);
-		// Ajoutez d'autres types d'arbres à la liste
+		  treeList.add(CYPRESS_TREE);
 
 		int treeIndex = randomWeight % treeList.size();
 		WorldGenAbstractTree tree = treeList.get(treeIndex);

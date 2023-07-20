@@ -18,7 +18,7 @@ import java.util.Random;
 public class BiomePoppyMeadow extends Biome 
 {
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-	protected static final WorldGenAbstractTree REDOAK_TREE = new WorldGenTreeBigRedOak(false);
+	protected static final WorldGenTreeBigRedOak REDOAK_TREE = new WorldGenTreeBigRedOak(false);
 	
 	public BiomePoppyMeadow(BiomeProperties properties)
 	{	

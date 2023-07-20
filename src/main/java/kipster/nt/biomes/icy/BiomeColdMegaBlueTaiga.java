@@ -24,7 +24,7 @@ public class BiomeColdMegaBlueTaiga extends Biome
 {	
    
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-	protected static final WorldGenAbstractTree BLUE_SPRUCE = new WorldGenTreeBlueSpruce2(false);
+	protected static final WorldGenTreeBlueSpruce2 BLUE_SPRUCE = new WorldGenTreeBlueSpruce2(false);
 	private final WorldGenTreeMegaBlueSpruce spruceGenerator= new WorldGenTreeMegaBlueSpruce(false, true);
 	 
 	   public BiomeColdMegaBlueTaiga(BiomeProperties properties)

@@ -33,13 +33,13 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import java.util.Random;
 
 public class BiomeMapleForest extends Biome {
-    private static final WorldGenAbstractTree SHRUB_OAK = new WorldGenTreeShrubOak();
+    private static final WorldGenTreeShrubOak SHRUB_OAK = new WorldGenTreeShrubOak();
     private static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-    private static final WorldGenAbstractTree MAPLE_TREE = new WorldGenTreeMaple(false, false);
+    private static final WorldGenTreeMaple MAPLE_TREE = new WorldGenTreeMaple(false, false);
     private final WorldGenTreeRedSpruce2 spruceGenerator = new WorldGenTreeRedSpruce2(true);
-    protected static final WorldGenerator CEPHALOPHYLLIUMflower= new WorldGenCephalophyllumFlower(BlockInit.CEPHALOPHYLLUMFLOWER.getDefaultState());
-    protected static final WorldGenerator DISAflower = new WorldGenDisaFlower(BlockInit.DISAFLOWER.getDefaultState());
-    protected static final WorldGenerator AESCHYNANTHUSflower = new WorldGenAeschynanthusFlower(BlockInit.AESCHYNANTHUSFLOWER.getDefaultState());
+    protected static final WorldGenCephalophyllumFlower CEPHALOPHYLLIUMflower= new WorldGenCephalophyllumFlower(BlockInit.CEPHALOPHYLLUMFLOWER.getDefaultState());
+    protected static final WorldGenDisaFlower DISAflower = new WorldGenDisaFlower(BlockInit.DISAFLOWER.getDefaultState());
+    protected static final WorldGenAeschynanthusFlower AESCHYNANTHUSflower = new WorldGenAeschynanthusFlower(BlockInit.AESCHYNANTHUSFLOWER.getDefaultState());
 
     public BiomeMapleForest(BiomeProperties properties) {
         super(properties);

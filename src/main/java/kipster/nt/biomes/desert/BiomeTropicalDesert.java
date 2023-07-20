@@ -27,7 +27,7 @@ public class BiomeTropicalDesert extends Biome
 	protected static final WorldGenPatches GRASS_PATCHES = new WorldGenPatches(Blocks.GRASS.getDefaultState(), 7);
 	private static final IBlockState JUNGLE_LOG = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE);
     private static final IBlockState JUNGLE_LEAF = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
-	protected static final WorldGenAbstractTree SHRUB_JUNGLE = new WorldGenTreeShrubJungle();
+	protected static final WorldGenTreeShrubJungle SHRUB_JUNGLE = new WorldGenTreeShrubJungle();
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
 	
 	public BiomeTropicalDesert(BiomeProperties properties)
@@ -128,7 +128,7 @@ public class BiomeTropicalDesert extends Biome
 			}
 		}
 	}
-	protected static final WorldGenerator SUMASTRAFLOWER= new WorldGenSumastraFlower(BlockInit.SUMASTRAFLOWER.getDefaultState());
+	protected static final WorldGenSumastraFlower SUMASTRAFLOWER= new WorldGenSumastraFlower(BlockInit.SUMASTRAFLOWER.getDefaultState());
 	public void decorate(World worldIn, Random rand, BlockPos pos)
 	{
 		int flowersPerChunk = 1;

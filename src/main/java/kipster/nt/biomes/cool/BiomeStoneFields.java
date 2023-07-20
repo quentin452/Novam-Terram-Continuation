@@ -27,7 +27,7 @@ public class BiomeStoneFields extends Biome
 	protected static final WorldGenBlockBlob COBBLESTONE_BOULDER_FEATURE = new WorldGenBlockBlob(Blocks.COBBLESTONE, 1);
 	private final WorldGenStoneSpike stoneSpike = new WorldGenStoneSpike();
 	protected static final WorldGenPatches STONE_PATCHES = new WorldGenPatches(Blocks.STONE.getDefaultState(), 7);
-	protected static final WorldGenAbstractTree SHRUB_SPRUCE = new WorldGenTreeShrubSpruce();
+	protected static final WorldGenTreeShrubSpruce SHRUB_SPRUCE = new WorldGenTreeShrubSpruce();
 	
 	 public BiomeStoneFields(BiomeProperties properties)
 	  	{	
@@ -80,8 +80,8 @@ public class BiomeStoneFields extends Biome
 			}
 		}
 	}
-	protected static final WorldGenerator HELIOTROPIUMFLOWER= new WorldGenHeliotropiumFlower(BlockInit.HELIOTROPIUMFLOWER.getDefaultState());
-	protected static final WorldGenerator NEGLECTEDSCORPIONWEEDFLOWER = new WorldGenNeglectedScorpionweedFlower(BlockInit.NEGLECTEDSCORPIONWEEDFLOWER.getDefaultState());
+	protected static final WorldGenHeliotropiumFlower HELIOTROPIUMFLOWER= new WorldGenHeliotropiumFlower(BlockInit.HELIOTROPIUMFLOWER.getDefaultState());
+	protected static final WorldGenNeglectedScorpionweedFlower NEGLECTEDSCORPIONWEEDFLOWER = new WorldGenNeglectedScorpionweedFlower(BlockInit.NEGLECTEDSCORPIONWEEDFLOWER.getDefaultState());
 
 	public void decorate(World worldIn, Random rand, BlockPos pos)
 	{

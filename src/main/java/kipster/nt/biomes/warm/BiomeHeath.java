@@ -26,10 +26,10 @@ import java.util.Random;
 public class BiomeHeath extends Biome 
 {
 
-	protected static final WorldGenAbstractTree SHRUB_JACARANDA = new WorldGenTreeShrubJacaranda();
-	protected static final WorldGenAbstractTree SHRUB_DARKOAK = new WorldGenTreeShrubDarkOak();
-	protected static final WorldGenAbstractTree SHRUB_OAK = new WorldGenTreeShrubOak();
-	protected static final WorldGenAbstractTree SHRUB_ACACIA = new WorldGenTreeShrubAcacia();
+	protected static final WorldGenTreeShrubJacaranda SHRUB_JACARANDA = new WorldGenTreeShrubJacaranda();
+	protected static final WorldGenTreeShrubDarkOak SHRUB_DARKOAK = new WorldGenTreeShrubDarkOak();
+	protected static final WorldGenTreeShrubOak SHRUB_OAK = new WorldGenTreeShrubOak();
+	protected static final WorldGenTreeShrubAcacia SHRUB_ACACIA = new WorldGenTreeShrubAcacia();
 	
 	public BiomeHeath(BiomeProperties properties)
 	{	

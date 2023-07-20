@@ -110,8 +110,8 @@ public class BiomeRockland extends Biome
 			}
 		}
 	}
-	protected static final WorldGenerator ROYALBLUEBELLFLOWER= new WorldGenRoyalBluebellFlower(BlockInit.ROYALBLUEBELLFLOWER.getDefaultState());
-	protected static final WorldGenerator ALOPECURUSFLOWER = new WorldGenAlopecurusFlower(BlockInit.ALOPECURUSFLOWER.getDefaultState());
+	protected static final WorldGenRoyalBluebellFlower ROYALBLUEBELLFLOWER= new WorldGenRoyalBluebellFlower(BlockInit.ROYALBLUEBELLFLOWER.getDefaultState());
+	protected static final WorldGenAlopecurusFlower ALOPECURUSFLOWER = new WorldGenAlopecurusFlower(BlockInit.ALOPECURUSFLOWER.getDefaultState());
 
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
 

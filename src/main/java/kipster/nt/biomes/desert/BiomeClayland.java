@@ -110,8 +110,8 @@ public class BiomeClayland extends Biome
 			}
 		}
 	}
-	protected static final WorldGenerator FABACEAEFLOWER= new WorldGenFabaceaeFlower(BlockInit.FABACEAEFLOWER.getDefaultState());
-	protected static final WorldGenerator ARIZONAPOPPYFLOWER = new WorldGenArizonaPoppyFlower(BlockInit.ARIZONAPOPPYFLOWER.getDefaultState());
+	protected static final WorldGenFabaceaeFlower FABACEAEFLOWER= new WorldGenFabaceaeFlower(BlockInit.FABACEAEFLOWER.getDefaultState());
+	protected static final WorldGenArizonaPoppyFlower ARIZONAPOPPYFLOWER = new WorldGenArizonaPoppyFlower(BlockInit.ARIZONAPOPPYFLOWER.getDefaultState());
 
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
 

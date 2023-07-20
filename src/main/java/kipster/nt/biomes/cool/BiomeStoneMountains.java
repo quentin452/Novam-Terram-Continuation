@@ -170,11 +170,11 @@ public class BiomeStoneMountains extends Biome {
 			}
 		}
 	}
-	protected static final WorldGenerator FRUITBOTFLOWER= new WorldGenFruitTopFlower(BlockInit.FRUITBOTFLOWER.getDefaultState());
-	protected static final WorldGenerator ALCEAFLOWER = new WorldGenAlceaFlower(BlockInit.ALCEAFLOWER.getDefaultState());
+	protected static final WorldGenFruitTopFlower FRUITBOTFLOWER= new WorldGenFruitTopFlower(BlockInit.FRUITBOTFLOWER.getDefaultState());
+	protected static final WorldGenAlceaFlower ALCEAFLOWER = new WorldGenAlceaFlower(BlockInit.ALCEAFLOWER.getDefaultState());
 
-	protected static final WorldGenerator AJUGAFLOWER= new WorldGenAjugaFlower(BlockInit.AJUGAFLOWER.getDefaultState());
-	protected static final WorldGenerator ASCLEPIASFLOWER = new WorldGenAsclepiasFlower(BlockInit.ASCLEPIASFLOWER.getDefaultState());
+	protected static final WorldGenAjugaFlower AJUGAFLOWER= new WorldGenAjugaFlower(BlockInit.AJUGAFLOWER.getDefaultState());
+	protected static final WorldGenAsclepiasFlower ASCLEPIASFLOWER = new WorldGenAsclepiasFlower(BlockInit.ASCLEPIASFLOWER.getDefaultState());
 
 	public void decorate(World worldIn, Random rand, BlockPos pos) {
 		int flowersPerChunk = 7;

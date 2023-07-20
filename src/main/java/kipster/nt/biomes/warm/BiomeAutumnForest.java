@@ -22,9 +22,9 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import java.util.Random;
 
 public class BiomeAutumnForest extends Biome {
-	protected static final WorldGenerator ALLIARIAFLOWER = new WorldGenAlliariaFlower(BlockInit.ALLIARIAFLOWER.getDefaultState());
-	protected static final WorldGenerator PLUCHEAGLUTONISAFLOWER = new WorldGenPlucheaGlutinosaFlower(BlockInit.PLUCHEAGLUTONISAFLOWER.getDefaultState());
-	protected static final WorldGenerator ACANTHUSBOTFLOWER = new WorldGenAcanthusBotFlower(BlockInit.ACANTHUSBOTFLOWER.getDefaultState());
+	protected static final WorldGenAlliariaFlower ALLIARIAFLOWER = new WorldGenAlliariaFlower(BlockInit.ALLIARIAFLOWER.getDefaultState());
+	protected static final WorldGenPlucheaGlutinosaFlower PLUCHEAGLUTONISAFLOWER = new WorldGenPlucheaGlutinosaFlower(BlockInit.PLUCHEAGLUTONISAFLOWER.getDefaultState());
+	protected static final WorldGenAcanthusBotFlower ACANTHUSBOTFLOWER = new WorldGenAcanthusBotFlower(BlockInit.ACANTHUSBOTFLOWER.getDefaultState());
 
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
 	protected static final WorldGenTreeAutumnOrange ORANGE_TREE = new WorldGenTreeAutumnOrange(false, false);

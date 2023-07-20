@@ -18,7 +18,7 @@ import java.util.Random;
 public class BiomeGrassHills extends Biome 
 {
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-	protected static final WorldGenAbstractTree SHRUB_OAK = new WorldGenTreeShrubOak();
+	protected static final WorldGenTreeShrubOak SHRUB_OAK = new WorldGenTreeShrubOak();
 	
 	public BiomeGrassHills(BiomeProperties properties)
 	{	

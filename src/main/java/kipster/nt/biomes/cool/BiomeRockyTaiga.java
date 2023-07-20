@@ -29,7 +29,7 @@ public class BiomeRockyTaiga extends Biome
 	protected static final WorldGenBlockBlob STONE_BOULDER_FEATURE = new WorldGenBlockBlob(Blocks.STONE, 1);
 	protected static final WorldGenLine STONE = new WorldGenLine(Blocks.STONE, 1);
 	protected static final WorldGenLakes LAKE = new WorldGenLakes(Blocks.WATER);
-	protected static final WorldGenAbstractTree RED_SPRUCE = new WorldGenTreeRedSpruce2(false);
+	protected static final WorldGenTreeRedSpruce2 RED_SPRUCE = new WorldGenTreeRedSpruce2(false);
 	private final WorldGenTreeRedSpruce1 spruceGenerator = new WorldGenTreeRedSpruce1();
 	 
    public BiomeRockyTaiga(BiomeProperties properties)
@@ -96,9 +96,9 @@ public class BiomeRockyTaiga extends Biome
 			}
 		}
 	}
-	protected static final WorldGenerator CLUSTEREDBROOMRAPEFLOWER= new WorldGenClusteredBroomrapeFlower(BlockInit.CLUSTEREDBROOMRAPEFLOWER.getDefaultState());
-	protected static final WorldGenerator BRACHYSTELMAFLOWER = new WorldGenBrachystelmaFlower(BlockInit.BRACHYSTELMAFLOWER.getDefaultState());
-	protected static final WorldGenerator BUCKBRUSHFLOWER = new WorldGenBuckBrushFlower(BlockInit.BUCKBRUSHFLOWER.getDefaultState());
+	protected static final WorldGenClusteredBroomrapeFlower CLUSTEREDBROOMRAPEFLOWER= new WorldGenClusteredBroomrapeFlower(BlockInit.CLUSTEREDBROOMRAPEFLOWER.getDefaultState());
+	protected static final WorldGenBrachystelmaFlower BRACHYSTELMAFLOWER = new WorldGenBrachystelmaFlower(BlockInit.BRACHYSTELMAFLOWER.getDefaultState());
+	protected static final WorldGenBuckBrushFlower BUCKBRUSHFLOWER = new WorldGenBuckBrushFlower(BlockInit.BUCKBRUSHFLOWER.getDefaultState());
 
 	public void decorate(World worldIn, Random rand, BlockPos pos)
    {
