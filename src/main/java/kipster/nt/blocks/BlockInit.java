@@ -34,6 +34,10 @@ public class BlockInit {
 	public static final Block ORCHARDLEAVES = new BlockLeavesOrchard("orchard_leaves", Material.LEAVES);
 	public static final Block WHITEMYRTLELEAVES = new BlockLeavesWhiteMyrtle("whitemyrtle_leaves", Material.LEAVES);
 
+	//FRUIT/LEGUME
+	//# todo : fix cannot be eaten
+	//public static final Block OLIVEFRUIT = new BlockOliveFruit("fruit_olive", Material.PLANTS);
+
 	//FLOWER
 	public static final Block PRIMEVEREFLOWER = new BlockFlowerPrimevere("flower_primevere", Material.PLANTS);
 	public static final Block ALLIUMFLOWER = new BlockFlowerAllium("flower_allium", Material.PLANTS);

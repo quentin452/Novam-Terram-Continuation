@@ -7,7 +7,6 @@ import kipster.nt.world.gen.flowers.WorldGenCrassulaFlower;
 import kipster.nt.world.gen.trees.WorldGenTreeBigPalmTree;
 import kipster.nt.world.gen.trees.WorldGenTreeCypress;
 import kipster.nt.world.gen.trees.WorldGenTreeOlive;
-import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.init.Blocks;
@@ -75,14 +74,12 @@ public class BiomeAegeanArchipelago extends Biome {
 
 		List<WorldGenAbstractTree> treeList = new ArrayList<>();
 		treeList.add(PALM_TREE);
-		 treeList.add(OLIVE_TREE);
-		// #todo # todo fix cascadingworldgen(not sure) + not worldgenned correctly
-		  treeList.add(CYPRESS_TREE);
+		treeList.add(OLIVE_TREE);
+		treeList.add(CYPRESS_TREE);
 
 		int treeIndex = randomWeight % treeList.size();
 		WorldGenAbstractTree tree = treeList.get(treeIndex);
 		return tree;
-
 	}
 
 	private void generateFlowers(World worldIn, Random rand, BlockPos pos, int flowersPerChunk, WorldGenerator flowerGenerator) {
@@ -149,6 +146,7 @@ public class BiomeAegeanArchipelago extends Biome {
 
 				IBlockState state = worldIn.getBlockState(blockpos);
 				if (state.getBlock().isReplaceableOreGen(state, worldIn, blockpos, net.minecraft.block.state.pattern.BlockMatcher.forBlock(Blocks.STONE))) {
+					assert Blocks.EMERALD_ORE != null;
 					worldIn.setBlockState(blockpos, Blocks.EMERALD_ORE.getDefaultState(), 16 | 2);
 				}
 			}

@@ -32,4 +32,4 @@ public class ItemInit {
 				new ModelResourceLocation(new ResourceLocation(NovamTerram.modId, fileName), "inventory"));
 		
 		}
-	}
+}

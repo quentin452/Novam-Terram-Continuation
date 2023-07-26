@@ -1,0 +1,31 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "nt:fruit_olive"
+  },
+  "textures": {
+    "texture": "nt:blocks/fruit_olive"
+  },
+  "faces": {
+    "north": {
+      "uv": [1, 14, 2, 16],
+      "texture": "#texture"
+    },
+    "south": {
+      "uv": [3, 14, 4, 16],
+      "texture": "#texture"
+    },
+    "west": {
+      "uv": [5, 14, 6, 16],
+      "texture": "#texture"
+    },
+    "east": {
+      "uv": [7, 14, 8, 16],
+      "texture": "#texture"
+    },
+    "down": {
+      "uv": [9, 14, 10, 15],
+      "texture": "#texture"
+    }
+  }
+}

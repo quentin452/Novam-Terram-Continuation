@@ -3,24 +3,25 @@ package kipster.nt.world.gen.trees;
 import kipster.nt.blocks.BlockInit;
 import kipster.nt.world.gen.TreeGeneratorRegistry;
 import kipster.nt.world.gen.flowers.WorldGenOliveFlower;
-import net.minecraft.block.BlockLeaves;
+import kipster.nt.world.gen.fruits.WorldGenOliveFruit;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class WorldGenTreeOlive extends WorldGenAbstractTree {
     private static final IBlockState LOG = Blocks.LOG.getDefaultState().withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.Y);
     private static final IBlockState LEAF = BlockInit.OLIVELEAVES.getDefaultState();
     private static final IBlockState BARK = Blocks.LOG.getDefaultState().withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.NONE);
-   // private static final IBlockState FLOWER = BlockInit.OLIVEFLOWER.getDefaultState();
-  // private static final IBlockState FRUIT = BlockInit.OLIVEFRUIT.getDefaultState();
-   protected static final WorldGenOliveFlower OLIVE_FLOWER = new WorldGenOliveFlower(BlockInit.OLIVEFLOWER.getDefaultState());
+    protected static final WorldGenOliveFruit OLIVE_FRUIT = new WorldGenOliveFruit(BlockInit.OLIVEFRUIT.getDefaultState());
+
+    protected static final WorldGenOliveFlower OLIVE_FLOWER = new WorldGenOliveFlower(BlockInit.OLIVEFLOWER.getDefaultState());
     private final TreeGeneratorRegistry registry = new TreeGeneratorRegistry();
     private final boolean useExtraRandomHeight;
 
@@ -39,24 +40,62 @@ public class WorldGenTreeOlive extends WorldGenAbstractTree {
     private boolean hasLeavesAbove(World worldIn, BlockPos pos) {
         for (int i = 1; i <= 3; i++) { // Check up to three blocks above for leaves
             if (worldIn.getBlockState(pos.up(i)).getBlock().isLeaves(worldIn.getBlockState(pos.up(i)), worldIn, pos.up(i))) {
-                return true;
+                return true; // If there are leaves above, return true
             }
         }
-        return false;
+        return false; // If there are no leaves above, return false
     }
-    private void generateFlowers(World worldIn, Random rand, BlockPos logPos) {
-        int crownRadius = (int) (10 / 2.5); // Adjust the crown radius based on tree height and reduce it by 2.5 times
 
-        for (int x = -crownRadius; x <= crownRadius; x++) {
-            for (int z = -crownRadius; z <= crownRadius; z++) {
-                BlockPos flowerPos = logPos.add(x, 0, z); // Offset flower position relative to the log position
-                BlockPos groundPos = flowerPos.down(); // Check if the block below is grass or dirt
+    private void generateBaseFlowers(World worldIn, Random rand, BlockPos basePos, int treeHeight) {
+        // The number of flowers generated per tree (adjust as needed)
+        int numberOfFlowers = 4;
+        // Calculate the radius of the circle based on the number of flowers
+        // The formula used here is a simple approximation for a circle
+        // with an even distribution of elements.
+        double circleRadius = Math.sqrt(numberOfFlowers / Math.PI);
 
-                if (worldIn.getBlockState(groundPos).getBlock() == Blocks.GRASS || worldIn.getBlockState(groundPos).getBlock() == Blocks.DIRT) {
-                    if (hasLeavesAbove(worldIn, flowerPos)) { // Only place flowers if there are leaves above
-                        OLIVE_FLOWER.generate(worldIn, rand, flowerPos); // Generate olive flowers using the WorldGenOliveFlower generator
+        // Increase the circle radius to augment the generation range
+        circleRadius *= 2;
+
+        // Generate the positions of flowers in a single iteration and store them in a list
+        List<BlockPos> flowerPositions = new ArrayList<>();
+        for (int i = 0; i < numberOfFlowers; i++) {
+            // Generate random angle (in radians) for the position on the circle
+            double angle = rand.nextDouble() * 2 * Math.PI;
+
+            // Calculate X and Z offsets from the base position
+            int flowerX = basePos.getX() + (int) (circleRadius * Math.cos(angle));
+            int flowerZ = basePos.getZ() + (int) (circleRadius * Math.sin(angle));
+
+            // Restrict the X and Z coordinates to stay within a range of -4 to 4 from the base position
+            flowerX = Math.min(Math.max(flowerX, basePos.getX() - 4), basePos.getX() + 4);
+            flowerZ = Math.min(Math.max(flowerZ, basePos.getZ() - 4), basePos.getZ() + 4);
+
+            BlockPos pos = new BlockPos(flowerX, basePos.getY(), flowerZ);
+            flowerPositions.add(pos);
+        }
+
+        // Loop through the generated flower positions and place flowers where there is grass below
+        for (BlockPos pos : flowerPositions) {
+            // Check if the position has grass in a certain radius below
+            boolean hasGrassBelow = false;
+            int checkRadius = 2; // Set the desired check radius (you can adjust as needed)
+            for (int dx = -checkRadius; dx <= checkRadius; dx++) {
+                for (int dz = -checkRadius; dz <= checkRadius; dz++) {
+                    if (worldIn.getBlockState(pos.add(dx, -1, dz)).getBlock() == Blocks.GRASS) {
+                        hasGrassBelow = true;
+                        break;
                     }
                 }
+                if (hasGrassBelow) break;
+            }
+
+            if (hasGrassBelow) {
+                // Generate a flower at that position
+                OLIVE_FLOWER.generate(worldIn, rand, pos);
+
+                // Print the coordinates of the generated flower
+                System.out.println("Generated flower at X: " + pos.getX() + ", Y: " + pos.getY() + ", Z: " + pos.getZ());
             }
         }
     }
@@ -73,6 +112,7 @@ public class WorldGenTreeOlive extends WorldGenAbstractTree {
 
         int height = 20 + rand.nextInt(11);
         int radius = 10 + rand.nextInt(11);
+        System.out.println("Tree height: " + height + " Radius: " + radius);
 
         if (this.useExtraRandomHeight) {
             height += rand.nextInt(11);
@@ -111,7 +151,7 @@ public class WorldGenTreeOlive extends WorldGenAbstractTree {
 
                                     if (leafState.getBlock().isAir(leafState, worldIn, leafPos) || leafState.getBlock().isLeaves(leafState, worldIn, leafPos)) {
                                         // Check for leaves above before decaying
-                                        if (!hasLeavesAbove(worldIn, leafPos)) {
+                                        if (hasLeavesAbove(worldIn, leafPos)) {
                                             this.setBlockAndNotifyAdequately(worldIn, leafPos, LEAF);
                                         }
                                     }
@@ -122,6 +162,10 @@ public class WorldGenTreeOlive extends WorldGenAbstractTree {
                 }
                 generateLeaves(worldIn, rand, position.up(height), height);
 
+
+                BlockPos basePos = position.down();
+                generateBaseFlowers(worldIn, rand, basePos, height);
+
                 for (int y = 0; y <= height; ++y) {
                     BlockPos logPos = position.up(y);
                     IBlockState logState = worldIn.getBlockState(logPos);
@@ -131,18 +175,13 @@ public class WorldGenTreeOlive extends WorldGenAbstractTree {
                             this.setBlockAndNotifyAdequately(worldIn, logPos, LOG);
                         } else {
                             this.setBlockAndNotifyAdequately(worldIn, logPos, BARK);
+                            if (rand.nextDouble() < 0.1 && hasLeavesAbove(worldIn, logPos.up())) {
+                                BlockPos fruitPos = logPos.up();
+                                IBlockState fruitState = worldIn.getBlockState(fruitPos);
 
-                            if (rand.nextDouble() < 0.1) {
-                                // #todo # todo flower don't want to generate
-                                generateFlowers(worldIn, rand, logPos); // Generate olive flowers
-                            }
-                            //#todo # todo not terminated
-                            if (rand.nextDouble() < 0.1) {
-                                //     BlockPos fruitPos = logPos.up().offset(rand.nextInt(3) - 1, 0, rand.nextInt(3) - 1);
-                                //    IBlockState fruitState = worldIn.getBlockState(fruitPos);
-                                //    if (fruitState.getBlock().isAir(fruitState, worldIn, fruitPos)) {
-                                //        this.setBlockAndNotifyAdequately(worldIn, fruitPos, FRUIT);
-                                //    }
+                                if (fruitState.getBlock().isAir(fruitState, worldIn, fruitPos)) {
+                                    this.setBlockAndNotifyAdequately(worldIn, fruitPos, (IBlockState) OLIVE_FRUIT);
+                                }
                             }
                         }
                     }

@@ -4,6 +4,7 @@ generator.Terram=Terram
 generator.Islands=Archipelago
 
 //Leaves
+tile.olive_leaves_green.name=Green Olive Leaves
 tile.conifer_leaves_yellow.name=Yellow Conifer Leaves
 tile.conifer_leaves_orange.name=Orange Conifer Leaves
 tile.cherry_leaves_purple.name=Cherry Leaves
@@ -25,7 +26,11 @@ tile.whitemyrtle_leaves.name=White Myrtle Leaves
 //Mushrooms
 tile.mushroom_ceps_wall.name=Ceps Mushroom
 
+//Fuits
+tile.fruit_olive.name=Olive Fruit
+
 //Flowers
+tile.flower_olive.name=Olive Fruit
 tile.flower_primevere.name=Primevere Flower
 tile.flower_allium.name=Allium Flower
 tile.flower_aspalathus.name=Aspalathus Flower
