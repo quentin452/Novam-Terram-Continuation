@@ -19,7 +19,7 @@ public class WorldGenTreeOlive extends WorldGenAbstractTree {
     private static final IBlockState LOG = Blocks.LOG.getDefaultState().withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.Y);
     private static final IBlockState LEAF = BlockInit.OLIVELEAVES.getDefaultState();
     private static final IBlockState BARK = Blocks.LOG.getDefaultState().withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.NONE);
-    protected static final WorldGenOliveFruit OLIVE_FRUIT = new WorldGenOliveFruit(BlockInit.OLIVEFRUIT.getDefaultState());
+    // #todo protected static final WorldGenOliveFruit OLIVE_FRUIT = new WorldGenOliveFruit(BlockInit.OLIVEFRUIT.getDefaultState());
 
     protected static final WorldGenOliveFlower OLIVE_FLOWER = new WorldGenOliveFlower(BlockInit.OLIVEFLOWER.getDefaultState());
     private final TreeGeneratorRegistry registry = new TreeGeneratorRegistry();
@@ -180,7 +180,7 @@ public class WorldGenTreeOlive extends WorldGenAbstractTree {
                                 IBlockState fruitState = worldIn.getBlockState(fruitPos);
 
                                 if (fruitState.getBlock().isAir(fruitState, worldIn, fruitPos)) {
-                                    this.setBlockAndNotifyAdequately(worldIn, fruitPos, (IBlockState) OLIVE_FRUIT);
+                                  // #todo  this.setBlockAndNotifyAdequately(worldIn, fruitPos, (IBlockState) OLIVE_FRUIT);
                                 }
                             }
                         }
