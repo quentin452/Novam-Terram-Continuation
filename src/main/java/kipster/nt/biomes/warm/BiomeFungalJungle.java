@@ -9,13 +9,12 @@ import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.passive.EntityParrot;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class BiomeFungalJungle extends Biome 
@@ -46,65 +45,73 @@ public class BiomeFungalJungle extends Biome
         this.decorator.bigMushroomsPerChunk = 17;
         
         
-        this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityParrot.class, 40, 1, 2));
-        this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityChicken.class, 10, 4, 4));
-        this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntityOcelot.class, 2, 1, 1));
-        this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityMooshroom.class, 8, 4, 8));
+        this.spawnableCreatureList.add(new SpawnListEntry(EntityParrot.class, 40, 1, 2));
+        this.spawnableCreatureList.add(new SpawnListEntry(EntityChicken.class, 10, 4, 4));
+        this.spawnableMonsterList.add(new SpawnListEntry(EntityOcelot.class, 2, 1, 1));
+        this.spawnableCreatureList.add(new SpawnListEntry(EntityMooshroom.class, 8, 4, 8));
         this.flowers.clear();
         for (BlockFlower.EnumFlowerType type : BlockFlower.EnumFlowerType.values())
         {
             if (type.getBlockType() == BlockFlower.EnumFlowerColor.YELLOW) continue;
             if (type == BlockFlower.EnumFlowerType.BLUE_ORCHID) type = BlockFlower.EnumFlowerType.POPPY;
-            addFlower(net.minecraft.init.Blocks.RED_FLOWER.getDefaultState().withProperty(net.minecraft.init.Blocks.RED_FLOWER.getTypeProperty(), type), 10);
+            addFlower(Blocks.RED_FLOWER.getDefaultState().withProperty(Blocks.RED_FLOWER.getTypeProperty(), type), 10);
         }
 }
-        public void addDoublePlants(World world, Random random, BlockPos pos, int count) {
-            List<BlockDoublePlant.EnumPlantType> validPlantTypes = new ArrayList<>();
-            validPlantTypes.add(BlockDoublePlant.EnumPlantType.SYRINGA);
-            validPlantTypes.add(BlockDoublePlant.EnumPlantType.ROSE);
-            validPlantTypes.add(BlockDoublePlant.EnumPlantType.PAEONIA);
-
-            DOUBLE_PLANT_GENERATOR.setPlantType(getPlantType(random, validPlantTypes));
-
-            for (int i = 0; i < count; i++) {
-
-                int x, z, y;
-                do {
-                    x = random.nextInt(16) + 8;
-                    z = random.nextInt(16) + 8;
-                    y = random.nextInt(world.getHeight(pos.add(x, 0, z)).getY() + 32);
-                } while (!DOUBLE_PLANT_GENERATOR.generate(world, random, pos.add(x, y, z)));
-            }
+ public BlockFlower.EnumFlowerType pickRandomFlower(Random rand, BlockPos pos)
+    {
+            double d0 = MathHelper.clamp((1.0D + GRASS_COLOR_NOISE.getValue((double)pos.getX() / 48.0D, (double)pos.getZ() / 48.0D)) / 2.0D, 0.0D, 0.9999D);
+            BlockFlower.EnumFlowerType blockflower$enumflowertype = BlockFlower.EnumFlowerType.values()[(int)(d0 * (double)BlockFlower.EnumFlowerType.values().length)];
+            return blockflower$enumflowertype == BlockFlower.EnumFlowerType.BLUE_ORCHID ? BlockFlower.EnumFlowerType.POPPY : blockflower$enumflowertype;
         }
+	
+ public void addDoublePlants(World p_185378_1_, Random p_185378_2_, BlockPos p_185378_3_, int p_185378_4_)
+ {
+     for (int i = 0; i < p_185378_4_; ++i)
+     {
+         int j = p_185378_2_.nextInt(3);
 
-        private BlockDoublePlant.EnumPlantType getPlantType(Random random, List<BlockDoublePlant.EnumPlantType> plants) {
-            int index = random.nextInt(plants.size());
-            return plants.get(index);
-        }
+         if (j == 0)
+         {
+             DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.SYRINGA);
+         }
+         else if (j == 1)
+         {
+             DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.ROSE);
+         }
+         else if (j == 2)
+         {
+             DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.PAEONIA);
+         }
 
-        public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+         for (int k = 0; k < 5; ++k)
+         {
+             int l = p_185378_2_.nextInt(16) + 8;
+             int i1 = p_185378_2_.nextInt(16) + 8;
+             int j1 = p_185378_2_.nextInt(p_185378_1_.getHeight(p_185378_3_.add(l, 0, i1)).getY() + 32);
 
-            int bigTreeWeight = 10;
-            int jungleShrubWeight = 2;
-            int megaJungleWeight = 3;
-            int jungleTreeWeight = 1;
+             if (DOUBLE_PLANT_GENERATOR.generate(p_185378_1_, p_185378_2_, new BlockPos(p_185378_3_.getX() + l, j1, p_185378_3_.getZ() + i1)))
+             {
+                 break;
+             }
+         }
+     }
+ }
 
-            int totalWeight = bigTreeWeight + jungleShrubWeight +
-                    megaJungleWeight + jungleTreeWeight;
-
-            int randomWeight = rand.nextInt(totalWeight);
-
-            List<WorldGenAbstractTree> treeList = new ArrayList<>();
-            treeList.add(BIG_TREE_FEATURE);
-            treeList.add(new WorldGenShrub(JUNGLE_LOG, OAK_LEAF));
-            treeList.add(new WorldGenMegaJungle(false, 10, 20, JUNGLE_LOG, JUNGLE_LEAF));
-            treeList.add(new WorldGenTrees(false, 4 + rand.nextInt(7),
-                    JUNGLE_LOG, JUNGLE_LEAF, true));
-
-            int treeIndex = randomWeight % treeList.size();
-            return treeList.get(treeIndex);
-        }
-
+public WorldGenAbstractTree getRandomTreeFeature(Random rand)
+{
+ if (rand.nextInt(10) == 0)
+ {
+     return BIG_TREE_FEATURE;
+ }
+ else if (rand.nextInt(2) == 0)
+ {
+     return new WorldGenShrub(JUNGLE_LOG, OAK_LEAF);
+ }
+ else
+ {
+     return (WorldGenAbstractTree)(rand.nextInt(3) == 0 ? new WorldGenMegaJungle(false, 10, 20, JUNGLE_LOG, JUNGLE_LEAF) : new WorldGenTrees(false, 4 + rand.nextInt(7), JUNGLE_LOG, JUNGLE_LEAF, true));
+ }
+}
 public WorldGenerator getRandomWorldGenForGrass(Random rand)
 {
  return rand.nextInt(4) == 0 ? new WorldGenTallGrass(BlockTallGrass.EnumType.FERN) : new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);
@@ -191,7 +198,7 @@ public WorldGenerator getRandomWorldGenForGrass(Random rand)
                 int offset = net.minecraftforge.common.ForgeModContainer.fixVanillaCascading ? 8 : 0; // MC-114332
                 BlockPos blockpos = pos.add(rand.nextInt(16) + offset, rand.nextInt(28) + 2, rand.nextInt(16) + offset);
 
-                net.minecraft.block.state.IBlockState state = worldIn.getBlockState(blockpos);
+                IBlockState state = worldIn.getBlockState(blockpos);
                 if (state.getBlock().isReplaceableOreGen(state, worldIn, blockpos, net.minecraft.block.state.pattern.BlockMatcher.forBlock(Blocks.STONE)))
                 {
                     worldIn.setBlockState(blockpos, Blocks.EMERALD_ORE.getDefaultState(), 16 | 2);

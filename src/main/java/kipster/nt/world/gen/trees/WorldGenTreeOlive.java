@@ -95,7 +95,7 @@ public class WorldGenTreeOlive extends WorldGenAbstractTree {
                 OLIVE_FLOWER.generate(worldIn, rand, pos);
 
                 // Print the coordinates of the generated flower
-                System.out.println("Generated flower at X: " + pos.getX() + ", Y: " + pos.getY() + ", Z: " + pos.getZ());
+               // System.out.println("Generated flower at X: " + pos.getX() + ", Y: " + pos.getY() + ", Z: " + pos.getZ());
             }
         }
     }
@@ -112,7 +112,7 @@ public class WorldGenTreeOlive extends WorldGenAbstractTree {
 
         int height = 20 + rand.nextInt(11);
         int radius = 10 + rand.nextInt(11);
-        System.out.println("Tree height: " + height + " Radius: " + radius);
+        //System.out.println("Tree height: " + height + " Radius: " + radius);
 
         if (this.useExtraRandomHeight) {
             height += rand.nextInt(11);
