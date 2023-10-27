@@ -19,4 +19,17 @@ public class BlockSaplingYellowAutumn extends BlockSaplingBase implements IHasMo
     public BlockSaplingYellowAutumn(String name, Material material) {
         super(name, material);
     }
+
+    @Override
+    public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    {
+        if (!TerrainGen.saplingGrowTree(worldIn, rand, pos)) return;
+        WorldGenerator worldgenerator = new WorldGenTreeAutumnYellow(false, false);
+
+        worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
+
+        worldgenerator.generate(worldIn, rand, pos);
+    }
+
+
 }
