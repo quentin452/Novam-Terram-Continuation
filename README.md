@@ -1,16 +1,25 @@
-## TemplateDevEnv
+# Description
 
-Template workspace for modding Minecraft 1.12.2. Licensed under MIT, it is made for public use.
+this mod is a fork of Novam Terram for 1.7.10
 
-This template currently utilizies **Gradle 8.1.1** + **[RetroFuturaGradle](https://github.com/GTNewHorizons/RetroFuturaGradle) 1.3.6** + **Forge 14.23.5.2847**.
+# What this mod have for now?
 
-With **coremod and mixin support** that is easy to configure.
+Go here : [Wiki](https://github.com/quentin452/Novam-Terram-Continuation/wiki)
 
-### Instructions:
+# Links to descriptions of my projects.
 
-1. Click `use this template` at the top.
-2. Clone the repository you have created with this template.
-3. In the local repository, run the command `gradlew setupDecompWorkspace`
-4. Open the project folder in IDEA.
-5. Right-click in IDEA `build.gradle` of your project, and select `Link Gradle Project`, after completion, hit `Refresh All` in the gradle tab on the right.
-6. Run `gradlew runClient` and `gradlew runServer`, or use the auto-imported run configurations in IntelliJ like `1. Run Client`.
+[*Modrinth*](https://modrinth.com/mod/novam-terram-continuation/versions)
+
+[*Github*](https://github.com/quentin452/Novam-Terram-Continuation)
+
+[*Curseforge*](https://legacy.curseforge.com/minecraft/mc-mods/novam-terram-continuation)
+
+# Requirement
+
+no requirements
+
+# Discord
+
+Add me on discord : imacatfr
+
+Discord server : https://discord.gg/ZnmHKJzKkZ
