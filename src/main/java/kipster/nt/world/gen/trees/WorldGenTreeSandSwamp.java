@@ -1,6 +1,5 @@
 package kipster.nt.world.gen.trees;
 
-import kipster.nt.world.gen.TreeGeneratorRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -14,24 +13,16 @@ import java.util.Random;
 
 public class WorldGenTreeSandSwamp extends WorldGenAbstractTree
 {
-    private final TreeGeneratorRegistry registry = new TreeGeneratorRegistry();
     private static final IBlockState TRUNK = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.BIRCH);
     private static final IBlockState LEAF = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.OAK).withProperty(BlockOldLeaf.CHECK_DECAY, Boolean.valueOf(false));
 
     public WorldGenTreeSandSwamp()
     {
         super(false);
-        registry.registerTreeGenerator(this);
     }
 
     public boolean generate(World worldIn, Random rand, BlockPos position)
     {
-        if (registry.containsTreeAt(worldIn, position, this)) {
-            return false;
-        }
-        if (registry.overlapsExistingTrees(worldIn, position)) {
-            return false;
-        }
         int i;
 
         for (i = rand.nextInt(4) + 4; worldIn.getBlockState(position.down()).getMaterial() == Material.WATER; position = position.down())

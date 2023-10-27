@@ -1,7 +1,6 @@
 package kipster.nt.world.gen.trees;
 
 import kipster.nt.blocks.BlockInit;
-import kipster.nt.world.gen.TreeGeneratorRegistry;
 import net.minecraft.block.BlockNewLog;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.IBlockState;
@@ -17,14 +16,11 @@ public class WorldGenTreeAutumnYellow extends WorldGenAbstractTree
     private static final IBlockState LOG = Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.DARK_OAK);
     private static final IBlockState LEAF = BlockInit.AUTUMNLEAVESYELLOW.getDefaultState();
     private final boolean useExtraRandomHeight;
-    private final TreeGeneratorRegistry registry = new TreeGeneratorRegistry();
 
     public WorldGenTreeAutumnYellow(boolean notify, boolean useExtraRandomHeightIn)
     {
         super(notify);
         this.useExtraRandomHeight = useExtraRandomHeightIn;
-
-        registry.registerTreeGenerator(this);
     }
     public void setBlockAndNotifyAdequately(World worldIn, BlockPos position, IBlockState state) {
         worldIn.setBlockState(position, state, 3);
@@ -32,12 +28,6 @@ public class WorldGenTreeAutumnYellow extends WorldGenAbstractTree
     }
     public boolean generate(World worldIn, Random rand, BlockPos position)
     {
-        if (registry.containsTreeAt(worldIn, position, this)) {
-            return false;
-        }
-        if (registry.overlapsExistingTrees(worldIn, position)) {
-            return false;
-        }
         int i = rand.nextInt(3) + 5;
 
         if (this.useExtraRandomHeight)

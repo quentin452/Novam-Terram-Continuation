@@ -1,7 +1,6 @@
 package kipster.nt.world.gen.trees;
 
 import kipster.nt.blocks.BlockInit;
-import kipster.nt.world.gen.TreeGeneratorRegistry;
 import kipster.nt.world.gen.flowers.WorldGenOliveFlower;
 import kipster.nt.world.gen.fruits.WorldGenOliveFruit;
 import net.minecraft.block.BlockLog;
@@ -22,14 +21,13 @@ public class WorldGenTreeOlive extends WorldGenAbstractTree {
     // #todo protected static final WorldGenOliveFruit OLIVE_FRUIT = new WorldGenOliveFruit(BlockInit.OLIVEFRUIT.getDefaultState());
 
     protected static final WorldGenOliveFlower OLIVE_FLOWER = new WorldGenOliveFlower(BlockInit.OLIVEFLOWER.getDefaultState());
-    private final TreeGeneratorRegistry registry = new TreeGeneratorRegistry();
+   // private static final IBlockState FLOWER = BlockInit.OLIVEFLOWER.getDefaultState();
+  // private static final IBlockState FRUIT = BlockInit.OLIVEFRUIT.getDefaultState();
     private final boolean useExtraRandomHeight;
 
     public WorldGenTreeOlive(boolean notify, boolean useExtraRandomHeightIn) {
         super(notify);
         this.useExtraRandomHeight = useExtraRandomHeightIn;
-
-        registry.registerTreeGenerator(this);
     }
 
     public void setBlockAndNotifyAdequately(World worldIn, BlockPos position, IBlockState state) {
@@ -102,13 +100,6 @@ public class WorldGenTreeOlive extends WorldGenAbstractTree {
 
     @Override
     public boolean generate(World worldIn, Random rand, BlockPos position) {
-
-        if (registry.containsTreeAt(worldIn, position, this)) {
-            return false;
-        }
-        if (registry.overlapsExistingTrees(worldIn, position)) {
-            return false;
-        }
 
         int height = 20 + rand.nextInt(11);
         int radius = 10 + rand.nextInt(11);
